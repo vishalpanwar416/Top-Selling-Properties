@@ -15,8 +15,8 @@ const HomeScreen = ({ navigation }) => {
     const [properties, setProperties] = useState(propertiesData.properties);
 
     const filteredProperties = properties.filter(property =>
-        property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        property.location.toLowerCase().includes(searchQuery.toLowerCase())
+        (property.title && property.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (property.location && property.location.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
     const handlePropertyPress = (property) => {

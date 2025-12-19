@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Logo from '../../assets/logo.svg';
 import colors from '../theme/colors';
 
 const Header = ({ navigation, title = 'Top Selling Properties', transparent = false }) => {
@@ -19,12 +20,10 @@ const Header = ({ navigation, title = 'Top Selling Properties', transparent = fa
             transparent && styles.transparentContainer
         ]}>
             <View style={styles.leftContainer}>
-                <Image
-                    source={require('../../assets/logo.svg')}
-                    style={[
-                        styles.logoImage,
-                        { tintColor: transparent ? '#FFFFFF' : (colors.maroon || colors.red) }
-                    ]}
+                <Logo 
+                    width={40} 
+                    height={40} 
+                    fill={transparent ? '#FFFFFF' : colors.maroon}
                 />
             </View>
 
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
     logoImage: {
         width: 40,
         height: 40,
-        resizeMode: 'contain',
     },
     menuButton: {
         padding: 8,

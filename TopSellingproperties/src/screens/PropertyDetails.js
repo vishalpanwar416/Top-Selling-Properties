@@ -15,20 +15,34 @@ import colors from '../theme/colors';
 const { width } = Dimensions.get('window');
 
 const PropertyDetails = ({ route, navigation }) => {
-    const { property } = route.params;
+    const { property } = route.params || {};
     const insets = useSafeAreaInsets();
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    
+    if (!property) {
+        return (
+            <View style={styles.container}>
+                <Text>Property not found</Text>
+            </View>
+        );
+    }
+    
+    const images = property.images && property.images.length > 0 ? property.images : ['https://via.placeholder.com/400x300'];
 
     const formatPrice = (price) => {
         return `AED ${price.toLocaleString()}`;
     };
 
     const handleCall = () => {
-        Linking.openURL(`tel:${property.agent.phone}`);
+        if (property.agent && property.agent.phone) {
+            Linking.openURL(`tel:${property.agent.phone}`);
+        }
     };
 
     const handleEmail = () => {
-        Linking.openURL(`mailto:${property.agent.email}?subject=Inquiry about ${property.title}`);
+        if (property.agent && property.agent.email) {
+            Linking.openURL(`mailto:${property.agent.email}?subject=Inquiry about ${property.title}`);
+        }
     };
 
     return (
@@ -45,7 +59,7 @@ const PropertyDetails = ({ route, navigation }) => {
                             setCurrentImageIndex(index);
                         }}
                     >
-                        {property.images.map((image, index) => (
+                        {images.map((image, index) => (
                             <Image
                                 key={index}
                                 source={{ uri: image }}
@@ -64,17 +78,19 @@ const PropertyDetails = ({ route, navigation }) => {
                     </TouchableOpacity>
 
                     {/* Image Indicators */}
-                    <View style={styles.imageIndicators}>
-                        {property.images.map((_, index) => (
-                            <View
-                                key={index}
-                                style={[
-                                    styles.indicator,
-                                    currentImageIndex === index && styles.activeIndicator
-                                ]}
-                            />
-                        ))}
-                    </View>
+                    {images.length > 1 && (
+                        <View style={styles.imageIndicators}>
+                            {images.map((_, index) => (
+                                <View
+                                    key={index}
+                                    style={[
+                                        styles.indicator,
+                                        currentImageIndex === index && styles.activeIndicator
+                                    ]}
+                                />
+                            ))}
+                        </View>
+                    )}
 
                     {/* Type Badge */}
                     <View style={styles.typeBadge}>
@@ -133,18 +149,20 @@ const PropertyDetails = ({ route, navigation }) => {
                     </View>
 
                     {/* Agent */}
-                    <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Contact Agent</Text>
-                        <View style={styles.agentCard}>
-                            <View style={styles.agentAvatar}>
-                                <Text style={styles.agentInitial}>{property.agent.name[0]}</Text>
-                            </View>
-                            <View style={styles.agentInfo}>
-                                <Text style={styles.agentName}>{property.agent.name}</Text>
-                                <Text style={styles.agentPhone}>{property.agent.phone}</Text>
+                    {property.agent && (
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Contact Agent</Text>
+                            <View style={styles.agentCard}>
+                                <View style={styles.agentAvatar}>
+                                    <Text style={styles.agentInitial}>{property.agent.name ? property.agent.name[0] : 'A'}</Text>
+                                </View>
+                                <View style={styles.agentInfo}>
+                                    <Text style={styles.agentName}>{property.agent.name || 'Agent'}</Text>
+                                    <Text style={styles.agentPhone}>{property.agent.phone || 'N/A'}</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
+                    )}
                 </View>
             </ScrollView>
 

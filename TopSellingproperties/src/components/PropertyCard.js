@@ -17,9 +17,10 @@ const PropertyCard = ({ property, onPress }) => {
         <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.9}>
             <View style={styles.imageContainer}>
                 <Image
-                    source={{ uri: property.images[0] }}
+                    source={{ uri: property.images && property.images[0] ? property.images[0] : 'https://via.placeholder.com/400x200' }}
                     style={styles.image}
                     resizeMode="cover"
+                    defaultSource={require('../../assets/icon.png')}
                 />
                 {property.featured && (
                     <View style={styles.featuredBadge}>

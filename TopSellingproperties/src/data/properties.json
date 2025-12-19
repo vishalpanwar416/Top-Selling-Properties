@@ -1,0 +1,197 @@
+{
+  "properties": [
+    {
+      "id": "1",
+      "title": "Luxury Villa in Palm Jumeirah",
+      "price": 15000000,
+      "currency": "AED",
+      "location": "Palm Jumeirah, Dubai",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "area": 8500,
+      "areaUnit": "sqft",
+      "type": "villa",
+      "status": "For Sale",
+      "featured": true,
+      "description": "Stunning 5-bedroom villa with private beach access, infinity pool, and breathtaking views of the Dubai skyline. This masterpiece features Italian marble flooring, smart home automation, and a private cinema room.",
+      "amenities": [
+        "Private Pool",
+        "Beach Access",
+        "Smart Home",
+        "Cinema Room",
+        "Garden",
+        "Gym",
+        "Maid's Room"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"
+      ],
+      "agent": {
+        "name": "Ahmed Hassan",
+        "phone": "+971 50 123 4567",
+        "email": "ahmed@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "2",
+      "title": "Modern Apartment in Dubai Marina",
+      "price": 2500000,
+      "currency": "AED",
+      "location": "Dubai Marina, Dubai",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1450,
+      "areaUnit": "sqft",
+      "type": "apartment",
+      "status": "For Sale",
+      "featured": true,
+      "description": "Elegant 2-bedroom apartment with stunning marina views. Features floor-to-ceiling windows, modern kitchen with premium appliances, and access to world-class amenities including pool and gym.",
+      "amenities": [
+        "Marina View",
+        "Gym",
+        "Pool",
+        "Concierge",
+        "Parking",
+        "Balcony"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800"
+      ],
+      "agent": {
+        "name": "Sara Al Maktoum",
+        "phone": "+971 50 234 5678",
+        "email": "sara@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "3",
+      "title": "Penthouse in Downtown Dubai",
+      "price": 25000000,
+      "currency": "AED",
+      "location": "Downtown Dubai, Dubai",
+      "bedrooms": 4,
+      "bathrooms": 5,
+      "area": 6200,
+      "areaUnit": "sqft",
+      "type": "penthouse",
+      "status": "For Sale",
+      "featured": true,
+      "description": "Exclusive penthouse with 360-degree views of Burj Khalifa and Dubai Fountain. This ultra-luxury residence features a private elevator, rooftop terrace, and designer interiors.",
+      "amenities": [
+        "Burj Khalifa View",
+        "Private Elevator",
+        "Rooftop Terrace",
+        "Smart Home",
+        "Wine Cellar",
+        "Jacuzzi"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+      ],
+      "agent": {
+        "name": "Mohammed Ali",
+        "phone": "+971 50 345 6789",
+        "email": "mohammed@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "4",
+      "title": "Townhouse in Arabian Ranches",
+      "price": 4500000,
+      "currency": "AED",
+      "location": "Arabian Ranches, Dubai",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "area": 3200,
+      "areaUnit": "sqft",
+      "type": "townhouse",
+      "status": "For Sale",
+      "featured": false,
+      "description": "Beautiful family townhouse in a gated community with golf course views. Features spacious living areas, private garden, and access to community pools and parks.",
+      "amenities": [
+        "Golf View",
+        "Private Garden",
+        "Community Pool",
+        "Playground",
+        "BBQ Area",
+        "Parking"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800"
+      ],
+      "agent": {
+        "name": "Fatima Khan",
+        "phone": "+971 50 456 7890",
+        "email": "fatima@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "5",
+      "title": "Studio in Business Bay",
+      "price": 850000,
+      "currency": "AED",
+      "location": "Business Bay, Dubai",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": 550,
+      "areaUnit": "sqft",
+      "type": "studio",
+      "status": "For Sale",
+      "featured": false,
+      "description": "Modern studio apartment perfect for investors or young professionals. Features open-plan living, built-in wardrobes, and stunning canal views.",
+      "amenities": [
+        "Canal View",
+        "Gym",
+        "Pool",
+        "24/7 Security",
+        "Metro Access"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+      ],
+      "agent": {
+        "name": "Ahmed Hassan",
+        "phone": "+971 50 123 4567",
+        "email": "ahmed@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "6",
+      "title": "Beach Villa in Jumeirah",
+      "price": 18000000,
+      "currency": "AED",
+      "location": "Jumeirah Beach, Dubai",
+      "bedrooms": 6,
+      "bathrooms": 7,
+      "area": 9500,
+      "areaUnit": "sqft",
+      "type": "villa",
+      "status": "For Sale",
+      "featured": true,
+      "description": "Magnificent beachfront villa with direct beach access. This contemporary masterpiece features a private pool, landscaped gardens, and premium finishes throughout.",
+      "amenities": [
+        "Beach Access",
+        "Private Pool",
+        "Garden",
+        "Cinema Room",
+        "Gym",
+        "Staff Quarters",
+        "Garage"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+      ],
+      "agent": {
+        "name": "Sara Al Maktoum",
+        "phone": "+971 50 234 5678",
+        "email": "sara@topsellingproperties.ae"
+      }
+    }
+  ]
+}

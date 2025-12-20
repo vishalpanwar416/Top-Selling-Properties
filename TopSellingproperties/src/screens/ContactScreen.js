@@ -6,8 +6,11 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
-    Alert
+    Alert,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import colors from '../theme/colors';
 
@@ -19,7 +22,7 @@ const ContactScreen = ({ navigation }) => {
 
     const handleSubmit = () => {
         if (!name || !email || !message) {
-            Alert.alert('Error', 'Please fill in all required fields');
+            Alert.alert('Required Fields', 'Please fill in all required fields');
             return;
         }
         Alert.alert('Success', 'Your message has been sent! We will contact you soon.');
@@ -30,162 +33,253 @@ const ContactScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView 
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
             <Header navigation={navigation} />
-            <ScrollView contentContainerStyle={styles.content}>
-                <Text style={styles.title}>Contact Us</Text>
-                <Text style={styles.subtitle}>Have questions? We'd love to hear from you.</Text>
+            <ScrollView 
+                contentContainerStyle={styles.content}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Header Section */}
+                <View style={styles.headerSection}>
+                    <Text style={styles.title}>Get In Touch</Text>
+                    <Text style={styles.subtitle}>
+                        Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                    </Text>
+                </View>
 
-                <View style={styles.form}>
-                    <Text style={styles.label}>Name *</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Your name"
-                        placeholderTextColor={colors.gray}
-                        value={name}
-                        onChangeText={setName}
-                    />
+                {/* Contact Form */}
+                <View style={styles.formCard}>
+                    <Text style={styles.formTitle}>Send us a Message</Text>
+                    
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Full Name *</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter your full name"
+                            placeholderTextColor={colors.textTertiary}
+                            value={name}
+                            onChangeText={setName}
+                        />
+                    </View>
 
-                    <Text style={styles.label}>Email *</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="your@email.com"
-                        placeholderTextColor={colors.gray}
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                    />
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Email Address *</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="your.email@example.com"
+                            placeholderTextColor={colors.textTertiary}
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                        />
+                    </View>
 
-                    <Text style={styles.label}>Phone</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="+971 50 123 4567"
-                        placeholderTextColor={colors.gray}
-                        value={phone}
-                        onChangeText={setPhone}
-                        keyboardType="phone-pad"
-                    />
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Phone Number</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="+971 50 123 4567"
+                            placeholderTextColor={colors.textTertiary}
+                            value={phone}
+                            onChangeText={setPhone}
+                            keyboardType="phone-pad"
+                        />
+                    </View>
 
-                    <Text style={styles.label}>Message *</Text>
-                    <TextInput
-                        style={[styles.input, styles.textArea]}
-                        placeholder="How can we help you?"
-                        placeholderTextColor={colors.gray}
-                        value={message}
-                        onChangeText={setMessage}
-                        multiline
-                        numberOfLines={4}
-                        textAlignVertical="top"
-                    />
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Message *</Text>
+                        <TextInput
+                            style={[styles.input, styles.textArea]}
+                            placeholder="Tell us how we can help you..."
+                            placeholderTextColor={colors.textTertiary}
+                            value={message}
+                            onChangeText={setMessage}
+                            multiline
+                            numberOfLines={5}
+                            textAlignVertical="top"
+                        />
+                    </View>
 
-                    <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                    <TouchableOpacity 
+                        style={styles.submitButton} 
+                        onPress={handleSubmit}
+                        activeOpacity={0.8}
+                    >
                         <Text style={styles.submitButtonText}>Send Message</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.contactInfo}>
+                {/* Contact Information */}
+                <View style={styles.infoCard}>
                     <Text style={styles.infoTitle}>Other Ways to Reach Us</Text>
-
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoIcon}>📞</Text>
-                        <Text style={styles.infoText}>+971 4 123 4567</Text>
+                    
+                    <View style={styles.infoItem}>
+                        <View style={styles.infoIconContainer}>
+                            <Ionicons name="call" size={24} color={colors.primary} />
+                        </View>
+                        <View style={styles.infoContent}>
+                            <Text style={styles.infoLabel}>Phone</Text>
+                            <Text style={styles.infoValue}>+971 4 123 4567</Text>
+                        </View>
                     </View>
 
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoIcon}>✉️</Text>
-                        <Text style={styles.infoText}>info@topsellingproperties.ae</Text>
+                    <View style={styles.infoItem}>
+                        <View style={styles.infoIconContainer}>
+                            <Ionicons name="mail" size={24} color={colors.primary} />
+                        </View>
+                        <View style={styles.infoContent}>
+                            <Text style={styles.infoLabel}>Email</Text>
+                            <Text style={styles.infoValue}>info@topsellingproperties.ae</Text>
+                        </View>
                     </View>
 
-                    <View style={styles.infoRow}>
-                        <Text style={styles.infoIcon}>📍</Text>
-                        <Text style={styles.infoText}>Dubai Marina, Dubai, UAE</Text>
+                    <View style={styles.infoItem}>
+                        <View style={styles.infoIconContainer}>
+                            <Ionicons name="location" size={24} color={colors.primary} />
+                        </View>
+                        <View style={styles.infoContent}>
+                            <Text style={styles.infoLabel}>Address</Text>
+                            <Text style={styles.infoValue}>Dubai Marina, Dubai, UAE</Text>
+                        </View>
                     </View>
                 </View>
             </ScrollView>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.lightGray,
+        backgroundColor: colors.background,
     },
     content: {
-        padding: 20,
+        padding: 24,
+    },
+    headerSection: {
+        marginBottom: 32,
     },
     title: {
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 34,
+        fontWeight: '700',
         color: colors.textPrimary,
-        marginBottom: 8,
+        marginBottom: 12,
+        letterSpacing: -0.5,
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: 17,
         color: colors.textSecondary,
-        marginBottom: 24,
+        lineHeight: 26,
+        fontWeight: '400',
     },
-    form: {
+    formCard: {
         backgroundColor: colors.white,
-        borderRadius: 16,
-        padding: 20,
+        borderRadius: 28,
+        padding: 28,
         marginBottom: 24,
+        shadowColor: colors.shadow,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
+        elevation: 8,
+    },
+    formTitle: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        marginBottom: 24,
+        letterSpacing: -0.3,
+    },
+    inputGroup: {
+        marginBottom: 20,
     },
     label: {
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: '600',
         color: colors.textPrimary,
-        marginBottom: 8,
+        marginBottom: 10,
+        letterSpacing: 0.1,
     },
     input: {
         backgroundColor: colors.lightGray,
-        borderRadius: 10,
-        paddingHorizontal: 16,
-        paddingVertical: 14,
+        borderRadius: 16,
+        paddingHorizontal: 20,
+        paddingVertical: 16,
         fontSize: 16,
         color: colors.textPrimary,
-        marginBottom: 16,
+        borderWidth: 2,
+        borderColor: 'transparent',
     },
     textArea: {
-        height: 120,
-        paddingTop: 14,
+        height: 140,
+        paddingTop: 16,
     },
     submitButton: {
-        backgroundColor: colors.red,
-        paddingVertical: 16,
-        borderRadius: 12,
+        backgroundColor: colors.secondary,
+        paddingVertical: 18,
+        borderRadius: 16,
         alignItems: 'center',
         marginTop: 8,
+        shadowColor: colors.secondary,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.4,
+        shadowRadius: 12,
+        elevation: 8,
     },
     submitButtonText: {
         color: colors.white,
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 17,
+        fontWeight: '700',
+        letterSpacing: 0.5,
     },
-    contactInfo: {
+    infoCard: {
         backgroundColor: colors.white,
-        borderRadius: 16,
-        padding: 20,
+        borderRadius: 28,
+        padding: 28,
+        shadowColor: colors.shadow,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
+        elevation: 8,
     },
     infoTitle: {
-        fontSize: 18,
-        fontWeight: '600',
+        fontSize: 22,
+        fontWeight: '700',
         color: colors.textPrimary,
-        marginBottom: 16,
+        marginBottom: 24,
+        letterSpacing: -0.3,
     },
-    infoRow: {
+    infoItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
+        marginBottom: 24,
     },
-    infoIcon: {
-        fontSize: 20,
-        marginRight: 14,
+    infoIconContainer: {
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: colors.lightGray,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 18,
     },
-    infoText: {
-        fontSize: 15,
-        color: colors.textSecondary,
+    infoContent: {
+        flex: 1,
+    },
+    infoLabel: {
+        fontSize: 13,
+        color: colors.textTertiary,
+        marginBottom: 4,
+        fontWeight: '500',
+    },
+    infoValue: {
+        fontSize: 17,
+        color: colors.textPrimary,
+        fontWeight: '600',
     },
 });
 

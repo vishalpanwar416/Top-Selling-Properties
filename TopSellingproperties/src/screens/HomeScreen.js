@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, ScrollView, ImageBackground, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import PropertyCard from '../components/PropertyCard';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
+
+const { width } = Dimensions.get('window');
 
 const propertyCategories = ['Residential', 'Commercial', 'Rooms For Rent', 'Monthly Short Term', 'Daily Short Term'];
 const transactionTypes = ['Sale', 'Rent', 'Off-Plan', 'New Projects'];
@@ -24,83 +27,91 @@ const HomeScreen = ({ navigation }) => {
     };
 
     const renderHeader = () => (
-        <View style={styles.headerHero}>
-            <View style={styles.maroonOverlay}>
+        <View style={styles.headerContainer}>
+            {/* Hero Section with Gradient Background */}
+            <View style={styles.heroSection}>
                 <Header navigation={navigation} transparent />
-                <View style={styles.headerContent}>
-                    {/* Top Level: Property Categories */}
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryScroll}>
+                
+                <View style={styles.heroContent}>
+                    {/* Welcome Text */}
+                    <View style={styles.welcomeSection}>
+                        <Text style={styles.welcomeTitle}>Find Your Dream Property</Text>
+                        <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
+                    </View>
+
+                    {/* Modern Search Bar */}
+                    <TouchableOpacity 
+                        style={styles.searchContainer}
+                        onPress={() => navigation.navigate('Search')}
+                        activeOpacity={0.8}
+                    >
+                        <View style={styles.searchBox}>
+                            <Ionicons name="search" size={20} color={colors.primary} style={styles.searchIcon} />
+                            <Text style={[styles.searchInput, !searchQuery && styles.searchPlaceholder]}>
+                                {searchQuery || 'Search location, area, or city'}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    {/* Category Pills - Modern Design */}
+                    <ScrollView 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false} 
+                        style={styles.categoryContainer}
+                        contentContainerStyle={styles.categoryContent}
+                    >
                         {propertyCategories.map((cat) => (
                             <TouchableOpacity
                                 key={cat}
-                                style={[styles.categoryPill, activeCategory === cat && styles.activeCategoryPill]}
+                                style={[
+                                    styles.categoryPill,
+                                    activeCategory === cat && styles.activeCategoryPill
+                                ]}
                                 onPress={() => setActiveCategory(cat)}
+                                activeOpacity={0.7}
                             >
-                                <Text style={[styles.categoryPillText, activeCategory === cat && styles.activeCategoryPillText]}>
+                                <Text style={[
+                                    styles.categoryPillText,
+                                    activeCategory === cat && styles.activeCategoryPillText
+                                ]}>
                                     {cat}
                                 </Text>
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
 
-                    {/* Bottom Level: Transaction Types (Inside dark capsule) */}
-                    <View style={styles.transactionCapsule}>
+                    {/* Transaction Types - Modern Segmented Control */}
+                    <View style={styles.transactionContainer}>
                         {transactionTypes.map((type) => (
                             <TouchableOpacity
                                 key={type}
-                                style={[styles.typeTab, activeType === type && styles.activeTypeTab]}
+                                style={[
+                                    styles.transactionButton,
+                                    activeType === type && styles.activeTransactionButton
+                                ]}
                                 onPress={() => setActiveType(type)}
+                                activeOpacity={0.8}
                             >
-                                <Text style={[styles.typeTabText, activeType === type && styles.activeTypeTabText]}>
+                                <Text style={[
+                                    styles.transactionText,
+                                    activeType === type && styles.activeTransactionText
+                                ]}>
                                     {type}
                                 </Text>
                             </TouchableOpacity>
                         ))}
                     </View>
-
-                    {/* Enhanced Search Bar */}
-                    <View style={styles.searchBox}>
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Search for a locality, area or city"
-                            placeholderTextColor={colors.gray}
-                            value={searchQuery}
-                            onChangeText={setSearchQuery}
-                        />
-                        <Text style={styles.searchIcon}>🔍</Text>
-                    </View>
                 </View>
             </View>
 
-            {/* Recent Searches */}
-            <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Recent Searches</Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentScroll}>
-                    <TouchableOpacity style={styles.recentCard}>
-                        <View style={styles.recentInfo}>
-                            <Text style={styles.recentCity}>Dubai</Text>
-                            <Text style={styles.recentType}>Residential Properties for S...</Text>
-                            <View style={styles.badge}><Text style={styles.badgeText}>Off-Plan</Text></View>
-                        </View>
-                    </TouchableOpacity>
-                </ScrollView>
-            </View>
-
-            {/* Banner Section */}
-            <TouchableOpacity style={styles.bannerContainer}>
-                <View style={styles.bannerContent}>
-                    <Text style={styles.bannerTitle}>Sell or Rent Your Property</Text>
-                    <Text style={styles.bannerSubtitle}>Connect with a trusted agent to secure the best deal, faster.</Text>
-                </View>
-                <View style={styles.bannerBadge}>
-                    <Text style={styles.bannerBadgeText}>NEW</Text>
-                </View>
-            </TouchableOpacity>
-
+            {/* Results Header */}
             <View style={styles.resultsHeader}>
-                <Text style={styles.resultsText}>
-                    {filteredProperties.length} Properties Found
+                <Text style={styles.resultsTitle}>
+                    {filteredProperties.length} Properties Available
                 </Text>
+                <TouchableOpacity>
+                    <Text style={styles.filterText}>Filter</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -127,193 +138,148 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.background,
     },
-    headerHero: {
-        backgroundColor: colors.maroon,
-        paddingBottom: 20,
+    headerContainer: {
+        backgroundColor: colors.white,
     },
-    maroonOverlay: {
-        width: '100%',
-        backgroundColor: colors.maroon,
-        paddingBottom: 24,
+    heroSection: {
+        backgroundColor: colors.primary,
+        paddingBottom: 32,
+        borderBottomLeftRadius: 32,
+        borderBottomRightRadius: 32,
     },
-    headerContent: {
-        paddingHorizontal: 16,
+    heroContent: {
+        paddingHorizontal: 20,
+        marginTop: 8,
     },
-    categoryScroll: {
-        marginVertical: 10,
+    welcomeSection: {
+        marginBottom: 24,
+    },
+    welcomeTitle: {
+        fontSize: 28,
+        fontWeight: '700',
+        color: colors.white,
+        marginBottom: 6,
+        letterSpacing: -0.5,
+    },
+    welcomeSubtitle: {
+        fontSize: 15,
+        color: 'rgba(255, 255, 255, 0.85)',
+        fontWeight: '400',
+    },
+    searchContainer: {
+        marginBottom: 20,
+    },
+    searchBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+        borderRadius: 16,
+        paddingHorizontal: 20,
+        height: 56,
+        shadowColor: colors.shadowDark,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 16,
+        elevation: 8,
+    },
+    searchIcon: {
+        marginRight: 12,
+    },
+    searchInput: {
+        flex: 1,
+        fontSize: 16,
+        color: colors.textPrimary,
+        fontWeight: '400',
+    },
+    searchPlaceholder: {
+        color: colors.textTertiary,
+    },
+    categoryContainer: {
+        marginBottom: 20,
+    },
+    categoryContent: {
+        paddingRight: 20,
     },
     categoryPill: {
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginRight: 10,
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.6)',
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
     },
     activeCategoryPill: {
-        backgroundColor: colors.red,
-        borderColor: colors.red,
+        backgroundColor: colors.secondary,
+        borderColor: colors.secondary,
+        shadowColor: colors.secondary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 12,
+        elevation: 8,
     },
     categoryPillText: {
-        fontSize: 14,
-        fontWeight: '700',
-        color: '#FFFFFF',
+        fontSize: 13,
+        fontWeight: '600',
+        color: colors.white,
+        letterSpacing: 0.2,
     },
     activeCategoryPillText: {
-        color: '#FFFFFF',
+        color: colors.white,
     },
-    transactionCapsule: {
+    transactionContainer: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(0,0,0,0.3)',
-        borderRadius: 30,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 14,
         padding: 4,
-        marginVertical: 15,
-        alignSelf: 'flex-start',
     },
-    typeTab: {
-        paddingHorizontal: 16,
+    transactionButton: {
+        flex: 1,
         paddingVertical: 10,
-        borderRadius: 25,
-    },
-    activeTypeTab: {
-        backgroundColor: colors.red,
-    },
-    typeTabText: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#FFFFFF',
-    },
-    activeTypeTabText: {
-        color: '#FFFFFF',
-    },
-    newBadgeText: {
-        fontSize: 10,
-        color: 'rgba(255,255,255,0.6)',
-    },
-    searchBox: {
-        flexDirection: 'row',
+        borderRadius: 10,
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        paddingHorizontal: 16,
-        height: 55,
-        marginTop: 10,
     },
-    searchInput: {
-        flex: 1,
-        fontSize: 15,
-        color: colors.textPrimary,
-    },
-    searchIcon: {
-        fontSize: 20,
-        color: colors.maroon,
-    },
-    sectionContainer: {
-        padding: 16,
-        backgroundColor: '#FFFFFF',
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: colors.textPrimary,
-        marginBottom: 12,
-    },
-    recentScroll: {
-        flexDirection: 'row',
-    },
-    recentCard: {
-        width: 280,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        padding: 12,
-        marginRight: 12,
-        flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: '#F0F0F0',
-        shadowColor: "#000",
+    activeTransactionButton: {
+        backgroundColor: colors.secondary,
+        shadowColor: colors.secondary,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 5,
-        elevation: 2,
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 4,
     },
-    recentInfo: {
-        flex: 1,
+    transactionText: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, 0.8)',
+        letterSpacing: 0.3,
     },
-    recentCity: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: colors.textPrimary,
-    },
-    recentType: {
-        fontSize: 13,
-        color: colors.textSecondary,
-        marginVertical: 4,
-    },
-    badge: {
-        backgroundColor: '#F0F0F0',
-        alignSelf: 'flex-start',
-        paddingHorizontal: 8,
-        paddingVertical: 2,
-        borderRadius: 4,
-    },
-    badgeText: {
-        fontSize: 11,
-        color: colors.textSecondary,
-    },
-    bannerContainer: {
-        marginHorizontal: 16,
-        marginBottom: 16,
-        backgroundColor: colors.maroon,
-        borderRadius: 12,
-        padding: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-    },
-    bannerContent: {
-        flex: 1,
-    },
-    bannerTitle: {
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    bannerSubtitle: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 13,
-    },
-    bannerBadge: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        backgroundColor: colors.red,
-        paddingHorizontal: 8,
-        paddingVertical: 2,
-        borderRadius: 4,
-    },
-    bannerBadgeText: {
-        color: '#FFFFFF',
-        fontSize: 10,
-        fontWeight: 'bold',
+    activeTransactionText: {
+        color: colors.white,
     },
     resultsHeader: {
-        paddingHorizontal: 16,
-        paddingBottom: 8,
-        marginTop: 8,
-        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 16,
+        backgroundColor: colors.white,
     },
-    resultsText: {
-        fontSize: 14,
-        color: colors.textSecondary,
+    resultsTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        letterSpacing: -0.3,
+    },
+    filterText: {
+        fontSize: 15,
         fontWeight: '600',
+        color: colors.primary,
     },
     listContent: {
-        paddingBottom: 20,
-        backgroundColor: '#FFFFFF',
+        paddingBottom: 24,
+        backgroundColor: colors.background,
     },
 });
 

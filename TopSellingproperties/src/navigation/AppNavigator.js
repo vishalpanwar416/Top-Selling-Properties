@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import PropertyDetails from '../screens/PropertyDetails';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import ContactScreen from '../screens/ContactScreen';
+import SearchScreen from '../screens/SearchScreen';
 import Sidebar from '../components/Sidebar';
 import colors from '../theme/colors';
 
@@ -14,8 +15,21 @@ const Stack = createStackNavigator();
 
 const HomeStack = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator 
+            screenOptions={{ 
+                headerShown: false,
+            }}
+        >
             <Stack.Screen name="HomeMain" component={HomeScreen} />
+            <Stack.Screen 
+                name="Search" 
+                component={SearchScreen}
+                options={{
+                    presentation: 'modal',
+                    animationTypeForReplace: 'push',
+                    gestureEnabled: true,
+                }}
+            />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
         </Stack.Navigator>
     );

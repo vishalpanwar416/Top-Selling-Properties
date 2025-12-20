@@ -10,6 +10,7 @@ import {
     Linking
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 
 const { width } = Dimensions.get('window');
@@ -71,8 +72,9 @@ const PropertyDetails = ({ route, navigation }) => {
 
                     {/* Back Button */}
                     <TouchableOpacity
-                        style={[styles.backButton, { top: insets.top + 10 }]}
+                        style={[styles.backButton, { top: insets.top + 16 }]}
                         onPress={() => navigation.goBack()}
+                        activeOpacity={0.8}
                     >
                         <Text style={styles.backButtonText}>←</Text>
                     </TouchableOpacity>
@@ -100,29 +102,29 @@ const PropertyDetails = ({ route, navigation }) => {
 
                 {/* Content */}
                 <View style={styles.content}>
-                    <Text style={styles.price}>{formatPrice(property.price)}</Text>
-                    <Text style={styles.title}>{property.title}</Text>
-
+                    {/* Price and Title Section */}
+                    <View style={styles.priceSection}>
+                        <Text style={styles.price}>{formatPrice(property.price)}</Text>
+                        <Text style={styles.title}>{property.title}</Text>
                     <View style={styles.locationRow}>
-                        <Text style={styles.locationIcon}>📍</Text>
+                        <Ionicons name="location" size={18} color={colors.textSecondary} style={styles.locationIcon} />
                         <Text style={styles.location}>{property.location}</Text>
                     </View>
+                    </View>
 
-                    {/* Property Features */}
+                    {/* Property Features - Modern Cards */}
                     <View style={styles.featuresContainer}>
-                        <View style={styles.featureItem}>
-                            <Text style={styles.featureIcon}>🛏</Text>
+                        <View style={styles.featureCard}>
+                            <Text style={styles.featureIcon}>🛏️</Text>
                             <Text style={styles.featureValue}>{property.bedrooms || 'Studio'}</Text>
                             <Text style={styles.featureLabel}>Bedrooms</Text>
                         </View>
-                        <View style={styles.featureDivider} />
-                        <View style={styles.featureItem}>
+                        <View style={styles.featureCard}>
                             <Text style={styles.featureIcon}>🚿</Text>
                             <Text style={styles.featureValue}>{property.bathrooms}</Text>
                             <Text style={styles.featureLabel}>Bathrooms</Text>
                         </View>
-                        <View style={styles.featureDivider} />
-                        <View style={styles.featureItem}>
+                        <View style={styles.featureCard}>
                             <Text style={styles.featureIcon}>📐</Text>
                             <Text style={styles.featureValue}>{property.area.toLocaleString()}</Text>
                             <Text style={styles.featureLabel}>{property.areaUnit}</Text>
@@ -131,30 +133,32 @@ const PropertyDetails = ({ route, navigation }) => {
 
                     {/* Description */}
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Description</Text>
+                        <Text style={styles.sectionTitle}>About This Property</Text>
                         <Text style={styles.description}>{property.description}</Text>
                     </View>
 
                     {/* Amenities */}
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>Amenities</Text>
+                        <Text style={styles.sectionTitle}>Amenities & Features</Text>
                         <View style={styles.amenitiesGrid}>
                             {property.amenities.map((amenity, index) => (
-                                <View key={index} style={styles.amenityItem}>
-                                    <Text style={styles.amenityCheck}>✓</Text>
+                                <View key={index} style={styles.amenityChip}>
+                                    <Ionicons name="checkmark-circle" size={16} color={colors.secondary} style={styles.amenityCheck} />
                                     <Text style={styles.amenityText}>{amenity}</Text>
                                 </View>
                             ))}
                         </View>
                     </View>
 
-                    {/* Agent */}
+                    {/* Agent Card */}
                     {property.agent && (
                         <View style={styles.section}>
                             <Text style={styles.sectionTitle}>Contact Agent</Text>
                             <View style={styles.agentCard}>
                                 <View style={styles.agentAvatar}>
-                                    <Text style={styles.agentInitial}>{property.agent.name ? property.agent.name[0] : 'A'}</Text>
+                                    <Text style={styles.agentInitial}>
+                                        {property.agent.name ? property.agent.name[0] : 'A'}
+                                    </Text>
                                 </View>
                                 <View style={styles.agentInfo}>
                                     <Text style={styles.agentName}>{property.agent.name || 'Agent'}</Text>
@@ -166,13 +170,23 @@ const PropertyDetails = ({ route, navigation }) => {
                 </View>
             </ScrollView>
 
-            {/* Bottom Action Buttons */}
-            <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 10 }]}>
-                <TouchableOpacity style={styles.callButton} onPress={handleCall}>
-                    <Text style={styles.callButtonText}>📞 Call</Text>
+            {/* Bottom Action Buttons - Modern Design */}
+            <View style={[styles.bottomActions, { paddingBottom: insets.bottom + 16 }]}>
+                <TouchableOpacity 
+                    style={styles.callButton} 
+                    onPress={handleCall}
+                    activeOpacity={0.8}
+                >
+                    <Text style={styles.callButtonIcon}>📞</Text>
+                    <Text style={styles.callButtonText}>Call Now</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.emailButton} onPress={handleEmail}>
-                    <Text style={styles.emailButtonText}>✉️ Email</Text>
+                <TouchableOpacity 
+                    style={styles.emailButton} 
+                    onPress={handleEmail}
+                    activeOpacity={0.8}
+                >
+                    <Text style={styles.emailButtonIcon}>✉️</Text>
+                    <Text style={styles.emailButtonText}>Send Email</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -182,33 +196,39 @@ const PropertyDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.white,
+        backgroundColor: colors.background,
     },
     imageContainer: {
         position: 'relative',
+        height: 400,
     },
     image: {
         width: width,
-        height: 300,
+        height: 400,
     },
     backButton: {
         position: 'absolute',
-        left: 16,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        width: 40,
-        height: 40,
-        borderRadius: 20,
+        left: 20,
+        backgroundColor: colors.white,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
+        shadowColor: colors.shadowDark,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 12,
+        elevation: 10,
     },
     backButtonText: {
-        color: colors.white,
-        fontSize: 24,
-        fontWeight: 'bold',
+        color: colors.primary,
+        fontSize: 28,
+        fontWeight: '600',
     },
     imageIndicators: {
         position: 'absolute',
-        bottom: 16,
+        bottom: 24,
         left: 0,
         right: 0,
         flexDirection: 'row',
@@ -218,186 +238,241 @@ const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: 'rgba(255,255,255,0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
         marginHorizontal: 4,
     },
     activeIndicator: {
         backgroundColor: colors.white,
-        width: 24,
+        width: 32,
+        height: 8,
+        borderRadius: 4,
     },
     typeBadge: {
         position: 'absolute',
-        bottom: 16,
-        right: 16,
-        backgroundColor: colors.maroon,
-        paddingHorizontal: 16,
-        paddingVertical: 6,
-        borderRadius: 4,
+        bottom: 24,
+        right: 20,
+        backgroundColor: 'rgba(122, 30, 62, 0.95)',
+        paddingHorizontal: 18,
+        paddingVertical: 8,
+        borderRadius: 20,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4,
+        shadowRadius: 8,
+        elevation: 8,
     },
     typeText: {
         color: colors.white,
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '700',
         letterSpacing: 1,
     },
     content: {
-        padding: 20,
+        padding: 24,
+    },
+    priceSection: {
+        marginBottom: 24,
     },
     price: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: colors.maroon,
-        marginBottom: 8,
+        fontSize: 36,
+        fontWeight: '700',
+        color: colors.primary,
+        marginBottom: 12,
+        letterSpacing: -0.5,
     },
     title: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: '600',
         color: colors.textPrimary,
         marginBottom: 12,
+        lineHeight: 32,
+        letterSpacing: -0.3,
     },
     locationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
     },
     locationIcon: {
-        fontSize: 16,
-        marginRight: 6,
+        marginRight: 8,
     },
     location: {
-        fontSize: 16,
+        fontSize: 17,
         color: colors.textSecondary,
+        fontWeight: '500',
     },
     featuresContainer: {
         flexDirection: 'row',
-        backgroundColor: colors.lightGray,
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 24,
+        marginBottom: 32,
+        gap: 12,
     },
-    featureItem: {
+    featureCard: {
         flex: 1,
+        backgroundColor: colors.white,
+        borderRadius: 20,
+        padding: 20,
         alignItems: 'center',
+        shadowColor: colors.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 4,
     },
     featureIcon: {
-        fontSize: 24,
-        marginBottom: 8,
-    },
-    featureValue: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: colors.textPrimary,
-    },
-    featureLabel: {
-        fontSize: 12,
-        color: colors.textSecondary,
-        marginTop: 4,
-    },
-    featureDivider: {
-        width: 1,
-        backgroundColor: colors.border,
-    },
-    section: {
-        marginBottom: 24,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: colors.textPrimary,
+        fontSize: 32,
         marginBottom: 12,
     },
-    description: {
-        fontSize: 15,
-        lineHeight: 24,
+    featureValue: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        marginBottom: 6,
+    },
+    featureLabel: {
+        fontSize: 13,
         color: colors.textSecondary,
+        fontWeight: '500',
+    },
+    section: {
+        marginBottom: 32,
+    },
+    sectionTitle: {
+        fontSize: 22,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        marginBottom: 16,
+        letterSpacing: -0.3,
+    },
+    description: {
+        fontSize: 16,
+        lineHeight: 26,
+        color: colors.textSecondary,
+        letterSpacing: 0.1,
     },
     amenitiesGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+        gap: 10,
     },
-    amenityItem: {
+    amenityChip: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '50%',
-        marginBottom: 12,
+        backgroundColor: colors.lightGray,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        marginBottom: 8,
     },
     amenityCheck: {
-        fontSize: 14,
-        color: colors.red,
         marginRight: 8,
-        fontWeight: 'bold',
     },
     amenityText: {
-        fontSize: 14,
-        color: colors.textSecondary,
+        fontSize: 15,
+        color: colors.textPrimary,
+        fontWeight: '500',
     },
     agentCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.lightGray,
-        borderRadius: 12,
-        padding: 16,
+        backgroundColor: colors.white,
+        borderRadius: 24,
+        padding: 24,
+        shadowColor: colors.shadow,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 16,
+        elevation: 6,
     },
     agentAvatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: colors.maroon,
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        backgroundColor: colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 14,
+        marginRight: 18,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 6,
     },
     agentInitial: {
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 28,
+        fontWeight: '700',
         color: colors.white,
     },
     agentInfo: {
         flex: 1,
     },
     agentName: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '600',
         color: colors.textPrimary,
-        marginBottom: 4,
+        marginBottom: 6,
+        letterSpacing: -0.2,
     },
     agentPhone: {
-        fontSize: 14,
+        fontSize: 16,
         color: colors.textSecondary,
+        fontWeight: '500',
     },
     bottomActions: {
         flexDirection: 'row',
-        paddingHorizontal: 20,
-        paddingTop: 16,
+        paddingHorizontal: 24,
+        paddingTop: 20,
         backgroundColor: colors.white,
-        borderTopWidth: 1,
-        borderTopColor: colors.border,
+        shadowColor: colors.shadowDark,
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 16,
+        elevation: 12,
+        gap: 12,
     },
     callButton: {
         flex: 1,
-        backgroundColor: colors.red,
-        paddingVertical: 16,
-        borderRadius: 12,
-        marginRight: 8,
+        backgroundColor: colors.secondary,
+        paddingVertical: 18,
+        borderRadius: 16,
         alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        shadowColor: colors.secondary,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.4,
+        shadowRadius: 12,
+        elevation: 8,
+    },
+    callButtonIcon: {
+        marginRight: 8,
     },
     callButtonText: {
         color: colors.white,
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
+        letterSpacing: 0.3,
     },
     emailButton: {
         flex: 1,
-        backgroundColor: colors.maroon,
-        paddingVertical: 16,
-        borderRadius: 12,
-        marginLeft: 8,
+        backgroundColor: colors.primary,
+        paddingVertical: 18,
+        borderRadius: 16,
         alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.4,
+        shadowRadius: 12,
+        elevation: 8,
+    },
+    emailButtonIcon: {
+        marginRight: 8,
     },
     emailButtonText: {
         color: colors.white,
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
+        letterSpacing: 0.3,
     },
 });
 

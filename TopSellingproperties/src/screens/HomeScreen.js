@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
@@ -7,8 +7,6 @@ import PropertyCard from '../components/PropertyCard';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 import categoriesData from '../data/categories.json';
-
-const { width } = Dimensions.get('window');
 
 const propertyCategories = categoriesData.propertyCategories;
 const transactionTypes = categoriesData.transactionTypes;
@@ -28,117 +26,116 @@ const HomeScreen = ({ navigation }) => {
         navigation.navigate('PropertyDetails', { property });
     };
 
-    const renderHeader = () => (
-        <View style={styles.headerContainer}>
-            {/* Hero Section with Gradient Background */}
-            <View style={styles.heroSection}>
-                <Header navigation={navigation} transparent />
-                
-                <View style={styles.heroContent}>
-                    {/* Welcome Text */}
-                    <View style={styles.welcomeSection}>
-                        <Text style={styles.welcomeTitle}>Find Your Dream Property</Text>
-                        <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
-                    </View>
-
-                    {/* Modern Search Bar */}
-                    <TouchableOpacity 
-                        style={styles.searchContainer}
-                        onPress={() => navigation.navigate('Search')}
-                        activeOpacity={0.8}
-                    >
-                        <View style={styles.searchBox}>
-                            <Ionicons name="search" size={20} color={colors.primary} style={styles.searchIcon} />
-                            <Text style={[styles.searchInput, !searchQuery && styles.searchPlaceholder]}>
-                                {searchQuery || 'Search location, area, or city'}
-                            </Text>
+    return (
+        <View style={styles.container}>
+            {/* White Header Section */}
+            <View style={styles.headerContainer}>
+                <View style={styles.heroSection}>
+                    <Header navigation={navigation} transparent />
+                    
+                    <View style={styles.heroContent}>
+                        {/* Welcome Text */}
+                        <View style={styles.welcomeSection}>
+                            <Text style={styles.welcomeTitle}>Find Your Dream Property</Text>
+                            <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
                         </View>
-                    </TouchableOpacity>
 
-                    {/* Category Pills - Modern Design */}
-                    <ScrollView 
-                        horizontal 
-                        showsHorizontalScrollIndicator={false} 
-                        style={styles.categoryContainer}
-                        contentContainerStyle={styles.categoryContent}
-                    >
-                        {propertyCategories.map((cat) => (
-                            <TouchableOpacity
-                                key={cat}
-                                style={[
-                                    styles.categoryPill,
-                                    activeCategory === cat && styles.activeCategoryPill
-                                ]}
-                                onPress={() => setActiveCategory(cat)}
-                                activeOpacity={0.7}
-                            >
-                                <Text style={[
-                                    styles.categoryPillText,
-                                    activeCategory === cat && styles.activeCategoryPillText
-                                ]}>
-                                    {cat}
+                        {/* Modern Search Bar */}
+                        <TouchableOpacity 
+                            style={styles.searchContainer}
+                            onPress={() => navigation.navigate('Search')}
+                            activeOpacity={0.8}
+                        >
+                            <View style={styles.searchBox}>
+                                <Ionicons name="search" size={20} color={colors.primary} style={styles.searchIcon} />
+                                <Text style={[styles.searchInput, !searchQuery && styles.searchPlaceholder]}>
+                                    {searchQuery || 'Search location, area, or city'}
                                 </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                            </View>
+                        </TouchableOpacity>
 
-                    {/* Transaction Types - Modern Segmented Control */}
-                    <View style={styles.transactionContainer}>
-                        {transactionTypes.map((type) => (
-                            <TouchableOpacity
-                                key={type}
-                                style={[
-                                    styles.transactionButton,
-                                    activeType === type && styles.activeTransactionButton
-                                ]}
-                                onPress={() => setActiveType(type)}
-                                activeOpacity={0.8}
-                            >
-                                <Text style={[
-                                    styles.transactionText,
-                                    activeType === type && styles.activeTransactionText
-                                ]}>
-                                    {type}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
+                        {/* Category Pills - Modern Design */}
+                        <ScrollView 
+                            horizontal 
+                            showsHorizontalScrollIndicator={false} 
+                            style={styles.categoryContainer}
+                            contentContainerStyle={styles.categoryContent}
+                        >
+                            {propertyCategories.map((cat) => (
+                                <TouchableOpacity
+                                    key={cat}
+                                    style={[
+                                        styles.categoryPill,
+                                        activeCategory === cat && styles.activeCategoryPill
+                                    ]}
+                                    onPress={() => setActiveCategory(cat)}
+                                    activeOpacity={0.7}
+                                >
+                                    <Text style={[
+                                        styles.categoryPillText,
+                                        activeCategory === cat && styles.activeCategoryPillText
+                                    ]}>
+                                        {cat}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+
+                        {/* Transaction Types - Modern Segmented Control */}
+                        <View style={styles.transactionContainer}>
+                            {transactionTypes.map((type) => (
+                                <TouchableOpacity
+                                    key={type}
+                                    style={[
+                                        styles.transactionButton,
+                                        activeType === type && styles.activeTransactionButton
+                                    ]}
+                                    onPress={() => setActiveType(type)}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text style={[
+                                        styles.transactionText,
+                                        activeType === type && styles.activeTransactionText
+                                    ]}>
+                                        {type}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
                     </View>
                 </View>
             </View>
 
-            {/* Results Header */}
-            <View style={styles.resultsHeader}>
-                <Text style={styles.resultsTitle}>
-                    {filteredProperties.length} Properties Available
-                </Text>
-                <TouchableOpacity>
-                    <Text style={styles.filterText}>Filter</Text>
-                </TouchableOpacity>
-            </View>
+            {/* Gradient Section with Rounded Top Corners - Merged Red Background */}
+            <LinearGradient
+                colors={[colors.maroon, colors.primary]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.gradientContainer}
+            >
+                <View style={styles.resultsHeader}>
+                    <Text style={styles.resultsTitle}>
+                        {filteredProperties.length} Properties Available
+                    </Text>
+                    <TouchableOpacity>
+                        <Text style={styles.filterText}>Filter</Text>
+                    </TouchableOpacity>
+                </View>
+                <FlatList
+                    data={filteredProperties}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <PropertyCard
+                            property={item}
+                            onPress={() => handlePropertyPress(item)}
+                        />
+                    )}
+                    contentContainerStyle={styles.listContent}
+                    showsVerticalScrollIndicator={false}
+                    ListFooterComponent={<View style={{ height: 20 }} />}
+                />
+            </LinearGradient>
         </View>
-    );
-
-    return (
-        <LinearGradient
-            colors={[colors.maroon, colors.primary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={[styles.container, styles.gradientContainer]}
-        >
-            <FlatList
-                data={filteredProperties}
-                keyExtractor={(item) => item.id}
-                ListHeaderComponent={renderHeader}
-                renderItem={({ item }) => (
-                    <PropertyCard
-                        property={item}
-                        onPress={() => handlePropertyPress(item)}
-                    />
-                )}
-                contentContainerStyle={styles.listContent}
-                showsVerticalScrollIndicator={false}
-            />
-        </LinearGradient>
     );
 };
 
@@ -147,6 +144,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     gradientContainer: {
+        flex: 1,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
@@ -159,6 +157,7 @@ const styles = StyleSheet.create({
         paddingBottom: 32,
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,
+        marginBottom: 0,
     },
     heroContent: {
         paddingHorizontal: 20,
@@ -278,8 +277,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 16,
         backgroundColor: 'transparent',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        paddingTop: 20,
     },
     resultsTitle: {
         fontSize: 18,
@@ -294,6 +292,7 @@ const styles = StyleSheet.create({
     },
     listContent: {
         paddingBottom: 24,
+        paddingTop: 0,
     },
 });
 

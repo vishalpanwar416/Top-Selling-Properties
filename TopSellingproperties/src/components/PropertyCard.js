@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 
@@ -7,6 +8,8 @@ const { width } = Dimensions.get('window');
 const cardWidth = width * 0.82;
 
 const PropertyCard = ({ property, onPress, fullWidth = false }) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+
     if (!property) {
         return null;
     }
@@ -33,58 +36,85 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     resizeMode="cover"
                 />
 
-                {/* Gradient Overlay */}
-                <View style={styles.imageOverlay} />
+                {/* Bottom Gradient Overlay */}
+                <LinearGradient
+                    colors={['transparent', 'rgba(0,0,0,0.7)']}
+                    style={styles.imageGradient}
+                />
 
-                {/* Badges */}
-                <View style={styles.badgesContainer}>
+                {/* Top Badges Row */}
+                <View style={styles.topRow}>
                     {property.featured && (
                         <View style={styles.featuredBadge}>
-                            <Ionicons name="star" size={12} color={colors.white} style={{ marginRight: 4 }} />
-                            <Text style={styles.featuredText}>Featured</Text>
+                            <Ionicons name="star" size={10} color="#FFD700" style={{ marginRight: 4 }} />
+                            <Text style={styles.featuredText}>FEATURED</Text>
                         </View>
                     )}
+                    <View style={{ flex: 1 }} />
+                    <TouchableOpacity 
+                        style={styles.favoriteButton}
+                        onPress={() => setIsFavorite(!isFavorite)}
+                        activeOpacity={0.8}
+                    >
+                        <Ionicons 
+                            name={isFavorite ? "heart" : "heart-outline"} 
+                            size={20} 
+                            color={isFavorite ? "#FF4757" : colors.white} 
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                {/* Property Type Badge */}
+                <View style={styles.typeBadgeContainer}>
                     <View style={styles.typeBadge}>
-                        <Text style={styles.typeText}>{(property.type || 'Property').toUpperCase()}</Text>
+                        <Text style={styles.typeText}>{property.type || 'PROPERTY'}</Text>
                     </View>
+                </View>
+
+                {/* Price on Image */}
+                <View style={styles.priceOnImage}>
+                    <Text style={styles.priceText}>{formatPrice(property.price)}</Text>
+                    {property.priceType && (
+                        <Text style={styles.priceType}>/{property.priceType}</Text>
+                    )}
                 </View>
             </View>
 
             {/* Content Section */}
             <View style={styles.content}>
-                {/* Price and Title */}
-                <View style={styles.headerSection}>
-                    <Text style={styles.price}>{formatPrice(property.price)}</Text>
-                    <Text style={styles.title} numberOfLines={2}>{property.title || 'Property'}</Text>
-                </View>
+                {/* Title */}
+                <Text style={styles.title} numberOfLines={2}>{property.title || 'Property'}</Text>
 
                 {/* Location */}
                 <View style={styles.locationRow}>
-                    <Ionicons name="location" size={16} color={colors.textSecondary} style={styles.locationIcon} />
+                    <Ionicons name="location-sharp" size={14} color={colors.primary} />
                     <Text style={styles.location} numberOfLines={1}>{property.location || 'Location not available'}</Text>
                 </View>
-
-                {/* Divider */}
-                <View style={styles.divider} />
 
                 {/* Property Details */}
                 <View style={styles.detailsContainer}>
                     <View style={styles.detailItem}>
-                        <MaterialCommunityIcons name="bed" size={20} color={colors.textSecondary} style={styles.detailIcon} />
-                        <Text style={styles.detailLabel}>Bedrooms</Text>
+                        <View style={styles.detailIconWrapper}>
+                            <MaterialCommunityIcons name="bed-outline" size={18} color={colors.primary} />
+                        </View>
                         <Text style={styles.detailValue}>{property.bedrooms || 'Studio'}</Text>
+                        <Text style={styles.detailLabel}>Beds</Text>
                     </View>
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
-                        <MaterialCommunityIcons name="shower" size={20} color={colors.textSecondary} style={styles.detailIcon} />
-                        <Text style={styles.detailLabel}>Bathrooms</Text>
-                        <Text style={styles.detailValue}>{property.bathrooms}</Text>
+                        <View style={styles.detailIconWrapper}>
+                            <MaterialCommunityIcons name="shower" size={18} color={colors.primary} />
+                        </View>
+                        <Text style={styles.detailValue}>{property.bathrooms || '-'}</Text>
+                        <Text style={styles.detailLabel}>Baths</Text>
                     </View>
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
-                        <MaterialCommunityIcons name="ruler-square" size={20} color={colors.textSecondary} style={styles.detailIcon} />
-                        <Text style={styles.detailLabel}>Area</Text>
-                        <Text style={styles.detailValue}>{property.area ? property.area.toLocaleString() : 'N/A'} {property.areaUnit || 'sqft'}</Text>
+                        <View style={styles.detailIconWrapper}>
+                            <MaterialCommunityIcons name="vector-square" size={18} color={colors.primary} />
+                        </View>
+                        <Text style={styles.detailValue}>{property.area ? property.area.toLocaleString() : 'N/A'}</Text>
+                        <Text style={styles.detailLabel}>{property.areaUnit || 'sqft'}</Text>
                     </View>
                 </View>
             </View>
@@ -96,141 +126,163 @@ const styles = StyleSheet.create({
     container: {
         width: cardWidth,
         backgroundColor: colors.white,
-        borderRadius: 24,
+        borderRadius: 20,
         marginRight: 16,
-        marginVertical: 12,
-        shadowColor: colors.shadowDark,
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.12,
-        shadowRadius: 24,
-        elevation: 12,
+        marginVertical: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
+        elevation: 10,
         overflow: 'hidden',
     },
     fullWidthContainer: {
         width: '100%',
         marginRight: 0,
-        marginBottom: 20,
+        marginBottom: 16,
         marginVertical: 0,
     },
     imageContainer: {
         width: '100%',
-        height: 260,
+        height: 200,
         position: 'relative',
     },
     image: {
         width: '100%',
         height: '100%',
     },
-    badgesContainer: {
+    imageGradient: {
         position: 'absolute',
-        top: 16,
-        left: 16,
-        right: 16,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 100,
+    },
+    topRow: {
+        position: 'absolute',
+        top: 12,
+        left: 12,
+        right: 12,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     featuredBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.secondary,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         borderRadius: 20,
-        shadowColor: colors.secondary,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.4,
-        shadowRadius: 8,
-        elevation: 8,
+        backdropFilter: 'blur(10px)',
     },
     featuredText: {
-        color: colors.white,
-        fontSize: 11,
+        color: '#FFD700',
+        fontSize: 10,
         fontWeight: '700',
         letterSpacing: 0.5,
     },
+    favoriteButton: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    typeBadgeContainer: {
+        position: 'absolute',
+        top: 12,
+        right: 56,
+    },
     typeBadge: {
-        backgroundColor: 'rgba(122, 30, 62, 0.95)',
-        paddingHorizontal: 14,
-        paddingVertical: 6,
+        backgroundColor: colors.primary,
+        paddingHorizontal: 12,
+        paddingVertical: 5,
         borderRadius: 20,
-        shadowColor: colors.primary,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 6,
-        elevation: 6,
     },
     typeText: {
         color: colors.white,
         fontSize: 10,
         fontWeight: '700',
-        letterSpacing: 1,
+        letterSpacing: 0.5,
     },
-    content: {
-        padding: 24,
+    priceOnImage: {
+        position: 'absolute',
+        bottom: 12,
+        left: 12,
+        flexDirection: 'row',
+        alignItems: 'baseline',
     },
-    headerSection: {
-        marginBottom: 12,
-    },
-    price: {
-        fontSize: 28,
-        fontWeight: '700',
-        color: colors.primary,
-        marginBottom: 8,
+    priceText: {
+        fontSize: 22,
+        fontWeight: '800',
+        color: colors.white,
         letterSpacing: -0.5,
     },
+    priceType: {
+        fontSize: 13,
+        fontWeight: '500',
+        color: 'rgba(255,255,255,0.8)',
+        marginLeft: 2,
+    },
+    content: {
+        padding: 16,
+    },
     title: {
-        fontSize: 19,
-        fontWeight: '600',
+        fontSize: 16,
+        fontWeight: '700',
         color: colors.textPrimary,
-        lineHeight: 26,
+        lineHeight: 22,
+        marginBottom: 8,
         letterSpacing: -0.3,
     },
     locationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
-    },
-    locationIcon: {
-        fontSize: 14,
-        marginRight: 6,
+        marginBottom: 14,
     },
     location: {
-        fontSize: 15,
+        fontSize: 13,
         color: colors.textSecondary,
         flex: 1,
+        marginLeft: 4,
         fontWeight: '500',
-    },
-    divider: {
-        height: 1,
-        backgroundColor: colors.border,
-        marginBottom: 16,
     },
     detailsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        backgroundColor: '#F8F9FB',
+        borderRadius: 14,
+        paddingVertical: 12,
+        paddingHorizontal: 8,
     },
     detailItem: {
-        alignItems: 'center',
         flex: 1,
+        alignItems: 'center',
     },
-    detailIcon: {
+    detailIconWrapper: {
+        width: 32,
+        height: 32,
+        borderRadius: 10,
+        backgroundColor: 'rgba(185, 28, 28, 0.08)',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginBottom: 6,
     },
-    detailLabel: {
-        fontSize: 11,
-        color: colors.textTertiary,
-        marginBottom: 4,
-        fontWeight: '500',
-    },
     detailValue: {
-        fontSize: 15,
+        fontSize: 14,
         color: colors.textPrimary,
         fontWeight: '700',
+    },
+    detailLabel: {
+        fontSize: 10,
+        color: colors.textTertiary,
+        fontWeight: '500',
+        marginTop: 2,
     },
     detailDivider: {
         width: 1,
         backgroundColor: colors.border,
-        marginHorizontal: 8,
+        marginVertical: 4,
     },
 });
 

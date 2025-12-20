@@ -7,9 +7,7 @@
     "Daily Short Term"
   ],
   "transactionTypes": [
-    "Sale",
-    "Rent",
-    "Off-Plan",
-    "New Projects"
+    "Buy",
+    "Rent"
   ]
 }

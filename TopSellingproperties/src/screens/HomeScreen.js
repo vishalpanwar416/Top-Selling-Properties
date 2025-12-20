@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import PropertyCard from '../components/PropertyCard';
 import NewProjectCard from '../components/NewProjectCard';
+import CityPropertiesModal from '../components/CityPropertiesModal';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 import categoriesData from '../data/categories.json';
@@ -23,6 +24,7 @@ const HomeScreen = ({ navigation }) => {
     const [activeLocation, setActiveLocation] = useState('Dubai');
     const [properties, setProperties] = useState(propertiesData.properties);
     const [isSticky, setIsSticky] = useState(false);
+    const [showCityModal, setShowCityModal] = useState(false);
     
     const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -173,7 +175,11 @@ const HomeScreen = ({ navigation }) => {
                         />
 
                         {/* View All Button */}
-                        <TouchableOpacity style={styles.viewAllButton} activeOpacity={0.8}>
+                        <TouchableOpacity 
+                            style={styles.viewAllButton} 
+                            activeOpacity={0.8}
+                            onPress={() => setShowCityModal(true)}
+                        >
                             <Text style={styles.viewAllText}>View All Projects in {activeLocation}</Text>
                             <Ionicons name="chevron-forward" size={18} color={colors.white} />
                         </TouchableOpacity>
@@ -204,6 +210,15 @@ const HomeScreen = ({ navigation }) => {
                     </View>
                 </LinearGradient>
             </ScrollView>
+
+            {/* City Properties Modal */}
+            <CityPropertiesModal
+                visible={showCityModal}
+                onClose={() => setShowCityModal(false)}
+                city={activeLocation}
+                properties={filteredProperties}
+                onPropertyPress={handlePropertyPress}
+            />
         </View>
     );
 };

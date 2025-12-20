@@ -4,9 +4,9 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 
 const { width } = Dimensions.get('window');
-const cardWidth = width - 40;
+const cardWidth = width * 0.82;
 
-const PropertyCard = ({ property, onPress }) => {
+const PropertyCard = ({ property, onPress, fullWidth = false }) => {
     if (!property) {
         return null;
     }
@@ -20,9 +20,9 @@ const PropertyCard = ({ property, onPress }) => {
     };
 
     return (
-        <TouchableOpacity 
-            style={styles.container} 
-            onPress={onPress} 
+        <TouchableOpacity
+            style={[styles.container, fullWidth && styles.fullWidthContainer]}
+            onPress={onPress}
             activeOpacity={0.95}
         >
             {/* Image Container with Gradient Overlay */}
@@ -32,18 +32,18 @@ const PropertyCard = ({ property, onPress }) => {
                     style={styles.image}
                     resizeMode="cover"
                 />
-                
+
                 {/* Gradient Overlay */}
                 <View style={styles.imageOverlay} />
-                
+
                 {/* Badges */}
                 <View style={styles.badgesContainer}>
-                {property.featured && (
-                    <View style={styles.featuredBadge}>
-                        <Ionicons name="star" size={12} color={colors.white} style={{ marginRight: 4 }} />
-                        <Text style={styles.featuredText}>Featured</Text>
-                    </View>
-                )}
+                    {property.featured && (
+                        <View style={styles.featuredBadge}>
+                            <Ionicons name="star" size={12} color={colors.white} style={{ marginRight: 4 }} />
+                            <Text style={styles.featuredText}>Featured</Text>
+                        </View>
+                    )}
                     <View style={styles.typeBadge}>
                         <Text style={styles.typeText}>{(property.type || 'Property').toUpperCase()}</Text>
                     </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         width: cardWidth,
         backgroundColor: colors.white,
         borderRadius: 24,
-        marginHorizontal: 20,
+        marginRight: 16,
         marginVertical: 12,
         shadowColor: colors.shadowDark,
         shadowOffset: { width: 0, height: 8 },
@@ -105,6 +105,12 @@ const styles = StyleSheet.create({
         shadowRadius: 24,
         elevation: 12,
         overflow: 'hidden',
+    },
+    fullWidthContainer: {
+        width: '100%',
+        marginRight: 0,
+        marginBottom: 20,
+        marginVertical: 0,
     },
     imageContainer: {
         width: '100%',

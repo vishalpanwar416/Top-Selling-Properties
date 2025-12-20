@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import PropertyCard from '../components/PropertyCard';
+import NewProjectCard from '../components/NewProjectCard';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 import categoriesData from '../data/categories.json';
@@ -11,10 +11,13 @@ import categoriesData from '../data/categories.json';
 const propertyCategories = categoriesData.propertyCategories;
 const transactionTypes = categoriesData.transactionTypes;
 
+const uaeLocations = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'RAK', 'Fujairah'];
+
 const HomeScreen = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('Residential');
     const [activeType, setActiveType] = useState('Rent');
+    const [activeLocation, setActiveLocation] = useState('Dubai');
     const [properties, setProperties] = useState(propertiesData.properties);
 
     const filteredProperties = properties.filter(property =>
@@ -28,113 +31,162 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* White Header Section */}
-            <View style={styles.headerContainer}>
+            <ScrollView
+                style={styles.container}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* 1. Hero Content & Welcome */}
                 <View style={styles.heroSection}>
                     <Header navigation={navigation} transparent />
-                    
                     <View style={styles.heroContent}>
-                        {/* Welcome Text */}
                         <View style={styles.welcomeSection}>
                             <Text style={styles.welcomeTitle}>Find Your Dream Property</Text>
                             <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
                         </View>
-
-                        {/* Modern Search Bar */}
-                        <TouchableOpacity 
-                            style={styles.searchContainer}
-                            onPress={() => navigation.navigate('Search')}
-                            activeOpacity={0.8}
-                        >
-                            <View style={styles.searchBox}>
-                                <Ionicons name="search" size={20} color={colors.primary} style={styles.searchIcon} />
-                                <Text style={[styles.searchInput, !searchQuery && styles.searchPlaceholder]}>
-                                    {searchQuery || 'Search location, area, or city'}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        {/* Category Pills - Modern Design */}
-                        <ScrollView 
-                            horizontal 
-                            showsHorizontalScrollIndicator={false} 
-                            style={styles.categoryContainer}
-                            contentContainerStyle={styles.categoryContent}
-                        >
-                            {propertyCategories.map((cat) => (
-                                <TouchableOpacity
-                                    key={cat}
-                                    style={[
-                                        styles.categoryPill,
-                                        activeCategory === cat && styles.activeCategoryPill
-                                    ]}
-                                    onPress={() => setActiveCategory(cat)}
-                                    activeOpacity={0.7}
-                                >
-                                    <Text style={[
-                                        styles.categoryPillText,
-                                        activeCategory === cat && styles.activeCategoryPillText
-                                    ]}>
-                                        {cat}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
-
-                        {/* Transaction Types - Modern Segmented Control */}
-                        <View style={styles.transactionContainer}>
-                            {transactionTypes.map((type) => (
-                                <TouchableOpacity
-                                    key={type}
-                                    style={[
-                                        styles.transactionButton,
-                                        activeType === type && styles.activeTransactionButton
-                                    ]}
-                                    onPress={() => setActiveType(type)}
-                                    activeOpacity={0.8}
-                                >
-                                    <Text style={[
-                                        styles.transactionText,
-                                        activeType === type && styles.activeTransactionText
-                                    ]}>
-                                        {type}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
                     </View>
                 </View>
-            </View>
 
-            {/* Gradient Section with Rounded Top Corners - Merged Red Background */}
-            <LinearGradient
-                colors={[colors.maroon, colors.primary]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 1 }}
-                style={styles.gradientContainer}
-            >
-                <View style={styles.resultsHeader}>
-                    <Text style={styles.resultsTitle}>
-                        {filteredProperties.length} Properties Available
-                    </Text>
-                    <TouchableOpacity>
-                        <Text style={styles.filterText}>Filter</Text>
+                {/* 2. Search Bar Container */}
+                <View style={styles.stickySearchWrapper}>
+                    <TouchableOpacity
+                        style={styles.searchBox}
+                        onPress={() => navigation.navigate('Search')}
+                        activeOpacity={0.9}
+                    >
+                        <Ionicons name="search" size={22} color={colors.primary} style={styles.searchIcon} />
+                        <Text style={[styles.searchInput, !searchQuery && styles.searchPlaceholder]}>
+                            {searchQuery || 'Search for a locality, area or city'}
+                        </Text>
                     </TouchableOpacity>
                 </View>
-                <FlatList
-                    data={filteredProperties}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <PropertyCard
-                            property={item}
-                            onPress={() => handlePropertyPress(item)}
-                        />
-                    )}
-                    contentContainerStyle={styles.listContent}
-                    showsVerticalScrollIndicator={false}
-                    ListFooterComponent={<View style={{ height: 20 }} />}
-                />
-            </LinearGradient>
+
+                {/* 3. Browse New Projects Section */}
+                <View style={styles.newProjectsSection}>
+                    <Text style={styles.sectionTitle}>Browse New Projects in UAE</Text>
+                    
+                    {/* Location Tabs */}
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.locationTabsContainer}
+                        contentContainerStyle={styles.locationTabsContent}
+                    >
+                        {uaeLocations.map((location) => (
+                            <TouchableOpacity
+                                key={location}
+                                style={[
+                                    styles.locationTab,
+                                    activeLocation === location && styles.activeLocationTab
+                                ]}
+                                onPress={() => setActiveLocation(location)}
+                                activeOpacity={0.7}
+                            >
+                                <Text style={[
+                                    styles.locationTabText,
+                                    activeLocation === location && styles.activeLocationTabText
+                                ]}>
+                                    {location}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+
+                    {/* Horizontal Project Cards */}
+                    <FlatList
+                        data={filteredProperties.slice(0, 5)}
+                        keyExtractor={(item) => item.id}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.projectCardsContainer}
+                        renderItem={({ item }) => (
+                            <NewProjectCard
+                                project={item}
+                                onPress={() => handlePropertyPress(item)}
+                            />
+                        )}
+                    />
+
+                    {/* View All Button */}
+                    <TouchableOpacity style={styles.viewAllButton} activeOpacity={0.8}>
+                        <Text style={styles.viewAllText}>View All Projects in {activeLocation}</Text>
+                        <Ionicons name="chevron-forward" size={18} color={colors.primary} />
+                    </TouchableOpacity>
+                </View>
+
+                {/* 4. Filters Section */}
+                <View style={styles.filtersSection}>
+                    <Text style={styles.sectionTitle}>Find Properties</Text>
+                    
+                    {/* Category Pills */}
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        style={styles.categoryContainer}
+                        contentContainerStyle={styles.categoryContent}
+                    >
+                        {propertyCategories.map((cat) => (
+                            <TouchableOpacity
+                                key={cat}
+                                style={[
+                                    styles.categoryPill,
+                                    activeCategory === cat && styles.activeCategoryPill
+                                ]}
+                                onPress={() => setActiveCategory(cat)}
+                                activeOpacity={0.7}
+                            >
+                                <Text style={[
+                                    styles.categoryPillText,
+                                    activeCategory === cat && styles.activeCategoryPillText
+                                ]}>
+                                    {cat}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+
+                    {/* Transaction Types */}
+                    <View style={styles.transactionContainer}>
+                        {transactionTypes.map((type) => (
+                            <TouchableOpacity
+                                key={type}
+                                style={[
+                                    styles.transactionButton,
+                                    activeType === type && styles.activeTransactionButton
+                                ]}
+                                onPress={() => setActiveType(type)}
+                                activeOpacity={0.8}
+                            >
+                                <Text style={[
+                                    styles.transactionText,
+                                    activeType === type && styles.activeTransactionText
+                                ]}>
+                                    {type}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
+
+                {/* 5. Property Cards Section */}
+                <View style={styles.propertiesSection}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.propertyCardsContainer}
+                    >
+                        {filteredProperties.map((item) => (
+                            <PropertyCard
+                                key={item.id}
+                                property={item}
+                                onPress={() => handlePropertyPress(item)}
+                            />
+                        ))}
+                    </ScrollView>
+                </View>
+
+                {/* Bottom Spacer */}
+                <View style={{ height: 40 }} />
+            </ScrollView>
         </View>
     );
 };
@@ -142,57 +194,48 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    gradientContainer: {
-        flex: 1,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        overflow: 'hidden',
-    },
-    headerContainer: {
         backgroundColor: colors.white,
     },
     heroSection: {
         backgroundColor: colors.white,
-        paddingBottom: 32,
-        borderBottomLeftRadius: 32,
-        borderBottomRightRadius: 32,
-        marginBottom: 0,
+        paddingBottom: 20,
     },
     heroContent: {
         paddingHorizontal: 20,
         marginTop: 8,
     },
     welcomeSection: {
-        marginBottom: 24,
+        marginBottom: 10,
     },
     welcomeTitle: {
-        fontSize: 28,
-        fontWeight: '700',
-        color: colors.primary,
-        marginBottom: 6,
-        letterSpacing: -0.5,
+        fontSize: 26,
+        fontWeight: '800',
+        color: colors.black,
+        marginBottom: 4,
+        letterSpacing: -0.8,
     },
     welcomeSubtitle: {
         fontSize: 15,
         color: colors.textSecondary,
-        fontWeight: '400',
+        fontWeight: '500',
     },
-    searchContainer: {
-        marginBottom: 20,
+    stickySearchWrapper: {
+        backgroundColor: colors.white,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
     },
     searchBox: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.lightGray,
-        borderRadius: 16,
-        paddingHorizontal: 20,
+        backgroundColor: colors.white,
+        borderRadius: 12,
+        paddingHorizontal: 16,
         height: 56,
-        shadowColor: colors.shadowDark,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 16,
-        elevation: 8,
+        shadowColor: colors.black,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 4,
         borderWidth: 1,
         borderColor: colors.border,
     },
@@ -201,42 +244,105 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontSize: 16,
+        fontSize: 15,
         color: colors.textPrimary,
-        fontWeight: '400',
+        fontWeight: '500',
     },
     searchPlaceholder: {
         color: colors.textTertiary,
+    },
+    
+    // New Projects Section
+    newProjectsSection: {
+        paddingTop: 24,
+        paddingBottom: 16,
+        backgroundColor: colors.white,
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: colors.textPrimary,
+        marginBottom: 16,
+        paddingHorizontal: 20,
+        letterSpacing: -0.3,
+    },
+    locationTabsContainer: {
+        marginBottom: 20,
+    },
+    locationTabsContent: {
+        paddingHorizontal: 20,
+    },
+    locationTab: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        marginRight: 10,
+        borderRadius: 25,
+        backgroundColor: colors.white,
+        borderWidth: 1.5,
+        borderColor: colors.border,
+    },
+    activeLocationTab: {
+        backgroundColor: 'rgba(185, 28, 28, 0.08)',
+        borderColor: colors.primary,
+    },
+    locationTabText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: colors.textSecondary,
+    },
+    activeLocationTabText: {
+        color: colors.primary,
+    },
+    projectCardsContainer: {
+        paddingHorizontal: 20,
+        paddingBottom: 8,
+    },
+    viewAllButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(185, 28, 28, 0.08)',
+        marginHorizontal: 20,
+        paddingVertical: 16,
+        borderRadius: 12,
+        marginTop: 8,
+    },
+    viewAllText: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: colors.primary,
+        marginRight: 4,
+    },
+
+    // Filters Section
+    filtersSection: {
+        backgroundColor: colors.white,
+        paddingTop: 24,
+        paddingBottom: 20,
     },
     categoryContainer: {
         marginBottom: 16,
     },
     categoryContent: {
-        paddingRight: 20,
+        paddingHorizontal: 20,
     },
     categoryPill: {
-        paddingHorizontal: 14,
-        paddingVertical: 7,
-        marginRight: 8,
-        borderRadius: 16,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        marginRight: 10,
+        borderRadius: 20,
         backgroundColor: colors.lightGray,
-        borderWidth: 1.5,
+        borderWidth: 1,
         borderColor: colors.border,
     },
     activeCategoryPill: {
-        backgroundColor: colors.primary,
-        borderColor: colors.primary,
-        shadowColor: colors.primary,
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.4,
-        shadowRadius: 8,
-        elevation: 6,
+        backgroundColor: colors.black,
+        borderColor: colors.black,
     },
     categoryPillText: {
-        fontSize: 11,
+        fontSize: 13,
         fontWeight: '600',
         color: colors.textPrimary,
-        letterSpacing: 0.2,
     },
     activeCategoryPillText: {
         color: colors.white,
@@ -244,55 +350,40 @@ const styles = StyleSheet.create({
     transactionContainer: {
         flexDirection: 'row',
         backgroundColor: colors.lightGray,
-        borderRadius: 14,
-        padding: 4,
+        borderRadius: 16,
+        padding: 6,
+        marginHorizontal: 20,
     },
     transactionButton: {
         flex: 1,
-        paddingVertical: 10,
-        borderRadius: 10,
+        paddingVertical: 12,
+        borderRadius: 12,
         alignItems: 'center',
     },
     activeTransactionButton: {
-        backgroundColor: colors.primary,
-        shadowColor: colors.primary,
+        backgroundColor: colors.white,
+        shadowColor: colors.black,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 4,
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
     },
     transactionText: {
-        fontSize: 12,
-        fontWeight: '600',
+        fontSize: 13,
+        fontWeight: '700',
         color: colors.textSecondary,
-        letterSpacing: 0.3,
     },
     activeTransactionText: {
-        color: colors.white,
+        color: colors.primary,
     },
-    resultsHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+
+    // Properties Section
+    propertiesSection: {
+        backgroundColor: colors.lightGray,
+        paddingVertical: 20,
+    },
+    propertyCardsContainer: {
         paddingHorizontal: 20,
-        paddingVertical: 16,
-        backgroundColor: 'transparent',
-        paddingTop: 20,
-    },
-    resultsTitle: {
-        fontSize: 18,
-        fontWeight: '700',
-        color: colors.white,
-        letterSpacing: -0.3,
-    },
-    filterText: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: colors.white,
-    },
-    listContent: {
-        paddingBottom: 24,
-        paddingTop: 0,
     },
 });
 

@@ -20,28 +20,32 @@ const Header = ({ navigation, transparent = false }) => {
             transparent && styles.transparentContainer
         ]}>
             <View style={styles.leftContainer}>
-                <Logo 
-                    width={52} 
-                    height={52} 
+                <Logo
+                    width={48}
+                    height={48}
                     fill={transparent ? colors.primary : colors.primary}
                 />
+                <Text style={styles.brandTitle} numberOfLines={1}>
+                    <Text style={styles.topSellingText}>Top Selling </Text>
+                    <Text style={styles.propertiesText}>Properties</Text>
+                </Text>
             </View>
 
-            <TouchableOpacity 
-                onPress={handleMenuPress} 
+            <TouchableOpacity
+                onPress={handleMenuPress}
                 style={styles.menuButton}
                 activeOpacity={0.7}
             >
                 <View style={[
-                    styles.hamburgerLine, 
+                    styles.hamburgerLine,
                     transparent && { backgroundColor: colors.primary }
                 ]} />
                 <View style={[
-                    styles.hamburgerLine, 
+                    styles.hamburgerLine,
                     transparent && { backgroundColor: colors.primary }
                 ]} />
                 <View style={[
-                    styles.hamburgerLine, 
+                    styles.hamburgerLine,
                     transparent && { backgroundColor: colors.primary }
                 ]} />
             </TouchableOpacity>
@@ -62,10 +66,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     leftContainer: {
-        width: 52,
-        height: 52,
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
+        flex: 1,
+    },
+    brandTitle: {
+        marginLeft: 8,
+    },
+    topSellingText: {
+        fontSize: 17,
+        fontWeight: '800',
+        color: colors.black,
+        letterSpacing: -0.5,
+    },
+    propertiesText: {
+        fontSize: 17,
+        fontWeight: '800',
+        color: colors.primary,
+        letterSpacing: -0.5,
     },
     menuButton: {
         padding: 10,

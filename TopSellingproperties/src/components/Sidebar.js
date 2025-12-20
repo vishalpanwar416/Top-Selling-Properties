@@ -22,7 +22,7 @@ const Sidebar = (props) => {
                     <Text style={styles.logoText}>TOP SELLING</Text>
                     <Text style={styles.logoTextAccent}> PROPERTIES</Text>
                 </View>
-                <Text style={styles.tagline}>Premium Real Estate Experience</Text>
+                <Text style={styles.tagline}>Premium Real Estate Experience 🔥</Text>
             </View>
 
             <DrawerContentScrollView 

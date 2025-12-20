@@ -8,7 +8,7 @@ import colors from '../theme/colors';
 const menuItems = [
     { name: 'Home', icon: 'home', iconType: 'Ionicons', screen: 'Home' },
     { name: 'Favorites', icon: 'heart', iconType: 'Ionicons', screen: 'Favorites' },
-    { name: 'Contact Us', icon: 'phone', iconType: 'Ionicons', screen: 'Contact' },
+    { name: 'Contact Us', icon: 'call', iconType: 'Ionicons', screen: 'Contact' },
 ];
 
 const Sidebar = (props) => {

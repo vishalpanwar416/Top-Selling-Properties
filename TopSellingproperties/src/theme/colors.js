@@ -2,14 +2,14 @@
 export const colors = {
     // Primary Brand Colors
     white: '#FFFFFF',
-    red: '#FF3B5C',
+    red: '#B91C1C',
     maroon: '#7A1E3E',
     black: '#1A1A1A',
     
     // Modern Color Palette
-    primary: '#7A1E3E',
-    primaryLight: '#9D2A52',
-    secondary: '#FF3B5C',
+    primary: '#B91C1C',
+    primaryLight: '#C41E3A',
+    secondary: '#B91C1C',
     accent: '#FF6B8A',
     
     // Neutral Colors
@@ -41,8 +41,8 @@ export const colors = {
     overlay: 'rgba(0, 0, 0, 0.5)',
     
     // Gradients
-    gradientStart: '#7A1E3E',
-    gradientEnd: '#FF3B5C',
+    gradientStart: '#B91C1C',
+    gradientEnd: '#B91C1C',
 };
 
 export default colors;

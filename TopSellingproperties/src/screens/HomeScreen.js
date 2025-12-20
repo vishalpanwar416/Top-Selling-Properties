@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import PropertyCard from '../components/PropertyCard';
@@ -118,7 +119,12 @@ const HomeScreen = ({ navigation }) => {
     );
 
     return (
-        <View style={styles.container}>
+        <LinearGradient
+            colors={[colors.maroon, colors.primary]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={[styles.container, styles.gradientContainer]}
+        >
             <FlatList
                 data={filteredProperties}
                 keyExtractor={(item) => item.id}
@@ -132,14 +138,18 @@ const HomeScreen = ({ navigation }) => {
                 contentContainerStyle={styles.listContent}
                 showsVerticalScrollIndicator={false}
             />
-        </View>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.primary,
+    },
+    gradientContainer: {
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        overflow: 'hidden',
     },
     headerContainer: {
         backgroundColor: colors.white,
@@ -267,7 +277,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 16,
-        backgroundColor: colors.primary,
+        backgroundColor: 'transparent',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
     },
@@ -284,7 +294,6 @@ const styles = StyleSheet.create({
     },
     listContent: {
         paddingBottom: 24,
-        backgroundColor: colors.primary,
     },
 });
 

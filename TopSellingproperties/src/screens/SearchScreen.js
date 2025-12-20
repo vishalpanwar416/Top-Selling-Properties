@@ -8,6 +8,7 @@ import {
     FlatList,
     Animated,
     Keyboard,
+    ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -20,21 +21,53 @@ const SearchScreen = ({ navigation, route }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProperties, setFilteredProperties] = useState(propertiesData.properties);
     const [fadeAnim] = useState(new Animated.Value(0));
-    const [slideAnim] = useState(new Animated.Value(50));
+    const [slideAnim] = useState(new Animated.Value(30));
+    const [headerOpacity] = useState(new Animated.Value(0));
+    const [filtersOpacity] = useState(new Animated.Value(0));
+    const [filtersTranslateY] = useState(new Animated.Value(20));
+    
+    // Filter states
+    const [selectedCity, setSelectedCity] = useState('Dubai');
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedPropertyType, setSelectedPropertyType] = useState('All in Residential');
+    const [selectedPriceRange, setSelectedPriceRange] = useState('Any');
+    const [selectedBeds, setSelectedBeds] = useState('Any');
 
     useEffect(() => {
-        // Animate screen entrance
-        Animated.parallel([
-            Animated.timing(fadeAnim, {
+        // Smooth entrance animation with staggered elements
+        Animated.sequence([
+            // Main container fade and slide
+            Animated.parallel([
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 350,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(slideAnim, {
+                    toValue: 0,
+                    duration: 350,
+                    useNativeDriver: true,
+                }),
+            ]),
+            // Header fade in
+            Animated.timing(headerOpacity, {
                 toValue: 1,
-                duration: 300,
+                duration: 250,
                 useNativeDriver: true,
             }),
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: true,
-            }),
+            // Filters fade in with slight delay
+            Animated.parallel([
+                Animated.timing(filtersOpacity, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(filtersTranslateY, {
+                    toValue: 0,
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+            ]),
         ]).start();
 
         // Focus search input
@@ -65,16 +98,31 @@ const SearchScreen = ({ navigation, route }) => {
         Animated.parallel([
             Animated.timing(fadeAnim, {
                 toValue: 0,
-                duration: 200,
+                duration: 250,
                 useNativeDriver: true,
             }),
             Animated.timing(slideAnim, {
-                toValue: 50,
+                toValue: 30,
+                duration: 250,
+                useNativeDriver: true,
+            }),
+            Animated.timing(headerOpacity, {
+                toValue: 0,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(filtersOpacity, {
+                toValue: 0,
                 duration: 200,
                 useNativeDriver: true,
             }),
         ]).start(() => {
-            navigation.goBack();
+            if (navigation.canGoBack()) {
+                navigation.goBack();
+            } else {
+                // If can't go back, navigate to Home
+                navigation.navigate('Home');
+            }
         });
     };
 
@@ -89,7 +137,15 @@ const SearchScreen = ({ navigation, route }) => {
             ]}
         >
             {/* Search Header */}
-            <View style={[styles.searchHeader, { paddingTop: insets.top + 12 }]}>
+            <Animated.View 
+                style={[
+                    styles.searchHeader, 
+                    { 
+                        paddingTop: insets.top + 12,
+                        opacity: headerOpacity,
+                    }
+                ]}
+            >
                 <TouchableOpacity 
                     style={styles.backButton}
                     onPress={handleBack}
@@ -118,7 +174,84 @@ const SearchScreen = ({ navigation, route }) => {
                         </TouchableOpacity>
                     )}
                 </View>
-            </View>
+            </Animated.View>
+
+            {/* Filters Section */}
+            <Animated.View 
+                style={[
+                    styles.filtersContainer,
+                    {
+                        opacity: filtersOpacity,
+                        transform: [{ translateY: filtersTranslateY }],
+                    }
+                ]}
+            >
+                <ScrollView 
+                    horizontal 
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.filtersContent}
+                >
+                    {/* City Filter */}
+                    <TouchableOpacity 
+                        style={styles.filterChip}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>CITY</Text>
+                        <Text style={styles.filterValue}>{selectedCity}</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
+                    </TouchableOpacity>
+
+                    {/* Location Filter */}
+                    <TouchableOpacity 
+                        style={styles.filterChip}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>LOCATION</Text>
+                        <Text style={styles.filterValue}>{selectedLocation || 'Any'}</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
+                    </TouchableOpacity>
+
+                    {/* Property Type Filter */}
+                    <TouchableOpacity 
+                        style={styles.filterChip}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>PROPERTY TYPE</Text>
+                        <Text style={styles.filterValue} numberOfLines={1}>{selectedPropertyType}</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
+                    </TouchableOpacity>
+
+                    {/* Price Range Filter */}
+                    <TouchableOpacity 
+                        style={styles.filterChip}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>PRICE RANGE</Text>
+                        <Text style={styles.filterValue}>{selectedPriceRange}</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
+                    </TouchableOpacity>
+
+                    {/* Beds Filter */}
+                    <TouchableOpacity 
+                        style={styles.filterChip}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>BEDS</Text>
+                        <Text style={styles.filterValue}>{selectedBeds}</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.textSecondary} />
+                    </TouchableOpacity>
+
+                    {/* More Filters */}
+                    <TouchableOpacity 
+                        style={[styles.filterChip, styles.moreFilterChip]}
+                        activeOpacity={0.7}
+                    >
+                        <Text style={styles.filterLabel}>MORE</Text>
+                        <Text style={styles.filterValue}>More filters</Text>
+                        <Ionicons name="options" size={16} color={colors.primary} />
+                    </TouchableOpacity>
+                </ScrollView>
+            </Animated.View>
 
             {/* Results */}
             <View style={styles.content}>
@@ -220,6 +353,48 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 8,
+    },
+    filtersContainer: {
+        backgroundColor: colors.white,
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.border,
+    },
+    filtersContent: {
+        paddingHorizontal: 20,
+        paddingRight: 20,
+    },
+    filterChip: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: colors.lightGray,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: colors.border,
+        minWidth: 100,
+    },
+    moreFilterChip: {
+        backgroundColor: colors.white,
+        borderColor: colors.primary,
+        borderWidth: 1.5,
+    },
+    filterLabel: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: colors.textTertiary,
+        letterSpacing: 0.5,
+        marginRight: 6,
+        textTransform: 'uppercase',
+    },
+    filterValue: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: colors.textPrimary,
+        marginRight: 4,
+        flex: 1,
     },
     content: {
         flex: 1,

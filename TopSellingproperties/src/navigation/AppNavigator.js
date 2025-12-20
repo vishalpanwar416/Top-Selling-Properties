@@ -28,6 +28,8 @@ const HomeStack = () => {
                     presentation: 'modal',
                     animationTypeForReplace: 'push',
                     gestureEnabled: true,
+                    animation: 'slide_from_bottom',
+                    animationDuration: 300,
                 }}
             />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />

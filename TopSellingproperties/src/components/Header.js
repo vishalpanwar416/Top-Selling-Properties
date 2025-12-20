@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
+import Logo from '../../assets/logo.svg';
 
 const Header = ({ navigation, transparent = false }) => {
     const insets = useSafeAreaInsets();
@@ -19,9 +20,11 @@ const Header = ({ navigation, transparent = false }) => {
             transparent && styles.transparentContainer
         ]}>
             <View style={styles.leftContainer}>
-                <Text style={[styles.logoText, { color: transparent ? colors.white : colors.primary }]}>
-                    TSP
-                </Text>
+                <Logo 
+                    width={52} 
+                    height={52} 
+                    fill={transparent ? colors.primary : colors.primary}
+                />
             </View>
 
             <TouchableOpacity 
@@ -31,15 +34,15 @@ const Header = ({ navigation, transparent = false }) => {
             >
                 <View style={[
                     styles.hamburgerLine, 
-                    transparent && { backgroundColor: colors.white }
+                    transparent && { backgroundColor: colors.primary }
                 ]} />
                 <View style={[
                     styles.hamburgerLine, 
-                    transparent && { backgroundColor: colors.white }
+                    transparent && { backgroundColor: colors.primary }
                 ]} />
                 <View style={[
                     styles.hamburgerLine, 
-                    transparent && { backgroundColor: colors.white }
+                    transparent && { backgroundColor: colors.primary }
                 ]} />
             </TouchableOpacity>
         </View>
@@ -59,8 +62,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     leftContainer: {
-        width: 44,
-        height: 44,
+        width: 52,
+        height: 52,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -84,6 +87,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
         letterSpacing: 1,
+    },
+    logoImage: {
+        width: 52,
+        height: 52,
     },
 });
 

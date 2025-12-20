@@ -5,11 +5,12 @@ import Header from '../components/Header';
 import PropertyCard from '../components/PropertyCard';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
+import categoriesData from '../data/categories.json';
 
 const { width } = Dimensions.get('window');
 
-const propertyCategories = ['Residential', 'Commercial', 'Rooms For Rent', 'Monthly Short Term', 'Daily Short Term'];
-const transactionTypes = ['Sale', 'Rent', 'Off-Plan', 'New Projects'];
+const propertyCategories = categoriesData.propertyCategories;
+const transactionTypes = categoriesData.transactionTypes;
 
 const HomeScreen = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -138,13 +139,13 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: colors.primary,
     },
     headerContainer: {
         backgroundColor: colors.white,
     },
     heroSection: {
-        backgroundColor: colors.primary,
+        backgroundColor: colors.white,
         paddingBottom: 32,
         borderBottomLeftRadius: 32,
         borderBottomRightRadius: 32,
@@ -159,13 +160,13 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 28,
         fontWeight: '700',
-        color: colors.white,
+        color: colors.primary,
         marginBottom: 6,
         letterSpacing: -0.5,
     },
     welcomeSubtitle: {
         fontSize: 15,
-        color: 'rgba(255, 255, 255, 0.85)',
+        color: colors.textSecondary,
         fontWeight: '400',
     },
     searchContainer: {
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     searchBox: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.lightGray,
         borderRadius: 16,
         paddingHorizontal: 20,
         height: 56,
@@ -183,6 +184,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 16,
         elevation: 8,
+        borderWidth: 1,
+        borderColor: colors.border,
     },
     searchIcon: {
         marginRight: 12,
@@ -197,33 +200,33 @@ const styles = StyleSheet.create({
         color: colors.textTertiary,
     },
     categoryContainer: {
-        marginBottom: 20,
+        marginBottom: 16,
     },
     categoryContent: {
         paddingRight: 20,
     },
     categoryPill: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        marginRight: 10,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        paddingHorizontal: 14,
+        paddingVertical: 7,
+        marginRight: 8,
+        borderRadius: 16,
+        backgroundColor: colors.lightGray,
         borderWidth: 1.5,
-        borderColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: colors.border,
     },
     activeCategoryPill: {
-        backgroundColor: colors.secondary,
-        borderColor: colors.secondary,
-        shadowColor: colors.secondary,
-        shadowOffset: { width: 0, height: 4 },
+        backgroundColor: colors.primary,
+        borderColor: colors.primary,
+        shadowColor: colors.primary,
+        shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.4,
-        shadowRadius: 12,
-        elevation: 8,
+        shadowRadius: 8,
+        elevation: 6,
     },
     categoryPillText: {
-        fontSize: 13,
+        fontSize: 11,
         fontWeight: '600',
-        color: colors.white,
+        color: colors.textPrimary,
         letterSpacing: 0.2,
     },
     activeCategoryPillText: {
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
     },
     transactionContainer: {
         flexDirection: 'row',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: colors.lightGray,
         borderRadius: 14,
         padding: 4,
     },
@@ -242,8 +245,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     activeTransactionButton: {
-        backgroundColor: colors.secondary,
-        shadowColor: colors.secondary,
+        backgroundColor: colors.primary,
+        shadowColor: colors.primary,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
     transactionText: {
         fontSize: 12,
         fontWeight: '600',
-        color: 'rgba(255, 255, 255, 0.8)',
+        color: colors.textSecondary,
         letterSpacing: 0.3,
     },
     activeTransactionText: {
@@ -264,22 +267,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 16,
-        backgroundColor: colors.white,
+        backgroundColor: colors.primary,
     },
     resultsTitle: {
         fontSize: 18,
         fontWeight: '700',
-        color: colors.textPrimary,
+        color: colors.white,
         letterSpacing: -0.3,
     },
     filterText: {
         fontSize: 15,
         fontWeight: '600',
-        color: colors.primary,
+        color: colors.white,
     },
     listContent: {
         paddingBottom: 24,
-        backgroundColor: colors.background,
+        backgroundColor: colors.primary,
     },
 });
 

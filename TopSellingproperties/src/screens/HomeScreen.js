@@ -268,6 +268,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 16,
         backgroundColor: colors.primary,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     resultsTitle: {
         fontSize: 18,

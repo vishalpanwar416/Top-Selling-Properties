@@ -258,7 +258,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_500Medium',
     },
 
-    // New Projects Section (inside gradient)
     newProjectsSection: {
         paddingBottom: 24,
     },

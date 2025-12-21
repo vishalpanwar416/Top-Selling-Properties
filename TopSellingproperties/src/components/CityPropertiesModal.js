@@ -209,9 +209,9 @@ const CityPropertiesModal = ({
                     ]}
                 >
                     <LinearGradient
-                        colors={['#6B1530', colors.maroon, colors.primary]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
+                        colors={[colors.maroon, colors.primary]}
+                        start={{ x: 0, y: 1 }}
+                        end={{ x: 0, y: 0 }}
                         style={styles.gradientFull}
                     />
                 </Animated.View>

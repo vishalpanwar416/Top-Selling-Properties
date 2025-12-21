@@ -6,15 +6,29 @@
       "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
       "phone": "+971 50 123 4567",
       "email": "ahmed@topsellingproperties.ae",
-      "serviceAreas": ["Palm Jumeirah", "Dubai Marina", "Downtown Dubai"],
-      "languages": ["English", "Arabic", "Hindi"],
+      "serviceAreas": [
+        "Palm Jumeirah",
+        "Dubai Marina",
+        "Downtown Dubai"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "Hindi"
+      ],
       "saleListings": 12,
       "rentListings": 5,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.8,
       "experience": "8 years",
-      "specialization": "Luxury Villas & Penthouses"
+      "specialization": "Luxury Villas & Penthouses",
+      "propertyIds": [
+        "1",
+        "5",
+        "9",
+        "15"
+      ]
     },
     {
       "id": "2",
@@ -22,15 +36,28 @@
       "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
       "phone": "+971 50 234 5678",
       "email": "sara@topsellingproperties.ae",
-      "serviceAreas": ["Dubai Marina", "JBR", "Bluewaters Island"],
-      "languages": ["English", "Arabic", "French"],
+      "serviceAreas": [
+        "Dubai Marina",
+        "JBR",
+        "Bluewaters Island"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "French"
+      ],
       "saleListings": 15,
       "rentListings": 8,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.9,
       "experience": "10 years",
-      "specialization": "Waterfront Properties & Apartments"
+      "specialization": "Waterfront Properties & Apartments",
+      "propertyIds": [
+        "2",
+        "6",
+        "12"
+      ]
     },
     {
       "id": "3",
@@ -38,15 +65,27 @@
       "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
       "phone": "+971 50 345 6789",
       "email": "mohammed@topsellingproperties.ae",
-      "serviceAreas": ["Downtown Dubai", "Business Bay", "DIFC"],
-      "languages": ["English", "Arabic", "Urdu"],
+      "serviceAreas": [
+        "Downtown Dubai",
+        "Business Bay",
+        "DIFC"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "Urdu"
+      ],
       "saleListings": 18,
       "rentListings": 12,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.7,
       "experience": "12 years",
-      "specialization": "Commercial & Residential"
+      "specialization": "Commercial & Residential",
+      "propertyIds": [
+        "3",
+        "10"
+      ]
     },
     {
       "id": "4",
@@ -54,15 +93,28 @@
       "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
       "phone": "+971 50 456 7890",
       "email": "fatima@topsellingproperties.ae",
-      "serviceAreas": ["Arabian Ranches", "Sharjah", "Al Majaz"],
-      "languages": ["English", "Arabic", "Urdu", "Hindi"],
+      "serviceAreas": [
+        "Arabian Ranches",
+        "Sharjah",
+        "Al Majaz"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "Urdu",
+        "Hindi"
+      ],
       "saleListings": 9,
       "rentListings": 4,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.6,
       "experience": "6 years",
-      "specialization": "Family Homes & Townhouses"
+      "specialization": "Family Homes & Townhouses",
+      "propertyIds": [
+        "4",
+        "11"
+      ]
     },
     {
       "id": "5",
@@ -70,15 +122,26 @@
       "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
       "phone": "+971 50 567 8901",
       "email": "omar@topsellingproperties.ae",
-      "serviceAreas": ["DIFC", "Business Bay", "Downtown Dubai"],
-      "languages": ["English", "Arabic"],
+      "serviceAreas": [
+        "DIFC",
+        "Business Bay",
+        "Downtown Dubai"
+      ],
+      "languages": [
+        "English",
+        "Arabic"
+      ],
       "saleListings": 7,
       "rentListings": 15,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.8,
       "experience": "5 years",
-      "specialization": "Premium Rentals & Serviced Apartments"
+      "specialization": "Premium Rentals & Serviced Apartments",
+      "propertyIds": [
+        "7",
+        "13"
+      ]
     },
     {
       "id": "6",
@@ -86,15 +149,27 @@
       "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
       "phone": "+971 50 678 9012",
       "email": "layla@topsellingproperties.ae",
-      "serviceAreas": ["Abu Dhabi", "Saadiyat Island", "Yas Island"],
-      "languages": ["English", "Arabic", "French"],
+      "serviceAreas": [
+        "Abu Dhabi",
+        "Saadiyat Island",
+        "Yas Island"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "French"
+      ],
       "saleListings": 11,
       "rentListings": 6,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.9,
       "experience": "9 years",
-      "specialization": "Luxury Waterfront & Cultural District"
+      "specialization": "Luxury Waterfront & Cultural District",
+      "propertyIds": [
+        "8",
+        "14"
+      ]
     },
     {
       "id": "7",
@@ -102,15 +177,24 @@
       "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
       "phone": "+971 50 789 0123",
       "email": "jitesh@topsellingproperties.ae",
-      "serviceAreas": ["Downtown Dubai", "Business Bay", "Dubai Marina"],
-      "languages": ["English", "Hindi", "Gujarati"],
+      "serviceAreas": [
+        "Downtown Dubai",
+        "Business Bay",
+        "Dubai Marina"
+      ],
+      "languages": [
+        "English",
+        "Hindi",
+        "Gujarati"
+      ],
       "saleListings": 8,
       "rentListings": 2,
       "agencyLogo": "https://via.placeholder.com/40?text=ROCKY",
       "agencyName": "ROCKY",
       "rating": 4.7,
       "experience": "7 years",
-      "specialization": "Investment Properties"
+      "specialization": "Investment Properties",
+      "propertyIds": []
     },
     {
       "id": "8",
@@ -118,15 +202,21 @@
       "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
       "phone": "+971 50 890 1234",
       "email": "george@topsellingproperties.ae",
-      "serviceAreas": ["Downtown Dubai", "DIFC"],
-      "languages": ["English"],
+      "serviceAreas": [
+        "Downtown Dubai",
+        "DIFC"
+      ],
+      "languages": [
+        "English"
+      ],
       "saleListings": 11,
       "rentListings": 4,
       "agencyLogo": "https://via.placeholder.com/40?text=SAVILLS",
       "agencyName": "Savills",
       "rating": 4.8,
       "experience": "11 years",
-      "specialization": "High-End Residential"
+      "specialization": "High-End Residential",
+      "propertyIds": []
     },
     {
       "id": "9",
@@ -134,15 +224,23 @@
       "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
       "phone": "+971 50 901 2345",
       "email": "liam@topsellingproperties.ae",
-      "serviceAreas": ["Dubai Marina", "JBR", "Bluewaters"],
-      "languages": ["English", "Arabic"],
+      "serviceAreas": [
+        "Dubai Marina",
+        "JBR",
+        "Bluewaters"
+      ],
+      "languages": [
+        "English",
+        "Arabic"
+      ],
       "saleListings": 15,
       "rentListings": 7,
       "agencyLogo": "https://via.placeholder.com/40?text=AGENCY",
       "agencyName": "Premium Realty",
       "rating": 4.9,
       "experience": "13 years",
-      "specialization": "Marina & Beachfront Properties"
+      "specialization": "Marina & Beachfront Properties",
+      "propertyIds": []
     },
     {
       "id": "10",
@@ -150,15 +248,24 @@
       "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
       "phone": "+971 50 012 3456",
       "email": "sarah@topsellingproperties.ae",
-      "serviceAreas": ["Palm Jumeirah", "Dubai Marina", "JLT"],
-      "languages": ["English", "French", "Spanish"],
+      "serviceAreas": [
+        "Palm Jumeirah",
+        "Dubai Marina",
+        "JLT"
+      ],
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
       "saleListings": 9,
       "rentListings": 3,
       "agencyLogo": "https://via.placeholder.com/40?text=AGENCY",
       "agencyName": "Elite Properties",
       "rating": 4.6,
       "experience": "6 years",
-      "specialization": "Luxury Apartments & Penthouses"
+      "specialization": "Luxury Apartments & Penthouses",
+      "propertyIds": []
     },
     {
       "id": "11",
@@ -166,15 +273,23 @@
       "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200",
       "phone": "+971 50 111 2222",
       "email": "khalid@topsellingproperties.ae",
-      "serviceAreas": ["Emirates Hills", "Arabian Ranches", "Dubai Hills"],
-      "languages": ["English", "Arabic"],
+      "serviceAreas": [
+        "Emirates Hills",
+        "Arabian Ranches",
+        "Dubai Hills"
+      ],
+      "languages": [
+        "English",
+        "Arabic"
+      ],
       "saleListings": 20,
       "rentListings": 10,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
-      "rating": 5.0,
+      "rating": 5,
       "experience": "15 years",
-      "specialization": "Ultra-Luxury Mansions & Estates"
+      "specialization": "Ultra-Luxury Mansions & Estates",
+      "propertyIds": []
     },
     {
       "id": "12",
@@ -182,16 +297,24 @@
       "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200",
       "phone": "+971 50 222 3333",
       "email": "aisha@topsellingproperties.ae",
-      "serviceAreas": ["Creek Harbour", "Dubai Creek", "Business Bay"],
-      "languages": ["English", "Arabic", "Urdu"],
+      "serviceAreas": [
+        "Creek Harbour",
+        "Dubai Creek",
+        "Business Bay"
+      ],
+      "languages": [
+        "English",
+        "Arabic",
+        "Urdu"
+      ],
       "saleListings": 14,
       "rentListings": 9,
       "agencyLogo": "https://via.placeholder.com/40?text=TS",
       "agencyName": "Top Selling Properties",
       "rating": 4.8,
       "experience": "8 years",
-      "specialization": "New Developments & Off-Plan"
+      "specialization": "New Developments & Off-Plan",
+      "propertyIds": []
     }
   ]
 }
-

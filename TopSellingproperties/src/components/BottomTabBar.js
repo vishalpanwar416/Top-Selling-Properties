@@ -1,11 +1,29 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 
 const BottomTabBar = ({ state, descriptors, navigation }) => {
     const insets = useSafeAreaInsets();
+    
+    // Check if current route is AgentDetails or AgencyDetails
+    const focusedRoute = state.routes[state.index];
+    let focusedRouteName = focusedRoute.name;
+    
+    // Get nested route name if it exists
+    if (focusedRoute.state) {
+        const nestedRouteName = getFocusedRouteNameFromRoute(focusedRoute);
+        if (nestedRouteName) {
+            focusedRouteName = nestedRouteName;
+        }
+    }
+    
+    // Hide tab bar on AgentDetails or AgencyDetails screens
+    if (focusedRouteName === 'AgentDetails' || focusedRouteName === 'AgencyDetails') {
+        return null;
+    }
     
     const getIconName = (routeName, focused) => {
         switch (routeName) {

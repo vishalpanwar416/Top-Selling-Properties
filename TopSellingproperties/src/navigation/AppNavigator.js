@@ -12,6 +12,8 @@ import FindMyAgentScreen from '../screens/FindMyAgentScreen';
 import PropertiesScreen from '../screens/PropertiesScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 import AgentsScreen from '../screens/AgentsScreen';
+import AgentDetailsScreen from '../screens/AgentDetailsScreen';
+import AgencyDetailsScreen from '../screens/AgencyDetailsScreen';
 import MoreScreen from '../screens/MoreScreen';
 import Sidebar from '../components/Sidebar';
 import BottomTabBar from '../components/BottomTabBar';
@@ -42,6 +44,7 @@ const HomeStack = () => {
             />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
+            <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
         </Stack.Navigator>
     );
 };
@@ -55,6 +58,7 @@ const PropertiesStack = () => {
         >
             <Stack.Screen name="PropertiesMain" component={PropertiesScreen} />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
+            <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
             <Stack.Screen 
                 name="Search" 
                 component={SearchScreen}
@@ -79,6 +83,7 @@ const ProjectsStack = () => {
         >
             <Stack.Screen name="ProjectsMain" component={ProjectsScreen} />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
+            <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
         </Stack.Navigator>
     );
 };
@@ -92,6 +97,8 @@ const AgentsStack = () => {
         >
             <Stack.Screen name="AgentsMain" component={AgentsScreen} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
+            <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
+            <Stack.Screen name="AgencyDetails" component={AgencyDetailsScreen} />
         </Stack.Navigator>
     );
 };

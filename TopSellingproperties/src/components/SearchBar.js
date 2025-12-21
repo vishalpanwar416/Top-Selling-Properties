@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Platform, StatusBar, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 
@@ -9,9 +9,14 @@ const SearchBar = ({
     onPress,
     placeholder = 'Search for a locality, area or city',
     value = '',
+    onChangeText,
+    editable = false,
     style,
     containerStyle,
     isSticky = false,
+    showSortButton = false,
+    sortValue = 'Latest',
+    onSortPress,
 }) => {
     const paddingAnim = useRef(new Animated.Value(0)).current;
 
@@ -22,6 +27,38 @@ const SearchBar = ({
             useNativeDriver: false,
         }).start();
     }, [isSticky]);
+
+    // If editable, show TextInput; otherwise show TouchableOpacity
+    if (editable && onChangeText) {
+        return (
+            <Animated.View style={[
+                styles.container,
+                containerStyle,
+                { paddingTop: paddingAnim }
+            ]}>
+                <View style={[styles.searchBox, style]}>
+                    <Ionicons name="search" size={22} color={colors.primary} style={styles.searchIcon} />
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder={placeholder}
+                        placeholderTextColor={colors.textTertiary}
+                        value={value}
+                        onChangeText={onChangeText}
+                    />
+                    {showSortButton && onSortPress && (
+                        <TouchableOpacity
+                            style={styles.sortButton}
+                            onPress={onSortPress}
+                            activeOpacity={0.7}
+                        >
+                            <Ionicons name="swap-vertical" size={18} color={colors.primary} />
+                            <Text style={styles.sortButtonText}>{sortValue}</Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
+            </Animated.View>
+        );
+    }
 
     return (
         <Animated.View style={[
@@ -38,6 +75,16 @@ const SearchBar = ({
                 <Text style={[styles.searchText, !value && styles.placeholder]}>
                     {value || placeholder}
                 </Text>
+                {showSortButton && onSortPress && (
+                    <TouchableOpacity
+                        style={styles.sortButton}
+                        onPress={onSortPress}
+                        activeOpacity={0.7}
+                    >
+                        <Ionicons name="swap-vertical" size={18} color={colors.primary} />
+                        <Text style={styles.sortButtonText}>{sortValue}</Text>
+                    </TouchableOpacity>
+                )}
             </TouchableOpacity>
         </Animated.View>
     );
@@ -74,8 +121,32 @@ const styles = StyleSheet.create({
         color: colors.textPrimary,
         fontFamily: 'Poppins_500Medium',
     },
+    searchInput: {
+        flex: 1,
+        fontSize: 15,
+        color: colors.textPrimary,
+        fontFamily: 'Poppins_500Medium',
+        padding: 0,
+    },
     placeholder: {
         color: colors.textTertiary,
+    },
+    sortButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(185, 28, 28, 0.08)',
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 16,
+        marginLeft: 8,
+        borderWidth: 1,
+        borderColor: 'rgba(185, 28, 28, 0.2)',
+    },
+    sortButtonText: {
+        fontSize: 12,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.primary,
+        marginLeft: 4,
     },
 });
 

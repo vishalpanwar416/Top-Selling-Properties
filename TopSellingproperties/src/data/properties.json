@@ -15,7 +15,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["EXCLUSIVE", "VERIFIED", "PRIME LOCATION"],
+      "tags": [
+        "EXCLUSIVE",
+        "VERIFIED",
+        "PRIME LOCATION"
+      ],
       "yearBuilt": 2021,
       "parking": 4,
       "furnishing": "Fully Furnished",
@@ -38,7 +42,8 @@
         "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
         "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800"
       ],
-      "agentId": "1"
+      "agentId": "1",
+      "agencyId": "1"
     },
     {
       "id": "2",
@@ -55,7 +60,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["HOT DEAL", "HIGH ROI", "INVESTOR PICK"],
+      "tags": [
+        "HOT DEAL",
+        "HIGH ROI",
+        "INVESTOR PICK"
+      ],
       "yearBuilt": 2019,
       "parking": 1,
       "furnishing": "Semi-Furnished",
@@ -77,7 +86,8 @@
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
         "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
       ],
-      "agentId": "2"
+      "agentId": "2",
+      "agencyId": "1"
     },
     {
       "id": "3",
@@ -94,7 +104,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["ULTRA LUXURY", "BURJ VIEW", "EXCLUSIVE"],
+      "tags": [
+        "ULTRA LUXURY",
+        "BURJ VIEW",
+        "EXCLUSIVE"
+      ],
       "yearBuilt": 2020,
       "parking": 3,
       "furnishing": "Fully Furnished",
@@ -117,7 +131,8 @@
         "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800",
         "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800"
       ],
-      "agentId": "3"
+      "agentId": "3",
+      "agencyId": "1"
     },
     {
       "id": "4",
@@ -134,7 +149,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": false,
-      "tags": ["FAMILY HOME", "GOLF VIEW", "READY"],
+      "tags": [
+        "FAMILY HOME",
+        "GOLF VIEW",
+        "READY"
+      ],
       "yearBuilt": 2018,
       "parking": 2,
       "furnishing": "Unfurnished",
@@ -156,7 +175,8 @@
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
         "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800"
       ],
-      "agentId": "4"
+      "agentId": "4",
+      "agencyId": "1"
     },
     {
       "id": "5",
@@ -173,7 +193,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": false,
-      "tags": ["BEST VALUE", "HIGH YIELD", "NEW"],
+      "tags": [
+        "BEST VALUE",
+        "HIGH YIELD",
+        "NEW"
+      ],
       "yearBuilt": 2022,
       "parking": 1,
       "furnishing": "Fully Furnished",
@@ -194,7 +218,8 @@
         "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
         "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
       ],
-      "agentId": "1"
+      "agentId": "1",
+      "agencyId": "1"
     },
     {
       "id": "6",
@@ -211,7 +236,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["BEACHFRONT", "LUXURY", "VERIFIED"],
+      "tags": [
+        "BEACHFRONT",
+        "LUXURY",
+        "VERIFIED"
+      ],
       "yearBuilt": 2020,
       "parking": 5,
       "furnishing": "Fully Furnished",
@@ -234,7 +263,8 @@
         "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=800",
         "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
       ],
-      "agentId": "2"
+      "agentId": "2",
+      "agencyId": "1"
     },
     {
       "id": "7",
@@ -252,7 +282,11 @@
       "status": "For Rent",
       "transactionType": "Rent",
       "featured": true,
-      "tags": ["PREMIUM", "CITY VIEW", "READY TO MOVE"],
+      "tags": [
+        "PREMIUM",
+        "CITY VIEW",
+        "READY TO MOVE"
+      ],
       "yearBuilt": 2021,
       "parking": 2,
       "furnishing": "Fully Furnished",
@@ -274,7 +308,8 @@
         "https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800",
         "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
       ],
-      "agentId": "5"
+      "agentId": "5",
+      "agencyId": "1"
     },
     {
       "id": "8",
@@ -291,7 +326,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["WATERFRONT", "CULTURAL DISTRICT", "EXCLUSIVE"],
+      "tags": [
+        "WATERFRONT",
+        "CULTURAL DISTRICT",
+        "EXCLUSIVE"
+      ],
       "yearBuilt": 2022,
       "parking": 3,
       "furnishing": "Semi-Furnished",
@@ -314,7 +353,8 @@
         "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800",
         "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800"
       ],
-      "agentId": "6"
+      "agentId": "6",
+      "agencyId": "1"
     },
     {
       "id": "9",
@@ -332,7 +372,11 @@
       "status": "For Rent",
       "transactionType": "Rent",
       "featured": false,
-      "tags": ["UNIQUE LAYOUT", "LAKE VIEW", "PET FRIENDLY"],
+      "tags": [
+        "UNIQUE LAYOUT",
+        "LAKE VIEW",
+        "PET FRIENDLY"
+      ],
       "yearBuilt": 2017,
       "parking": 1,
       "furnishing": "Fully Furnished",
@@ -354,7 +398,8 @@
         "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
         "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
       ],
-      "agentId": "1"
+      "agentId": "1",
+      "agencyId": "1"
     },
     {
       "id": "10",
@@ -371,7 +416,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["ULTRA PREMIUM", "FULL FLOOR", "SEA VIEW"],
+      "tags": [
+        "ULTRA PREMIUM",
+        "FULL FLOOR",
+        "SEA VIEW"
+      ],
       "yearBuilt": 2023,
       "parking": 4,
       "furnishing": "Fully Furnished",
@@ -394,7 +443,8 @@
         "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
         "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
       ],
-      "agentId": "3"
+      "agentId": "3",
+      "agencyId": "1"
     },
     {
       "id": "11",
@@ -411,7 +461,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": false,
-      "tags": ["AFFORDABLE", "FAMILY AREA", "VERIFIED"],
+      "tags": [
+        "AFFORDABLE",
+        "FAMILY AREA",
+        "VERIFIED"
+      ],
       "yearBuilt": 2019,
       "parking": 1,
       "furnishing": "Unfurnished",
@@ -433,7 +487,8 @@
         "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800",
         "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
       ],
-      "agentId": "4"
+      "agentId": "4",
+      "agencyId": "1"
     },
     {
       "id": "12",
@@ -450,7 +505,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["NEW LAUNCH", "CREEK VIEW", "BRANDED"],
+      "tags": [
+        "NEW LAUNCH",
+        "CREEK VIEW",
+        "BRANDED"
+      ],
       "yearBuilt": 2024,
       "parking": 3,
       "furnishing": "Semi-Furnished",
@@ -473,7 +532,8 @@
         "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800",
         "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
       ],
-      "agentId": "2"
+      "agentId": "2",
+      "agencyId": "1"
     },
     {
       "id": "13",
@@ -491,7 +551,11 @@
       "status": "For Rent",
       "transactionType": "Rent",
       "featured": false,
-      "tags": ["AIN DUBAI VIEW", "SERVICED", "ALL BILLS INCLUDED"],
+      "tags": [
+        "AIN DUBAI VIEW",
+        "SERVICED",
+        "ALL BILLS INCLUDED"
+      ],
       "yearBuilt": 2020,
       "parking": 1,
       "furnishing": "Fully Furnished",
@@ -514,7 +578,8 @@
         "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
         "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
       ],
-      "agentId": "5"
+      "agentId": "5",
+      "agencyId": "1"
     },
     {
       "id": "14",
@@ -531,7 +596,11 @@
       "status": "For Sale",
       "transactionType": "Buy",
       "featured": true,
-      "tags": ["MEGA MANSION", "GOLF VIEW", "CELEBRITY HOME"],
+      "tags": [
+        "MEGA MANSION",
+        "GOLF VIEW",
+        "CELEBRITY HOME"
+      ],
       "yearBuilt": 2019,
       "parking": 10,
       "furnishing": "Fully Furnished",
@@ -556,7 +625,8 @@
         "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800",
         "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800"
       ],
-      "agentId": "6"
+      "agentId": "6",
+      "agencyId": "1"
     },
     {
       "id": "15",
@@ -574,7 +644,11 @@
       "status": "For Rent",
       "transactionType": "Rent",
       "featured": false,
-      "tags": ["BEACHFRONT", "HOLIDAY HOME", "SHORT TERM OK"],
+      "tags": [
+        "BEACHFRONT",
+        "HOLIDAY HOME",
+        "SHORT TERM OK"
+      ],
       "yearBuilt": 2021,
       "parking": 2,
       "furnishing": "Fully Furnished",
@@ -596,7 +670,383 @@
         "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800",
         "https://images.unsplash.com/photo-1600047509782-20d39509f26d?w=800"
       ],
-      "agentId": "1"
+      "agentId": "1",
+      "agencyId": "1"
+    },
+    {
+      "id": "16",
+      "title": "3BR with Study in Takaya Tower B",
+      "price": 3220101,
+      "currency": "AED",
+      "location": "Takaya Tower B, Takaya, Motor City, Dubai",
+      "city": "Dubai",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": 1641,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Off-Plan",
+      "featured": true,
+      "tags": [
+        "Off-Plan",
+        "INVESTMENT",
+        "NEW LAUNCH"
+      ],
+      "yearBuilt": 2026,
+      "parking": 2,
+      "furnishing": "Unfurnished",
+      "description": "Premium 3-bedroom apartment with study in the iconic Takaya Tower B. Perfect investment opportunity in Motor City with excellent capital appreciation potential.",
+      "amenities": [
+        "Pool",
+        "Gym",
+        "Kids Play Area",
+        "BBQ Area",
+        "Landscaped Garden",
+        "24/7 Security",
+        "Covered Parking"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+      ],
+      "agent": {
+        "name": "Sarah Ahmed",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
+      },
+      "agentId": "1",
+      "agencyId": "1"
+    },
+    {
+      "id": "17",
+      "title": "2BR Apartment in Sobha Hartland",
+      "price": 2850000,
+      "currency": "AED",
+      "location": "Sobha Hartland, MBR City, Dubai",
+      "city": "Dubai",
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "area": 1450,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Off-Plan",
+      "featured": true,
+      "tags": [
+        "Off-Plan",
+        "PREMIUM",
+        "LAGOON VIEW"
+      ],
+      "yearBuilt": 2025,
+      "parking": 1,
+      "furnishing": "Unfurnished",
+      "description": "Luxurious 2-bedroom apartment in the prestigious Sobha Hartland community. Features lagoon views, premium finishes, and world-class amenities.",
+      "amenities": [
+        "Lagoon View",
+        "Crystal Lagoon",
+        "Golf Course",
+        "Gym",
+        "Infinity Pool",
+        "Kids Club",
+        "Retail Outlets"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+      ],
+      "agent": {
+        "name": "John Smith",
+        "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"
+      },
+      "agentId": "2",
+      "agencyId": "1"
+    },
+    {
+      "id": "18",
+      "title": "4BR Villa in Damac Hills 2",
+      "price": 1650000,
+      "currency": "AED",
+      "location": "Damac Hills 2, Dubai",
+      "city": "Dubai",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "area": 2800,
+      "areaUnit": "sqft",
+      "type": "Villa",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Ready",
+      "featured": false,
+      "tags": [
+        "READY",
+        "FAMILY HOME",
+        "VERIFIED"
+      ],
+      "yearBuilt": 2022,
+      "parking": 2,
+      "furnishing": "Semi-Furnished",
+      "description": "Spacious 4-bedroom villa with private garden and maid's room. Located in the vibrant Damac Hills 2 community with excellent amenities.",
+      "amenities": [
+        "Private Garden",
+        "Community Pool",
+        "Tennis Court",
+        "Gym",
+        "Kids Area",
+        "BBQ Area",
+        "Jogging Track"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800",
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+      ],
+      "agent": {
+        "name": "Mike Johnson",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100"
+      },
+      "agentId": "3",
+      "agencyId": "1"
+    },
+    {
+      "id": "19",
+      "title": "1BR in Emaar Beachfront",
+      "price": 1950000,
+      "currency": "AED",
+      "location": "Emaar Beachfront, Dubai Harbour, Dubai",
+      "city": "Dubai",
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "area": 850,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Ready",
+      "featured": true,
+      "tags": [
+        "READY",
+        "BEACH ACCESS",
+        "SEA VIEW"
+      ],
+      "yearBuilt": 2023,
+      "parking": 1,
+      "furnishing": "Fully Furnished",
+      "description": "Stunning 1-bedroom apartment with full sea views at Emaar Beachfront. Private beach access and close to Dubai Marina.",
+      "amenities": [
+        "Sea View",
+        "Beach Access",
+        "Private Beach",
+        "Infinity Pool",
+        "Gym",
+        "Concierge",
+        "Retail Outlets"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800",
+        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+        "https://images.unsplash.com/photo-1560448075-bb485b067938?w=800"
+      ],
+      "agent": {
+        "name": "Sarah Ahmed",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
+      },
+      "agentId": "1",
+      "agencyId": "1"
+    },
+    {
+      "id": "20",
+      "title": "3BR Townhouse in Town Square",
+      "price": 1450000,
+      "currency": "AED",
+      "location": "Town Square, Dubai",
+      "city": "Dubai",
+      "bedrooms": 3,
+      "bathrooms": 4,
+      "area": 2100,
+      "areaUnit": "sqft",
+      "type": "Townhouse",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Ready",
+      "featured": false,
+      "tags": [
+        "READY",
+        "FAMILY COMMUNITY",
+        "AFFORDABLE"
+      ],
+      "yearBuilt": 2021,
+      "parking": 2,
+      "furnishing": "Unfurnished",
+      "description": "Modern 3-bedroom townhouse in the family-friendly Town Square community. Features private garden, maid's room, and excellent community facilities.",
+      "amenities": [
+        "Private Garden",
+        "Community Pool",
+        "Splashpad",
+        "Skate Park",
+        "Cinema",
+        "Gym",
+        "Retail Outlets"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+      ],
+      "agent": {
+        "name": "David Brown",
+        "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100"
+      },
+      "agentId": "4",
+      "agencyId": "1"
+    },
+    {
+      "id": "21",
+      "title": "Studio in Dubai Hills Mall",
+      "price": 950000,
+      "currency": "AED",
+      "location": "Dubai Hills Estate, Dubai",
+      "city": "Dubai",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": 480,
+      "areaUnit": "sqft",
+      "type": "Studio",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Off-Plan",
+      "featured": false,
+      "tags": [
+        "Off-Plan",
+        "HIGH ROI",
+        "INVESTOR PICK"
+      ],
+      "yearBuilt": 2025,
+      "parking": 1,
+      "furnishing": "Unfurnished",
+      "description": "Smart investment studio in Dubai Hills Estate. Walking distance to Dubai Hills Mall with excellent rental yields.",
+      "amenities": [
+        "Golf View",
+        "Walking to Mall",
+        "Gym",
+        "Pool",
+        "Jogging Track",
+        "Dog Park"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800",
+        "https://images.unsplash.com/photo-1630699144867-37acec97df5a?w=800"
+      ],
+      "agent": {
+        "name": "John Smith",
+        "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"
+      },
+      "agentId": "2",
+      "agencyId": "1"
+    },
+    {
+      "id": "22",
+      "title": "2BR in The Address Residences",
+      "price": 4500000,
+      "currency": "AED",
+      "location": "Dubai Opera District, Downtown Dubai",
+      "city": "Dubai",
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "area": 1680,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Ready",
+      "featured": true,
+      "tags": [
+        "READY",
+        "BURJ VIEW",
+        "5-STAR HOTEL"
+      ],
+      "yearBuilt": 2021,
+      "parking": 2,
+      "furnishing": "Fully Furnished",
+      "description": "Elegant 2-bedroom residence with iconic Burj Khalifa views. Emaar branded with 5-star hotel services including spa, pool, and fine dining.",
+      "amenities": [
+        "Burj Khalifa View",
+        "Hotel Services",
+        "Spa",
+        "Valet Parking",
+        "Concierge",
+        "Fine Dining",
+        "Rooftop Pool"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800"
+      ],
+      "agent": {
+        "name": "Sarah Ahmed",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
+      },
+      "agentId": "1",
+      "agencyId": "1"
+    },
+    {
+      "id": "23",
+      "title": "5BR Villa in Palm Jebel Ali",
+      "price": 8500000,
+      "currency": "AED",
+      "location": "Palm Jebel Ali, Dubai",
+      "city": "Dubai",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "area": 6200,
+      "areaUnit": "sqft",
+      "type": "Villa",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "completion": "Off-Plan",
+      "featured": true,
+      "tags": [
+        "Off-Plan",
+        "NEW PALM",
+        "BEACHFRONT"
+      ],
+      "yearBuilt": 2027,
+      "parking": 3,
+      "furnishing": "Unfurnished",
+      "description": "Exclusive villa on the new Palm Jebel Ali. Private beach, pool, and garden with guaranteed rental returns. Limited availability.",
+      "amenities": [
+        "Private Beach",
+        "Private Pool",
+        "Garden",
+        "Smart Home",
+        "Maid's Room",
+        "Driver's Room",
+        "Yacht Berth"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800"
+      ],
+      "agent": {
+        "name": "Mike Johnson",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100"
+      },
+      "agentId": "3",
+      "agencyId": "1"
     }
   ]
 }

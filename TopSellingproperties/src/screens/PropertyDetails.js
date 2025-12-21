@@ -7,7 +7,6 @@ import {
     StyleSheet,
     TouchableOpacity,
     Dimensions,
-    Linking,
     Animated,
     Platform,
     StatusBar,
@@ -17,6 +16,8 @@ import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-ic
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
 import agentsData from '../data/agents.json';
+import agenciesData from '../data/agencies.json';
+import ContactActions from '../components/ContactActions';
 
 const { width, height } = Dimensions.get('window');
 const PHOTO_HEIGHT = width * 0.75;
@@ -61,27 +62,18 @@ const PropertyDetails = ({ route, navigation }) => {
         return agentsData.agents.find(agent => agent.id === agentId) || null;
     };
 
+    // Get agency by ID
+    const getAgencyById = (agencyId) => {
+        return agenciesData.agencies.find(agency => agency.id === agencyId) || null;
+    };
+
     const agent = property.agentId ? getAgentById(property.agentId) : (property.agent || null);
+    const agency = property.agencyId ? getAgencyById(property.agencyId) : null;
 
     const formatPrice = (price) => {
         return `AED  ${price?.toLocaleString() || 'N/A'}`;
     };
 
-    const handleCall = () => {
-        const phone = agent?.phone || '+971500000000';
-        Linking.openURL(`tel:${phone}`);
-    };
-
-    const handleEmail = () => {
-        const email = agent?.email || 'info@property.ae';
-        Linking.openURL(`mailto:${email}?subject=Inquiry about ${property.title}`);
-    };
-
-    const handleWhatsApp = () => {
-        const phone = agent?.phone || '+971500000000';
-        const message = `Hi, I'm interested in ${property.title}`;
-        Linking.openURL(`whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}`);
-    };
 
     const handleShare = () => {
         // Share functionality
@@ -450,10 +442,10 @@ const PropertyDetails = ({ route, navigation }) => {
                         <View style={styles.infoTable}>
                             {[
                                 { label: 'Trakheesi Permit', value: property.permit || '71635604642', hasInfo: true },
-                                { label: 'Zone Name', value: property.zone || 'Business Bay', hasInfo: true },
-                                { label: 'Registered Agency', value: property.agency || 'TOP SELLING PROPERTIES', hasInfo: true },
-                                { label: 'RERA', value: property.rera || '1858', hasInfo: true },
-                                { label: 'BRN', value: property.brn || '69449', hasInfo: true },
+                                { label: 'Zone Name', value: property.zone || property.location?.split(',')[0] || 'Business Bay', hasInfo: true },
+                                { label: 'Registered Agency', value: agency?.name?.toUpperCase() || property.agency || agent?.agencyName?.toUpperCase() || 'TOP SELLING PROPERTIES', hasInfo: true },
+                                { label: 'RERA', value: property.rera || agency?.rera || '1858', hasInfo: true },
+                                { label: 'BRN', value: property.brn || agency?.brn || '69449', hasInfo: true },
                             ].map((item, index) => (
                                 <View key={index} style={styles.infoRow}>
                                     <View style={styles.infoLabelRow}>
@@ -470,7 +462,11 @@ const PropertyDetails = ({ route, navigation }) => {
 
                     {/* Agent Card */}
                     {agent && (
-                        <View style={styles.agentSection}>
+                        <TouchableOpacity
+                            style={styles.agentSection}
+                            onPress={() => navigation.navigate('AgentDetails', { agent })}
+                            activeOpacity={0.8}
+                        >
                             <LinearGradient
                                 colors={[colors.maroon, colors.primary]}
                                 start={{ x: 0, y: 0 }}
@@ -486,8 +482,109 @@ const PropertyDetails = ({ route, navigation }) => {
                                 <View style={styles.agentInfo}>
                                     <Text style={styles.agentBadge}>TSPBroker™</Text>
                                     <Text style={styles.agentName}>{agent.name || 'Agent'}</Text>
+                                    {agent.specialization && (
+                                        <Text style={styles.agentSpecialization}>{agent.specialization}</Text>
+                                    )}
+                                    <View style={styles.agentDetailsRow}>
+                                        {agent.rating && (
+                                            <View style={styles.agentDetailItem}>
+                                                <Ionicons name="star" size={14} color={colors.white} />
+                                                <Text style={styles.agentDetailText}>{agent.rating}</Text>
+                                            </View>
+                                        )}
+                                        {agent.experience && (
+                                            <View style={styles.agentDetailItem}>
+                                                <Ionicons name="time-outline" size={14} color={colors.white} />
+                                                <Text style={styles.agentDetailText}>{agent.experience}</Text>
+                                            </View>
+                                        )}
+                                        {agent.saleListings && agent.rentListings && (
+                                            <View style={styles.agentDetailItem}>
+                                                <Ionicons name="home-outline" size={14} color={colors.white} />
+                                                <Text style={styles.agentDetailText}>
+                                                    {agent.saleListings + agent.rentListings} Listings
+                                                </Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                    {agent.serviceAreas && agent.serviceAreas.length > 0 && (
+                                        <Text style={styles.agentServiceAreas}>
+                                            📍 {agent.serviceAreas.slice(0, 2).join(', ')}
+                                            {agent.serviceAreas.length > 2 && ` +${agent.serviceAreas.length - 2} more`}
+                                        </Text>
+                                    )}
                                 </View>
                             </LinearGradient>
+                        </TouchableOpacity>
+                    )}
+
+                    {/* Agency Card */}
+                    {agency && (
+                        <View style={styles.agencySection}>
+                            <View style={styles.agencyCard}>
+                                <View style={styles.agencyHeaderRow}>
+                                    <Image
+                                        source={{ uri: agency.logo || 'https://via.placeholder.com/60' }}
+                                        style={styles.agencyLogo}
+                                    />
+                                    <View style={styles.agencyHeaderInfo}>
+                                        <View style={styles.agencyNameRow}>
+                                            <Text style={styles.agencyName}>{agency.name}</Text>
+                                            {agency.verified && (
+                                                <Ionicons name="checkmark-circle" size={18} color={colors.primary} style={{ marginLeft: 6 }} />
+                                            )}
+                                        </View>
+                                        {agency.rating && (
+                                            <View style={styles.agencyRatingRow}>
+                                                <Ionicons name="star" size={14} color={colors.primary} />
+                                                <Text style={styles.agencyRating}>{agency.rating}</Text>
+                                                {agency.yearsInBusiness && (
+                                                    <Text style={styles.agencyYears}> • {agency.yearsInBusiness} years</Text>
+                                                )}
+                                            </View>
+                                        )}
+                                    </View>
+                                </View>
+                                {agency.description && (
+                                    <Text style={styles.agencyDescription} numberOfLines={2}>
+                                        {agency.description}
+                                    </Text>
+                                )}
+                                <View style={styles.agencyStatsRow}>
+                                    {agency.totalAgents && (
+                                        <View style={styles.agencyStatItem}>
+                                            <Text style={styles.agencyStatValue}>{agency.totalAgents}</Text>
+                                            <Text style={styles.agencyStatLabel}>Agents</Text>
+                                        </View>
+                                    )}
+                                    {agency.totalListings && (
+                                        <View style={styles.agencyStatItem}>
+                                            <Text style={styles.agencyStatValue}>{agency.totalListings}</Text>
+                                            <Text style={styles.agencyStatLabel}>Listings</Text>
+                                        </View>
+                                    )}
+                                    {agency.saleListings && (
+                                        <View style={styles.agencyStatItem}>
+                                            <Text style={styles.agencyStatValue}>{agency.saleListings}</Text>
+                                            <Text style={styles.agencyStatLabel}>For Sale</Text>
+                                        </View>
+                                    )}
+                                    {agency.rentListings && (
+                                        <View style={styles.agencyStatItem}>
+                                            <Text style={styles.agencyStatValue}>{agency.rentListings}</Text>
+                                            <Text style={styles.agencyStatLabel}>For Rent</Text>
+                                        </View>
+                                    )}
+                                </View>
+                                {agency.serviceAreas && agency.serviceAreas.length > 0 && (
+                                    <View style={styles.agencyServiceAreas}>
+                                        <Ionicons name="location-outline" size={14} color={colors.textSecondary} />
+                                        <Text style={styles.agencyServiceAreasText}>
+                                            {agency.serviceAreas.join(', ')}
+                                        </Text>
+                                    </View>
+                                )}
+                            </View>
                         </View>
                     )}
 
@@ -532,19 +629,13 @@ const PropertyDetails = ({ route, navigation }) => {
             </View>
 
             {/* Bottom Action Bar */}
-            <View style={[styles.bottomBar, { paddingBottom: insets.bottom + 12 }]}>
-                <TouchableOpacity style={styles.bottomButton} onPress={handleEmail}>
-                    <Ionicons name="mail-outline" size={20} color={colors.primary} />
-                    <Text style={styles.bottomButtonText}>Email</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.bottomButton} onPress={handleCall}>
-                    <Ionicons name="call-outline" size={20} color={colors.primary} />
-                    <Text style={styles.bottomButtonText}>Call</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.bottomButtonWhatsApp} onPress={handleWhatsApp}>
-                    <Ionicons name="logo-whatsapp" size={22} color="#25D366" />
-                </TouchableOpacity>
-            </View>
+            <ContactActions
+                phone={agent?.phone}
+                email={agent?.email}
+                whatsappMessage={`Hi, I'm interested in ${property.title}`}
+                emailSubject={`Inquiry about ${property.title}`}
+                contactName={agent?.name}
+            />
         </View>
     );
 };
@@ -972,9 +1063,135 @@ const styles = StyleSheet.create({
         color: colors.white,
     },
     agentName: {
-        fontSize: 14,
-        color: 'rgba(255,255,255,0.8)',
+        fontSize: 16,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.white,
+        marginTop: 6,
+    },
+    agentSpecialization: {
+        fontSize: 13,
+        color: 'rgba(255,255,255,0.9)',
         marginTop: 4,
+        fontFamily: 'Poppins_500Medium',
+    },
+    agentDetailsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 8,
+        flexWrap: 'wrap',
+    },
+    agentDetailItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 12,
+        marginTop: 4,
+    },
+    agentDetailText: {
+        fontSize: 12,
+        color: 'rgba(255,255,255,0.9)',
+        marginLeft: 4,
+        fontFamily: 'Poppins_500Medium',
+    },
+    agentServiceAreas: {
+        fontSize: 12,
+        color: 'rgba(255,255,255,0.8)',
+        marginTop: 8,
+        fontFamily: 'Poppins_400Regular',
+    },
+    agencySection: {
+        marginBottom: 20,
+    },
+    agencyCard: {
+        backgroundColor: colors.white,
+        borderRadius: 16,
+        padding: 20,
+        borderWidth: 1,
+        borderColor: colors.border,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        elevation: 2,
+    },
+    agencyHeaderRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    agencyLogo: {
+        width: 60,
+        height: 60,
+        borderRadius: 12,
+        marginRight: 12,
+    },
+    agencyHeaderInfo: {
+        flex: 1,
+    },
+    agencyNameRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 4,
+    },
+    agencyName: {
+        fontSize: 18,
+        fontFamily: 'Poppins_700Bold',
+        color: colors.textPrimary,
+    },
+    agencyRatingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    agencyRating: {
+        fontSize: 14,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.textPrimary,
+        marginLeft: 4,
+    },
+    agencyYears: {
+        fontSize: 14,
+        color: colors.textSecondary,
+    },
+    agencyDescription: {
+        fontSize: 14,
+        color: colors.textSecondary,
+        lineHeight: 20,
+        marginBottom: 12,
+    },
+    agencyStatsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 12,
+        paddingTop: 12,
+        borderTopWidth: 1,
+        borderTopColor: colors.border,
+    },
+    agencyStatItem: {
+        alignItems: 'center',
+    },
+    agencyStatValue: {
+        fontSize: 18,
+        fontFamily: 'Poppins_700Bold',
+        color: colors.primary,
+        marginBottom: 4,
+    },
+    agencyStatLabel: {
+        fontSize: 12,
+        color: colors.textSecondary,
+        fontFamily: 'Poppins_500Medium',
+    },
+    agencyServiceAreas: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 12,
+        paddingTop: 12,
+        borderTopWidth: 1,
+        borderTopColor: colors.border,
+    },
+    agencyServiceAreasText: {
+        fontSize: 13,
+        color: colors.textSecondary,
+        marginLeft: 6,
+        flex: 1,
     },
     floatingHeader: {
         position: 'absolute',
@@ -1000,52 +1217,6 @@ const styles = StyleSheet.create({
     headerRightButtons: {
         flexDirection: 'row',
         gap: 10,
-    },
-    bottomBar: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        flexDirection: 'row',
-        backgroundColor: colors.white,
-        paddingHorizontal: 16,
-        paddingTop: 12,
-        borderTopWidth: 1,
-        borderTopColor: '#F0F0F0',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.08,
-        shadowRadius: 12,
-        elevation: 10,
-        zIndex: 100,
-    },
-    bottomButton: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(185, 28, 28, 0.08)',
-        paddingVertical: 14,
-        borderRadius: 12,
-        marginRight: 10,
-        borderWidth: 1,
-        borderColor: colors.primary,
-    },
-    bottomButtonText: {
-        color: colors.primary,
-        fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
-        marginLeft: 8,
-    },
-    bottomButtonWhatsApp: {
-        width: 56,
-        height: 52,
-        borderRadius: 12,
-        backgroundColor: 'rgba(37, 211, 102, 0.1)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#25D366',
     },
 });
 

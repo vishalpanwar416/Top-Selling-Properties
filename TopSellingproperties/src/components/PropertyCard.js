@@ -50,6 +50,11 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                             <Text style={styles.featuredText}>FEATURED</Text>
                         </View>
                     )}
+                    {property.tags && property.tags[0] && !property.featured && (
+                        <View style={styles.tagBadge}>
+                            <Text style={styles.tagText}>{property.tags[0]}</Text>
+                        </View>
+                    )}
                     <View style={{ flex: 1 }} />
                     <TouchableOpacity 
                         style={styles.favoriteButton}
@@ -64,11 +69,16 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Property Type Badge */}
+                {/* Property Type & Transaction Badge */}
                 <View style={styles.typeBadgeContainer}>
-                    <View style={styles.typeBadge}>
-                        <Text style={styles.typeText}>{property.type || 'PROPERTY'}</Text>
+                    <View style={[styles.typeBadge, property.transactionType === 'Rent' && styles.rentBadge]}>
+                        <Text style={styles.typeText}>{property.type?.toUpperCase() || 'PROPERTY'}</Text>
                     </View>
+                    {property.transactionType === 'Rent' && (
+                        <View style={styles.rentTagBadge}>
+                            <Text style={styles.rentTagText}>FOR RENT</Text>
+                        </View>
+                    )}
                 </View>
 
                 {/* Price on Image */}
@@ -181,6 +191,18 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         letterSpacing: 0.5,
     },
+    tagBadge: {
+        backgroundColor: 'rgba(72, 187, 120, 0.9)',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 20,
+    },
+    tagText: {
+        color: colors.white,
+        fontSize: 9,
+        fontWeight: '700',
+        letterSpacing: 0.5,
+    },
     favoriteButton: {
         width: 36,
         height: 36,
@@ -193,6 +215,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 12,
         right: 56,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     typeBadge: {
         backgroundColor: colors.primary,
@@ -205,6 +229,22 @@ const styles = StyleSheet.create({
         fontSize: 10,
         fontWeight: '700',
         letterSpacing: 0.5,
+    },
+    rentBadge: {
+        backgroundColor: '#2563EB',
+    },
+    rentTagBadge: {
+        backgroundColor: '#059669',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 12,
+        marginLeft: 6,
+    },
+    rentTagText: {
+        color: colors.white,
+        fontSize: 8,
+        fontWeight: '700',
+        letterSpacing: 0.3,
     },
     priceOnImage: {
         position: 'absolute',

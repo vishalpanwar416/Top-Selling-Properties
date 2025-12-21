@@ -6,13 +6,19 @@
       "price": 15000000,
       "currency": "AED",
       "location": "Palm Jumeirah, Dubai",
+      "city": "Dubai",
       "bedrooms": 5,
       "bathrooms": 6,
       "area": 8500,
       "areaUnit": "sqft",
-      "type": "villa",
+      "type": "Villa",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": true,
+      "tags": ["EXCLUSIVE", "VERIFIED", "PRIME LOCATION"],
+      "yearBuilt": 2021,
+      "parking": 4,
+      "furnishing": "Fully Furnished",
       "description": "Stunning 5-bedroom villa with private beach access, infinity pool, and breathtaking views of the Dubai skyline. This masterpiece features Italian marble flooring, smart home automation, and a private cinema room.",
       "amenities": [
         "Private Pool",
@@ -21,11 +27,16 @@
         "Cinema Room",
         "Garden",
         "Gym",
-        "Maid's Room"
+        "Maid's Room",
+        "Driver's Room"
       ],
       "images": [
         "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
-        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
+        "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800"
       ],
       "agent": {
         "name": "Ahmed Hassan",
@@ -39,13 +50,19 @@
       "price": 2500000,
       "currency": "AED",
       "location": "Dubai Marina, Dubai",
+      "city": "Dubai",
       "bedrooms": 2,
       "bathrooms": 2,
       "area": 1450,
       "areaUnit": "sqft",
-      "type": "apartment",
+      "type": "Apartment",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": true,
+      "tags": ["HOT DEAL", "HIGH ROI", "INVESTOR PICK"],
+      "yearBuilt": 2019,
+      "parking": 1,
+      "furnishing": "Semi-Furnished",
       "description": "Elegant 2-bedroom apartment with stunning marina views. Features floor-to-ceiling windows, modern kitchen with premium appliances, and access to world-class amenities including pool and gym.",
       "amenities": [
         "Marina View",
@@ -53,11 +70,16 @@
         "Pool",
         "Concierge",
         "Parking",
-        "Balcony"
+        "Balcony",
+        "Built-in Wardrobes"
       ],
       "images": [
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
-        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800"
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1484154218962-a197022b25ba?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800"
       ],
       "agent": {
         "name": "Sara Al Maktoum",
@@ -71,13 +93,19 @@
       "price": 25000000,
       "currency": "AED",
       "location": "Downtown Dubai, Dubai",
+      "city": "Dubai",
       "bedrooms": 4,
       "bathrooms": 5,
       "area": 6200,
       "areaUnit": "sqft",
-      "type": "penthouse",
+      "type": "Penthouse",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": true,
+      "tags": ["ULTRA LUXURY", "BURJ VIEW", "EXCLUSIVE"],
+      "yearBuilt": 2020,
+      "parking": 3,
+      "furnishing": "Fully Furnished",
       "description": "Exclusive penthouse with 360-degree views of Burj Khalifa and Dubai Fountain. This ultra-luxury residence features a private elevator, rooftop terrace, and designer interiors.",
       "amenities": [
         "Burj Khalifa View",
@@ -85,11 +113,17 @@
         "Rooftop Terrace",
         "Smart Home",
         "Wine Cellar",
-        "Jacuzzi"
+        "Jacuzzi",
+        "Private Pool",
+        "24/7 Concierge"
       ],
       "images": [
         "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800",
+        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800",
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800"
       ],
       "agent": {
         "name": "Mohammed Ali",
@@ -103,13 +137,19 @@
       "price": 4500000,
       "currency": "AED",
       "location": "Arabian Ranches, Dubai",
+      "city": "Dubai",
       "bedrooms": 4,
       "bathrooms": 4,
       "area": 3200,
       "areaUnit": "sqft",
-      "type": "townhouse",
+      "type": "Townhouse",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": false,
+      "tags": ["FAMILY HOME", "GOLF VIEW", "READY"],
+      "yearBuilt": 2018,
+      "parking": 2,
+      "furnishing": "Unfurnished",
       "description": "Beautiful family townhouse in a gated community with golf course views. Features spacious living areas, private garden, and access to community pools and parks.",
       "amenities": [
         "Golf View",
@@ -117,11 +157,16 @@
         "Community Pool",
         "Playground",
         "BBQ Area",
-        "Parking"
+        "Parking",
+        "Storage Room"
       ],
       "images": [
         "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
-        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800"
+        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800",
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800"
       ],
       "agent": {
         "name": "Fatima Khan",
@@ -135,24 +180,35 @@
       "price": 850000,
       "currency": "AED",
       "location": "Business Bay, Dubai",
+      "city": "Dubai",
       "bedrooms": 0,
       "bathrooms": 1,
       "area": 550,
       "areaUnit": "sqft",
-      "type": "studio",
+      "type": "Studio",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": false,
+      "tags": ["BEST VALUE", "HIGH YIELD", "NEW"],
+      "yearBuilt": 2022,
+      "parking": 1,
+      "furnishing": "Fully Furnished",
       "description": "Modern studio apartment perfect for investors or young professionals. Features open-plan living, built-in wardrobes, and stunning canal views.",
       "amenities": [
         "Canal View",
         "Gym",
         "Pool",
         "24/7 Security",
-        "Metro Access"
+        "Metro Access",
+        "Built-in Kitchen"
       ],
       "images": [
         "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
-        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800",
+        "https://images.unsplash.com/photo-1630699144867-37acec97df5a?w=800",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
       ],
       "agent": {
         "name": "Ahmed Hassan",
@@ -166,13 +222,19 @@
       "price": 18000000,
       "currency": "AED",
       "location": "Jumeirah Beach, Dubai",
+      "city": "Dubai",
       "bedrooms": 6,
       "bathrooms": 7,
       "area": 9500,
       "areaUnit": "sqft",
-      "type": "villa",
+      "type": "Villa",
       "status": "For Sale",
+      "transactionType": "Buy",
       "featured": true,
+      "tags": ["BEACHFRONT", "LUXURY", "VERIFIED"],
+      "yearBuilt": 2020,
+      "parking": 5,
+      "furnishing": "Fully Furnished",
       "description": "Magnificent beachfront villa with direct beach access. This contemporary masterpiece features a private pool, landscaped gardens, and premium finishes throughout.",
       "amenities": [
         "Beach Access",
@@ -181,16 +243,419 @@
         "Cinema Room",
         "Gym",
         "Staff Quarters",
-        "Garage"
+        "Garage",
+        "Smart Home"
       ],
       "images": [
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800",
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+        "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=800",
+        "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
       ],
       "agent": {
         "name": "Sara Al Maktoum",
         "phone": "+971 50 234 5678",
         "email": "sara@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "7",
+      "title": "Luxury Apartment in DIFC",
+      "price": 180000,
+      "priceType": "year",
+      "currency": "AED",
+      "location": "DIFC, Dubai",
+      "city": "Dubai",
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "area": 1800,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Rent",
+      "transactionType": "Rent",
+      "featured": true,
+      "tags": ["PREMIUM", "CITY VIEW", "READY TO MOVE"],
+      "yearBuilt": 2021,
+      "parking": 2,
+      "furnishing": "Fully Furnished",
+      "description": "Spectacular 2-bedroom apartment in the heart of Dubai's financial district. Floor-to-ceiling windows offer panoramic city views, with premium finishes and designer furniture included.",
+      "amenities": [
+        "City View",
+        "Gym",
+        "Pool",
+        "24/7 Concierge",
+        "Valet Parking",
+        "Spa",
+        "Business Center"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800",
+        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+        "https://images.unsplash.com/photo-1560448075-bb485b067938?w=800",
+        "https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800",
+        "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
+      ],
+      "agent": {
+        "name": "Omar Rashid",
+        "phone": "+971 50 567 8901",
+        "email": "omar@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "8",
+      "title": "Waterfront Villa in Abu Dhabi",
+      "price": 12500000,
+      "currency": "AED",
+      "location": "Saadiyat Island, Abu Dhabi",
+      "city": "Abu Dhabi",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "area": 7200,
+      "areaUnit": "sqft",
+      "type": "Villa",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "featured": true,
+      "tags": ["WATERFRONT", "CULTURAL DISTRICT", "EXCLUSIVE"],
+      "yearBuilt": 2022,
+      "parking": 3,
+      "furnishing": "Semi-Furnished",
+      "description": "Exquisite waterfront villa on prestigious Saadiyat Island, minutes from the Louvre Abu Dhabi. Contemporary design with private pool, landscaped garden, and direct beach access.",
+      "amenities": [
+        "Waterfront",
+        "Beach Access",
+        "Private Pool",
+        "Garden",
+        "Smart Home",
+        "Maid's Room",
+        "Driver's Room",
+        "BBQ Area"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800",
+        "https://images.unsplash.com/photo-1600047509782-20d39509f26d?w=800",
+        "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800",
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
+        "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800",
+        "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800"
+      ],
+      "agent": {
+        "name": "Layla Ahmed",
+        "phone": "+971 50 678 9012",
+        "email": "layla@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "9",
+      "title": "Modern Loft in JLT",
+      "price": 95000,
+      "priceType": "year",
+      "currency": "AED",
+      "location": "Jumeirah Lake Towers, Dubai",
+      "city": "Dubai",
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "area": 1100,
+      "areaUnit": "sqft",
+      "type": "Loft",
+      "status": "For Rent",
+      "transactionType": "Rent",
+      "featured": false,
+      "tags": ["UNIQUE LAYOUT", "LAKE VIEW", "PET FRIENDLY"],
+      "yearBuilt": 2017,
+      "parking": 1,
+      "furnishing": "Fully Furnished",
+      "description": "Stunning duplex loft with double-height ceilings and lake views. Modern industrial design with exposed brick, open kitchen, and rooftop access. Perfect for creative professionals.",
+      "amenities": [
+        "Lake View",
+        "Gym",
+        "Pool",
+        "Rooftop Access",
+        "Pet Friendly",
+        "Metro Access",
+        "Coworking Space"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+        "https://images.unsplash.com/photo-1560448075-bb485b067938?w=800",
+        "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+        "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
+      ],
+      "agent": {
+        "name": "Ahmed Hassan",
+        "phone": "+971 50 123 4567",
+        "email": "ahmed@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "10",
+      "title": "Sky Villa in JBR",
+      "price": 35000000,
+      "currency": "AED",
+      "location": "Jumeirah Beach Residence, Dubai",
+      "city": "Dubai",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "area": 8000,
+      "areaUnit": "sqft",
+      "type": "Sky Villa",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "featured": true,
+      "tags": ["ULTRA PREMIUM", "FULL FLOOR", "SEA VIEW"],
+      "yearBuilt": 2023,
+      "parking": 4,
+      "furnishing": "Fully Furnished",
+      "description": "Ultra-exclusive full-floor sky villa with 270-degree sea views. Features include private elevator, infinity pool on terrace, chef's kitchen, and premium Hermès furnishings throughout.",
+      "amenities": [
+        "Sea View",
+        "Private Elevator",
+        "Infinity Pool",
+        "Terrace",
+        "Smart Home",
+        "Home Office",
+        "Wine Cellar",
+        "Private Gym"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800",
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+        "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
+      ],
+      "agent": {
+        "name": "Mohammed Ali",
+        "phone": "+971 50 345 6789",
+        "email": "mohammed@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "11",
+      "title": "Garden Apartment in Sharjah",
+      "price": 650000,
+      "currency": "AED",
+      "location": "Al Majaz, Sharjah",
+      "city": "Sharjah",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1200,
+      "areaUnit": "sqft",
+      "type": "Apartment",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "featured": false,
+      "tags": ["AFFORDABLE", "FAMILY AREA", "VERIFIED"],
+      "yearBuilt": 2019,
+      "parking": 1,
+      "furnishing": "Unfurnished",
+      "description": "Spacious 2-bedroom apartment in family-friendly Al Majaz area. Walking distance to parks, schools, and shopping centers. Great investment opportunity with high rental demand.",
+      "amenities": [
+        "Gym",
+        "Pool",
+        "Garden",
+        "Playground",
+        "24/7 Security",
+        "Covered Parking",
+        "Near Schools"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+        "https://images.unsplash.com/photo-1484154218962-a197022b25ba?w=800",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+        "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800",
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
+      ],
+      "agent": {
+        "name": "Fatima Khan",
+        "phone": "+971 50 456 7890",
+        "email": "fatima@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "12",
+      "title": "Duplex Penthouse in Creek Harbour",
+      "price": 18000000,
+      "currency": "AED",
+      "location": "Dubai Creek Harbour, Dubai",
+      "city": "Dubai",
+      "bedrooms": 4,
+      "bathrooms": 5,
+      "area": 5500,
+      "areaUnit": "sqft",
+      "type": "Duplex",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "featured": true,
+      "tags": ["NEW LAUNCH", "CREEK VIEW", "BRANDED"],
+      "yearBuilt": 2024,
+      "parking": 3,
+      "furnishing": "Semi-Furnished",
+      "description": "Brand new duplex penthouse with unobstructed views of Dubai Creek Tower. Two-story living with floor-to-ceiling windows, private rooftop garden, and Emaar branded interiors.",
+      "amenities": [
+        "Creek View",
+        "Private Garden",
+        "Smart Home",
+        "Gym",
+        "Pool",
+        "Sauna",
+        "Concierge",
+        "Kids Play Area"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800",
+        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800",
+        "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800"
+      ],
+      "agent": {
+        "name": "Sara Al Maktoum",
+        "phone": "+971 50 234 5678",
+        "email": "sara@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "13",
+      "title": "Serviced Apartment in Bluewaters",
+      "price": 220000,
+      "priceType": "year",
+      "currency": "AED",
+      "location": "Bluewaters Island, Dubai",
+      "city": "Dubai",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1600,
+      "areaUnit": "sqft",
+      "type": "Serviced Apt",
+      "status": "For Rent",
+      "transactionType": "Rent",
+      "featured": false,
+      "tags": ["AIN DUBAI VIEW", "SERVICED", "ALL BILLS INCLUDED"],
+      "yearBuilt": 2020,
+      "parking": 1,
+      "furnishing": "Fully Furnished",
+      "description": "Premium serviced apartment with spectacular Ain Dubai views. All bills included with weekly housekeeping, concierge services, and access to 5-star hotel amenities.",
+      "amenities": [
+        "Ain Dubai View",
+        "Serviced",
+        "Bills Included",
+        "Beach Access",
+        "Gym",
+        "Spa",
+        "Restaurant Access",
+        "Room Service"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+        "https://images.unsplash.com/photo-1560448075-bb485b067938?w=800",
+        "https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800",
+        "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800"
+      ],
+      "agent": {
+        "name": "Omar Rashid",
+        "phone": "+971 50 567 8901",
+        "email": "omar@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "14",
+      "title": "Mansion in Emirates Hills",
+      "price": 85000000,
+      "currency": "AED",
+      "location": "Emirates Hills, Dubai",
+      "city": "Dubai",
+      "bedrooms": 8,
+      "bathrooms": 10,
+      "area": 25000,
+      "areaUnit": "sqft",
+      "type": "Mansion",
+      "status": "For Sale",
+      "transactionType": "Buy",
+      "featured": true,
+      "tags": ["MEGA MANSION", "GOLF VIEW", "CELEBRITY HOME"],
+      "yearBuilt": 2019,
+      "parking": 10,
+      "furnishing": "Fully Furnished",
+      "description": "Iconic mega-mansion on the prestigious Montgomerie golf course. This palatial estate features Italian marble throughout, indoor/outdoor pools, private cinema, bowling alley, and staff quarters for 6.",
+      "amenities": [
+        "Golf View",
+        "Indoor Pool",
+        "Outdoor Pool",
+        "Tennis Court",
+        "Cinema Room",
+        "Bowling Alley",
+        "Wine Cellar",
+        "Staff Quarters",
+        "Helipad",
+        "Smart Home"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+        "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800",
+        "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800"
+      ],
+      "agent": {
+        "name": "Layla Ahmed",
+        "phone": "+971 50 678 9012",
+        "email": "layla@topsellingproperties.ae"
+      }
+    },
+    {
+      "id": "15",
+      "title": "Beachfront Chalet in RAK",
+      "price": 45000,
+      "priceType": "month",
+      "currency": "AED",
+      "location": "Al Marjan Island, Ras Al Khaimah",
+      "city": "Ras Al Khaimah",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": 2200,
+      "areaUnit": "sqft",
+      "type": "Chalet",
+      "status": "For Rent",
+      "transactionType": "Rent",
+      "featured": false,
+      "tags": ["BEACHFRONT", "HOLIDAY HOME", "SHORT TERM OK"],
+      "yearBuilt": 2021,
+      "parking": 2,
+      "furnishing": "Fully Furnished",
+      "description": "Private beachfront chalet perfect for vacation getaways. Direct beach access, BBQ area, and stunning sunset views. Short-term rentals available.",
+      "amenities": [
+        "Beach Access",
+        "Private Beach",
+        "BBQ Area",
+        "Outdoor Shower",
+        "Garden",
+        "Kayaks Included",
+        "Pet Friendly"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800",
+        "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800",
+        "https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=800",
+        "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800",
+        "https://images.unsplash.com/photo-1600047509782-20d39509f26d?w=800"
+      ],
+      "agent": {
+        "name": "Ahmed Hassan",
+        "phone": "+971 50 123 4567",
+        "email": "ahmed@topsellingproperties.ae"
       }
     }
   ]

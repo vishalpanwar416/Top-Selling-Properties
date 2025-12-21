@@ -26,7 +26,8 @@ const Header = ({ navigation, transparent = false }) => {
                     fill={transparent ? colors.primary : colors.primary}
                 />
                 <Text style={styles.brandTitle} numberOfLines={1}>
-                    <Text style={styles.topSellingText}>Top Selling </Text>
+                    <Text style={styles.topText}>Top </Text>
+                    <Text style={styles.sellingText}>Selling </Text>
                     <Text style={styles.propertiesText}>Properties</Text>
                 </Text>
             </View>
@@ -73,7 +74,13 @@ const styles = StyleSheet.create({
     brandTitle: {
         marginLeft: 8,
     },
-    topSellingText: {
+    topText: {
+        fontSize: 17,
+        fontWeight: '800',
+        color: colors.red,
+        letterSpacing: -0.5,
+    },
+    sellingText: {
         fontSize: 17,
         fontWeight: '800',
         color: colors.black,

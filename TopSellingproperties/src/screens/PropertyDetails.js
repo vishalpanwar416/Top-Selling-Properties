@@ -18,16 +18,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
 
 const { width, height } = Dimensions.get('window');
-const IMAGE_HEIGHT = height * 0.45;
+const PHOTO_HEIGHT = width * 0.75;
+const INITIAL_SHEET_POSITION = height * 0.70;
 
 const PropertyDetails = ({ route, navigation }) => {
     const { property } = route.params || {};
     const insets = useSafeAreaInsets();
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
     const [showFullDescription, setShowFullDescription] = useState(false);
-    const scrollY = useRef(new Animated.Value(0)).current;
-    
+    const [isPhotoScrolling, setIsPhotoScrolling] = useState(false);
+    const [isContentScrolling, setIsContentScrolling] = useState(false);
+    const [contentScrollPosition, setContentScrollPosition] = useState(0);
+    const [isInPhotoArea, setIsInPhotoArea] = useState(true);
+    const photoScrollRef = useRef(null);
+    const contentScrollRef = useRef(null);
+    const contentScrollY = useRef(new Animated.Value(0)).current;
+
     if (!property) {
         return (
             <View style={styles.container}>
@@ -35,8 +41,19 @@ const PropertyDetails = ({ route, navigation }) => {
             </View>
         );
     }
-    
-    const images = property.images && property.images.length > 0 ? property.images : ['https://via.placeholder.com/400x300'];
+
+    const images = property.images && property.images.length > 0 
+        ? property.images 
+        : [
+            'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
+            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+            'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800',
+            'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800',
+            'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800',
+            'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
+            'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
+        ];
 
     const formatPrice = (price) => {
         return `AED  ${price?.toLocaleString() || 'N/A'}`;
@@ -97,41 +114,129 @@ const PropertyDetails = ({ route, navigation }) => {
         ? property.amenities.map((a, i) => ({ name: a, icon: amenitiesWithIcons[i % amenitiesWithIcons.length].icon }))
         : amenitiesWithIcons;
 
+    // Calculate total photos height
+    const totalPhotosHeight = images.length * PHOTO_HEIGHT;
+
+    // Handle photo scroll begin - disable content scrolling
+    const handlePhotoScrollBegin = () => {
+        setIsPhotoScrolling(true);
+        if (contentScrollRef.current) {
+            contentScrollRef.current.setNativeProps({ scrollEnabled: false });
+        }
+    };
+
+    // Handle photo scroll end - enable content scrolling
+    const handlePhotoScrollEnd = () => {
+        setIsPhotoScrolling(false);
+        if (contentScrollRef.current) {
+            contentScrollRef.current.setNativeProps({ scrollEnabled: true });
+        }
+    };
+
+    // Handle content scroll begin - disable photo scrolling
+    const handleContentScrollBegin = () => {
+        setIsContentScrolling(true);
+        if (photoScrollRef.current) {
+            photoScrollRef.current.setNativeProps({ scrollEnabled: false });
+        }
+    };
+
+    // Handle content scroll end - enable photo scrolling
+    const handleContentScrollEnd = () => {
+        setIsContentScrolling(false);
+        if (photoScrollRef.current) {
+            photoScrollRef.current.setNativeProps({ scrollEnabled: true });
+        }
+    };
+
+    // Handle content scroll - update animated value and track position
+    const handleContentScroll = (event) => {
+        const offsetY = event.nativeEvent.contentOffset.y;
+        contentScrollY.setValue(offsetY);
+        setContentScrollPosition(offsetY);
+        // Update whether we're in photo area
+        setIsInPhotoArea(offsetY < INITIAL_SHEET_POSITION - 10);
+    };
+
+    // Combined scroll handler for Animated.event
+    const onContentScroll = Animated.event(
+        [{ nativeEvent: { contentOffset: { y: contentScrollY } } }],
+        { 
+            useNativeDriver: true,
+            listener: handleContentScroll
+        }
+    );
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" />
 
-            {/* Main Scroll View */}
-            <Animated.ScrollView
-                showsVerticalScrollIndicator={false}
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                    { useNativeDriver: true }
-                )}
-                scrollEventThrottle={16}
-            >
-                {/* Image Gallery - Vertical Stack */}
-                <View style={styles.imagesContainer}>
-                    {images.slice(0, 3).map((image, index) => (
-                        <Image
-                            key={index}
-                            source={{ uri: image }}
-                            style={[
-                                styles.galleryImage,
-                                index === 0 && styles.firstImage,
-                            ]}
-                            resizeMode="cover"
-                        />
+            {/* Background Photos - Full screen scrollable */}
+            <View style={styles.photosBackground}>
+                <ScrollView
+                    ref={photoScrollRef}
+                    showsVerticalScrollIndicator={true}
+                    style={styles.photosScrollView}
+                    contentContainerStyle={styles.photosContentContainer}
+                    scrollEnabled={!isContentScrolling}
+                    nestedScrollEnabled={true}
+                    indicatorStyle="white"
+                    scrollEventThrottle={16}
+                    onScrollBeginDrag={handlePhotoScrollBegin}
+                    onScrollEndDrag={handlePhotoScrollEnd}
+                    onMomentumScrollBegin={handlePhotoScrollBegin}
+                    onMomentumScrollEnd={handlePhotoScrollEnd}
+                >
+                    {images.map((image, index) => (
+                        <View key={index} style={styles.photoWrapper}>
+                            <Image
+                                source={{ uri: image }}
+                                style={styles.photo}
+                                resizeMode="cover"
+                            />
+                            {/* Photo counter badge */}
+                            <View style={styles.photoCounterBadge}>
+                                <Ionicons name="images-outline" size={14} color={colors.white} />
+                                <Text style={styles.photoCounterText}>{index + 1} / {images.length}</Text>
+                            </View>
+                        </View>
                     ))}
-                    {images.length > 3 && (
-                        <TouchableOpacity style={styles.morePhotosButton}>
-                            <Text style={styles.morePhotosText}>+{images.length - 3} Photos</Text>
-                        </TouchableOpacity>
-                    )}
+                </ScrollView>
+                
+                {/* Scroll hint indicator */}
+                <View style={styles.scrollHintContainer}>
+                    <View style={styles.scrollHint}>
+                        <Ionicons name="chevron-down" size={16} color={colors.white} />
+                        <Text style={styles.scrollHintText}>Scroll for more photos</Text>
+                        <Ionicons name="chevron-down" size={16} color={colors.white} />
+                    </View>
                 </View>
+            </View>
 
-                {/* Content Sheet */}
-                <View style={styles.contentSheet}>
+            {/* Content Sheet Overlay - Always on top, full screen coverage */}
+            <View style={styles.contentWrapper} pointerEvents="box-none">
+                <Animated.ScrollView
+                    ref={contentScrollRef}
+                    style={styles.contentScrollView}
+                    showsVerticalScrollIndicator={false}
+                    bounces={true}
+                    scrollEnabled={!isPhotoScrolling}
+                    onScroll={onContentScroll}
+                    onScrollBeginDrag={handleContentScrollBegin}
+                    onScrollEndDrag={handleContentScrollEnd}
+                    onMomentumScrollBegin={handleContentScrollBegin}
+                    onMomentumScrollEnd={handleContentScrollEnd}
+                    scrollEventThrottle={16}
+                    contentContainerStyle={styles.contentScrollContainer}
+                >
+                {/* Transparent spacer - shows photos behind initially, allows content to scroll over photos */}
+                <View 
+                    style={[styles.photosSpacer, { height: INITIAL_SHEET_POSITION }]} 
+                    pointerEvents="none" 
+                />
+                
+                {/* Content Sheet - white overlay on top, captures touches only in this area */}
+                <View style={styles.contentSheet} pointerEvents="auto">
                     {/* Drag Handle */}
                     <View style={styles.dragHandle} />
 
@@ -200,7 +305,7 @@ const PropertyDetails = ({ route, navigation }) => {
                             <Text style={styles.readMoreText}>
                                 {showFullDescription ? 'Read less' : 'Read more'}
                             </Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
                     </View>
 
                     {/* Property Information */}
@@ -229,9 +334,9 @@ const PropertyDetails = ({ route, navigation }) => {
                                 <View key={index} style={styles.infoRow}>
                                     <Text style={styles.infoLabel}>{item.label}</Text>
                                     <Text style={styles.infoValue}>{item.value}</Text>
-                </View>
+                                </View>
                             ))}
-                    </View>
+                        </View>
                     </View>
 
                     {/* Features & Amenities */}
@@ -270,7 +375,7 @@ const PropertyDetails = ({ route, navigation }) => {
                                     <View style={[styles.chartBar, { height: 150, backgroundColor: colors.maroon }]} />
                                     <Text style={styles.chartBarLabel}>Asking price*</Text>
                                 </View>
-                        </View>
+                            </View>
                         </View>
                         <Text style={styles.chartDisclaimer}>
                             *These trends are calculated using a proprietary algorithm based on prices advertised.
@@ -378,14 +483,23 @@ const PropertyDetails = ({ route, navigation }) => {
                         </View>
                     )}
 
-                    {/* Bottom Spacing */}
+                    {/* Bottom Spacing for fixed action buttons */}
                     <View style={{ height: 100 }} />
                 </View>
             </Animated.ScrollView>
+            
+            {/* Touch interceptor for photo area - only blocks when scroll is at top (in photo area) */}
+            {isInPhotoArea && contentScrollPosition < 10 && (
+                <View 
+                    style={[styles.photoTouchArea, { height: INITIAL_SHEET_POSITION }]} 
+                    pointerEvents="box-none"
+                />
+            )}
+            </View>
 
             {/* Floating Header Buttons */}
             <View style={[styles.floatingHeader, { top: insets.top + 10 }]}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.headerButton}
                     onPress={() => navigation.goBack()}
                     activeOpacity={0.8}
@@ -395,8 +509,8 @@ const PropertyDetails = ({ route, navigation }) => {
                 <View style={styles.headerRightButtons}>
                     <TouchableOpacity style={styles.headerButton} onPress={handleShare}>
                         <Ionicons name="share-social-outline" size={22} color={colors.textPrimary} />
-                </TouchableOpacity>
-                <TouchableOpacity 
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.headerButton}
                         onPress={() => setIsFavorite(!isFavorite)}
                     >
@@ -430,44 +544,108 @@ const PropertyDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.white,
-    },
-    imagesContainer: {
         backgroundColor: '#000',
     },
-    galleryImage: {
-        width: width,
-        height: IMAGE_HEIGHT * 0.6,
-    },
-    firstImage: {
-        height: IMAGE_HEIGHT,
-    },
-    morePhotosButton: {
+    photosBackground: {
         position: 'absolute',
-        bottom: 20,
-        right: 20,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: height,
+        zIndex: 1,
+    },
+    photosScrollView: {
+        flex: 1,
+    },
+    photosContentContainer: {
+        paddingBottom: 20,
+    },
+    photoWrapper: {
+        width: width,
+        height: PHOTO_HEIGHT,
+        position: 'relative',
+    },
+    photo: {
+        width: '100%',
+        height: '100%',
+    },
+    photoCounterBadge: {
+        position: 'absolute',
+        bottom: 16,
+        right: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 16,
+    },
+    photoCounterText: {
+        color: colors.white,
+        fontSize: 14,
+        fontWeight: '600',
+        marginLeft: 6,
+    },
+    scrollHintContainer: {
+        position: 'absolute',
+        bottom: height - INITIAL_SHEET_POSITION + 20,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        zIndex: 5,
+    },
+    scrollHint: {
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.6)',
         paddingHorizontal: 14,
-        paddingVertical: 8,
+        paddingVertical: 6,
         borderRadius: 20,
     },
-    morePhotosText: {
+    scrollHintText: {
         color: colors.white,
-        fontSize: 13,
-        fontWeight: '600',
+        fontSize: 11,
+        fontWeight: '500',
+        marginHorizontal: 6,
+    },
+    contentWrapper: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10,
+    },
+    contentScrollView: {
+        flex: 1,
+    },
+    contentScrollContainer: {
+        flexGrow: 1,
+    },
+    photosSpacer: {
+        backgroundColor: 'transparent',
+    },
+    photoTouchArea: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 12,
+        backgroundColor: 'transparent',
     },
     contentSheet: {
         backgroundColor: colors.white,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        marginTop: -24,
         paddingHorizontal: 20,
         paddingTop: 12,
+        minHeight: height,
     },
     dragHandle: {
         width: 40,
         height: 4,
-        backgroundColor: '#E0E0E0',
+        backgroundColor: '#D0D0D0',
         borderRadius: 2,
         alignSelf: 'center',
         marginBottom: 16,
@@ -831,6 +1009,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.08,
         shadowRadius: 12,
         elevation: 10,
+        zIndex: 100,
     },
     bottomButton: {
         flex: 1,

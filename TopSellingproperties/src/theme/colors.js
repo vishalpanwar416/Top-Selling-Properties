@@ -3,7 +3,7 @@ export const colors = {
     // Primary Brand Colors
     white: '#FFFFFF',
     red: '#B91C1C',
-    maroon: '#7A1E3E',
+    maroon: '#B91C3E',
     black: '#1A1A1A',
     
     // Modern Color Palette

@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
     const [properties, setProperties] = useState(propertiesData.properties);
     const [isSticky, setIsSticky] = useState(false);
     const [showCityModal, setShowCityModal] = useState(false);
-    
+
     const scrollY = useRef(new Animated.Value(0)).current;
 
     const filteredProperties = properties.filter(property =>
@@ -50,6 +50,8 @@ const HomeScreen = ({ navigation }) => {
                 stickyHeaderIndices={[1]}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
+                nestedScrollEnabled={true}
+                bounces={true}
             >
                 {/* 1. Hero Content & Welcome */}
                 <View style={styles.heroSection}>
@@ -63,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
 
                 {/* 2. Sticky Search Bar - sticks to top when scrolling */}
-                <SearchBar 
+                <SearchBar
                     onPress={() => navigation.navigate('Search')}
                     value={searchQuery}
                     isSticky={isSticky}
@@ -77,6 +79,7 @@ const HomeScreen = ({ navigation }) => {
                         showsHorizontalScrollIndicator={false}
                         style={styles.categoryContainer}
                         contentContainerStyle={styles.categoryContent}
+                        nestedScrollEnabled={true}
                     >
                         {propertyCategories.map((cat) => (
                             <TouchableOpacity
@@ -131,13 +134,14 @@ const HomeScreen = ({ navigation }) => {
                     {/* Browse New Projects Section */}
                     <View style={styles.newProjectsSection}>
                         <Text style={styles.sectionTitleWhite}>Browse New Projects in UAE</Text>
-                        
+
                         {/* Location Tabs */}
                         <ScrollView
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             style={styles.locationTabsContainer}
                             contentContainerStyle={styles.locationTabsContent}
+                            nestedScrollEnabled={true}
                         >
                             {uaeLocations.map((location) => (
                                 <TouchableOpacity
@@ -166,6 +170,7 @@ const HomeScreen = ({ navigation }) => {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.projectCardsContainer}
+                            nestedScrollEnabled={true}
                             renderItem={({ item }) => (
                                 <NewProjectCard
                                     project={item}
@@ -175,8 +180,8 @@ const HomeScreen = ({ navigation }) => {
                         />
 
                         {/* View All Button */}
-                        <TouchableOpacity 
-                            style={styles.viewAllButton} 
+                        <TouchableOpacity
+                            style={styles.viewAllButton}
                             activeOpacity={0.8}
                             onPress={() => setShowCityModal(true)}
                         >
@@ -198,6 +203,7 @@ const HomeScreen = ({ navigation }) => {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.propertyCardsContainer}
+                            nestedScrollEnabled={true}
                         >
                             {filteredProperties.map((item) => (
                                 <PropertyCard
@@ -251,7 +257,7 @@ const styles = StyleSheet.create({
         color: colors.textSecondary,
         fontWeight: '500',
     },
-    
+
     // New Projects Section (inside gradient)
     newProjectsSection: {
         paddingBottom: 24,

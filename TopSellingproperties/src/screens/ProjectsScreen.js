@@ -675,19 +675,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     expandedTitle: {
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginRight: 4,
     },
     expandedType: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginBottom: 2,
     },
     expandedDeveloper: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginBottom: 12,
@@ -704,7 +704,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     statusBadgeText: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
     },
@@ -715,7 +715,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     statusBadgeTextSecondary: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_600SemiBold',
         color: '#10B981',
     },
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     aedText: {
-        fontSize: 10,
+        fontSize: 11,
         fontFamily: 'Poppins_700Bold',
         color: colors.primary,
     },
@@ -758,7 +758,7 @@ const styles = StyleSheet.create({
     },
     actionButtonText: {
         flex: 1,
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_500Medium',
         color: colors.textPrimary,
     },
@@ -769,7 +769,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     viewMoreText: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
         marginRight: 4,
@@ -996,7 +996,7 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     price: {
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
     },
@@ -1009,7 +1009,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
     viewedText: {
-        fontSize: 11,
+        fontSize: 12,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginLeft: 4,
@@ -1025,19 +1025,19 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     specText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginLeft: 4,
     },
     propertyTitle: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textPrimary,
         marginBottom: 4,
     },
     propertyLocation: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_400Regular',
         color: colors.textSecondary,
         marginBottom: 8,
@@ -1048,12 +1048,12 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     handoverLabel: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_400Regular',
         color: colors.textSecondary,
     },
     handoverValue: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
     },
@@ -1080,7 +1080,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     emailButtonText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
         marginLeft: 6,
@@ -1098,7 +1098,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     callButtonText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
         marginLeft: 6,
@@ -1132,7 +1132,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     truBrokerHeaderText: {
-        fontSize: 11,
+        fontSize: 12,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.white,
         marginLeft: 4,
@@ -1149,7 +1149,7 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     mapTabText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginLeft: 4,
@@ -1159,18 +1159,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     sortTabText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginLeft: 4,
     },
     viewAllText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.primary,
     },
     sectionSubtitle: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_400Regular',
         color: colors.textSecondary,
     },
@@ -1190,7 +1190,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     registerText: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textPrimary,
     },
@@ -1205,7 +1205,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     whatsappRegisterText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_600SemiBold',
         color: '#25D366',
         marginLeft: 6,
@@ -1234,7 +1234,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: 17,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 16,
@@ -1254,7 +1254,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'transparent',
     },
     sortOptionText: {
-        fontSize: 15,
+        fontSize: 14,
         fontFamily: 'Poppins_500Medium',
         color: colors.textPrimary,
     },

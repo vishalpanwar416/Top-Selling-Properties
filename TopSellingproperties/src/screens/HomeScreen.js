@@ -26,12 +26,35 @@ const HomeScreen = ({ navigation }) => {
     const [isSticky, setIsSticky] = useState(false);
     const [showCityModal, setShowCityModal] = useState(false);
 
-    const scrollY = useRef(new Animated.Value(0)).current;
+    // Filter properties based on search and transaction type (location filtering is done per section)
+    const filteredProperties = properties.filter(property => {
+        // Search filter
+        const matchesSearch =
+            !searchQuery ||
+            (property.title && property.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (property.location && property.location.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const filteredProperties = properties.filter(property =>
-        (property.title && property.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (property.location && property.location.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+        // Transaction type filter
+        const matchesTransaction =
+            !activeType ||
+            (activeType === 'Buy' && property.transactionType === 'Buy') ||
+            (activeType === 'Rent' && property.transactionType === 'Rent');
+
+        // Category filter - for now, we'll consider all properties as matching if category is set
+        // This can be enhanced later if properties have a category field
+        const matchesCategory = true; // Placeholder - can be enhanced when category mapping is defined
+
+        return matchesSearch && matchesTransaction && matchesCategory;
+    });
+
+    // Helper function to check if property matches location
+    const matchesLocation = (property, location) => {
+        if (!location) return true;
+        return (
+            (property.city && property.city.toLowerCase() === location.toLowerCase()) ||
+            (property.location && property.location.toLowerCase().includes(location.toLowerCase()))
+        );
+    };
 
     const handlePropertyPress = (property) => {
         navigation.navigate('PropertyDetails', { property });
@@ -58,7 +81,7 @@ const HomeScreen = ({ navigation }) => {
                     <Header navigation={navigation} transparent />
                     <View style={styles.heroContent}>
                         <View style={styles.welcomeSection}>
-                            <Text style={styles.welcomeTitle}>Find Your Dream Property</Text>
+                            <Text style={styles.welcomeTitle} numberOfLines={1}>Find Your Dream Property</Text>
                             <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
                         </View>
                     </View>
@@ -163,9 +186,11 @@ const HomeScreen = ({ navigation }) => {
                             ))}
                         </ScrollView>
 
-                        {/* Horizontal Project Cards */}
+                        {/* Horizontal Project Cards - Filter by active location */}
                         <FlatList
-                            data={filteredProperties.slice(0, 5)}
+                            data={filteredProperties
+                                .filter(prop => matchesLocation(prop, activeLocation))
+                                .slice(0, 5)}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -194,7 +219,11 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.featuredSection}>
                         <View style={styles.propertiesSectionHeader}>
                             <Text style={styles.propertiesSectionTitle}>Featured Properties</Text>
-                            <TouchableOpacity style={styles.seeAllButton}>
+                            <TouchableOpacity 
+                                style={styles.seeAllButton}
+                                onPress={() => navigation.navigate('Properties')}
+                                activeOpacity={0.8}
+                            >
                                 <Text style={styles.seeAllText}>See All</Text>
                                 <Ionicons name="chevron-forward" size={16} color={colors.white} />
                             </TouchableOpacity>
@@ -222,7 +251,7 @@ const HomeScreen = ({ navigation }) => {
                 visible={showCityModal}
                 onClose={() => setShowCityModal(false)}
                 city={activeLocation}
-                properties={filteredProperties}
+                properties={filteredProperties.filter(prop => matchesLocation(prop, activeLocation))}
                 onPropertyPress={handlePropertyPress}
             />
         </View>
@@ -236,21 +265,21 @@ const styles = StyleSheet.create({
     },
     heroSection: {
         backgroundColor: colors.white,
-        paddingBottom: 20,
+        paddingBottom: 8,
     },
     heroContent: {
         paddingHorizontal: 20,
         marginTop: 8,
     },
     welcomeSection: {
-        marginBottom: 10,
+        marginBottom: 4,
     },
     welcomeTitle: {
-        fontSize: 26,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontSize: 20,
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.black,
         marginBottom: 4,
-        letterSpacing: -0.8,
+        letterSpacing: -0.5,
     },
     welcomeSubtitle: {
         fontSize: 15,
@@ -259,18 +288,18 @@ const styles = StyleSheet.create({
     },
 
     newProjectsSection: {
-        paddingBottom: 24,
+        paddingBottom: 16,
     },
     sectionTitleWhite: {
         fontSize: 20,
         fontFamily: 'Poppins_700Bold',
         color: colors.white,
-        marginBottom: 16,
+        marginBottom: 12,
         paddingHorizontal: 20,
         letterSpacing: -0.3,
     },
     locationTabsContainer: {
-        marginBottom: 20,
+        marginBottom: 12,
     },
     locationTabsContent: {
         paddingHorizontal: 20,
@@ -306,9 +335,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
         marginHorizontal: 20,
-        paddingVertical: 16,
+        paddingVertical: 12,
         borderRadius: 12,
-        marginTop: 8,
+        marginTop: 4,
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.3)',
     },
@@ -319,17 +348,17 @@ const styles = StyleSheet.create({
         marginRight: 4,
     },
     featuredSection: {
-        paddingTop: 8,
+        paddingTop: 4,
     },
 
     // Filters Section (below search bar)
     filtersSection: {
         backgroundColor: colors.white,
-        paddingTop: 8,
-        paddingBottom: 16,
+        paddingTop: 4,
+        paddingBottom: 12,
     },
     categoryContainer: {
-        marginBottom: 16,
+        marginBottom: 12,
     },
     categoryContent: {
         paddingHorizontal: 20,
@@ -389,8 +418,8 @@ const styles = StyleSheet.create({
     gradientSection: {
         borderTopLeftRadius: 32,
         borderTopRightRadius: 32,
-        paddingTop: 24,
-        paddingBottom: 40,
+        paddingTop: 16,
+        paddingBottom: 30,
         minHeight: Dimensions.get('window').height * 0.4,
     },
     propertiesSectionHeader: {
@@ -398,7 +427,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        marginBottom: 16,
+        marginBottom: 12,
     },
     propertiesSectionTitle: {
         fontSize: 20,
@@ -422,7 +451,7 @@ const styles = StyleSheet.create({
     },
     propertyCardsContainer: {
         paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingBottom: 12,
     },
 });
 

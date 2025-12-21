@@ -879,7 +879,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     resultsText: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.textSecondary,
     },
@@ -902,14 +902,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
     },
     emptyTitle: {
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginTop: 20,
         marginBottom: 8,
     },
     emptySubtitle: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         textAlign: 'center',
@@ -945,7 +945,7 @@ const styles = StyleSheet.create({
         gap: 12,
     },
     bottomSheetTitle: {
-        fontSize: 18,
+        fontSize: 17,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
     },
@@ -973,7 +973,7 @@ const styles = StyleSheet.create({
         borderColor: colors.filterRed,
     },
     transactionModalButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.textSecondary,
     },
@@ -1004,7 +1004,7 @@ const styles = StyleSheet.create({
         borderColor: colors.filterRed,
     },
     categoryTabText: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_600SemiBold',
         color: colors.textSecondary,
     },
@@ -1031,7 +1031,7 @@ const styles = StyleSheet.create({
         borderColor: colors.filterRed,
     },
     propertyTypeCardText: {
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
         marginTop: 8,
@@ -1048,7 +1048,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     applyButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins_700Bold',
         color: colors.white,
     },
@@ -1076,7 +1076,7 @@ const styles = StyleSheet.create({
         borderColor: colors.filterRed,
     },
     optionPillText: {
-        fontSize: 14,
+        fontSize: 15,
         fontFamily: 'Poppins_500Medium',
         color: colors.textSecondary,
     },

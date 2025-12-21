@@ -46,7 +46,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                 <View style={styles.topRow}>
                     {property.featured && (
                         <View style={styles.featuredBadge}>
-                            <Ionicons name="star" size={10} color="#FFD700" style={{ marginRight: 4 }} />
+                            <Ionicons name="star" size={9} color="#FFD700" style={{ marginRight: 3 }} />
                             <Text style={styles.featuredText}>FEATURED</Text>
                         </View>
                     )}
@@ -63,7 +63,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     >
                         <Ionicons
                             name={isFavorite ? "heart" : "heart-outline"}
-                            size={20}
+                            size={18}
                             color={isFavorite ? "#FF4757" : colors.white}
                         />
                     </TouchableOpacity>
@@ -97,7 +97,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
 
                 {/* Location */}
                 <View style={styles.locationRow}>
-                    <Ionicons name="location-sharp" size={14} color={colors.primary} />
+                    <Ionicons name="location-sharp" size={13} color={colors.primary} />
                     <Text style={styles.location} numberOfLines={1}>{property.location || 'Location not available'}</Text>
                 </View>
 
@@ -105,7 +105,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                 <View style={styles.detailsContainer}>
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="bed-outline" size={18} color={colors.primary} />
+                            <MaterialCommunityIcons name="bed-outline" size={16} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.bedrooms || 'Studio'}</Text>
                         <Text style={styles.detailLabel}>Beds</Text>
@@ -113,7 +113,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="shower" size={18} color={colors.primary} />
+                            <MaterialCommunityIcons name="shower" size={16} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.bathrooms || '-'}</Text>
                         <Text style={styles.detailLabel}>Baths</Text>
@@ -121,7 +121,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="vector-square" size={18} color={colors.primary} />
+                            <MaterialCommunityIcons name="vector-square" size={16} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.area ? property.area.toLocaleString() : 'N/A'}</Text>
                         <Text style={styles.detailLabel}>{property.areaUnit || 'sqft'}</Text>
@@ -136,25 +136,25 @@ const styles = StyleSheet.create({
     container: {
         width: cardWidth,
         backgroundColor: colors.white,
-        borderRadius: 20,
+        borderRadius: 16,
         marginRight: 16,
-        marginVertical: 8,
+        marginVertical: 6,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.15,
-        shadowRadius: 20,
-        elevation: 10,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 6,
         overflow: 'hidden',
     },
     fullWidthContainer: {
         width: '100%',
         marginRight: 0,
-        marginBottom: 16,
+        marginBottom: 10,
         marginVertical: 0,
     },
     imageContainer: {
         width: '100%',
-        height: 200,
+        height: 150,
         position: 'relative',
     },
     image: {
@@ -166,120 +166,120 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 100,
+        height: 60,
     },
     topRow: {
         position: 'absolute',
-        top: 12,
-        left: 12,
-        right: 12,
+        top: 8,
+        left: 8,
+        right: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },
     featuredBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 20,
+        backgroundColor: 'rgba(0,0,0,0.65)',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 16,
         backdropFilter: 'blur(10px)',
     },
     featuredText: {
         color: '#FFD700',
         fontSize: 10,
         fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.5,
+        letterSpacing: 0.3,
     },
     tagBadge: {
-        backgroundColor: 'rgba(72, 187, 120, 0.9)',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 20,
+        backgroundColor: 'rgba(72, 187, 120, 0.95)',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 16,
     },
     tagText: {
         color: colors.white,
-        fontSize: 9,
+        fontSize: 10,
         fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.5,
+        letterSpacing: 0.3,
     },
     favoriteButton: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        backgroundColor: 'rgba(0,0,0,0.4)',
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        backgroundColor: 'rgba(0,0,0,0.45)',
         alignItems: 'center',
         justifyContent: 'center',
     },
     typeBadgeContainer: {
         position: 'absolute',
-        top: 12,
-        right: 56,
+        top: 8,
+        right: 44,
         flexDirection: 'row',
         alignItems: 'center',
     },
     typeBadge: {
         backgroundColor: colors.primary,
-        paddingHorizontal: 12,
-        paddingVertical: 5,
-        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 16,
     },
     typeText: {
         color: colors.white,
         fontSize: 10,
         fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.5,
+        letterSpacing: 0.3,
     },
     rentBadge: {
         backgroundColor: '#2563EB',
     },
     rentTagBadge: {
         backgroundColor: '#059669',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 12,
-        marginLeft: 6,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 10,
+        marginLeft: 4,
     },
     rentTagText: {
         color: colors.white,
-        fontSize: 8,
+        fontSize: 9,
         fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.3,
+        letterSpacing: 0.2,
     },
     priceOnImage: {
         position: 'absolute',
-        bottom: 12,
-        left: 12,
+        bottom: 8,
+        left: 8,
         flexDirection: 'row',
         alignItems: 'baseline',
     },
     priceText: {
-        fontSize: 22,
+        fontSize: 17,
         fontFamily: 'Poppins_800ExtraBold',
         color: colors.white,
-        letterSpacing: -0.5,
+        letterSpacing: -0.4,
     },
     priceType: {
-        fontSize: 13,
+        fontSize: 12,
         fontFamily: 'Poppins_500Medium',
-        color: 'rgba(255,255,255,0.8)',
+        color: 'rgba(255,255,255,0.85)',
         marginLeft: 2,
     },
     content: {
-        padding: 16,
+        padding: 10,
     },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
-        lineHeight: 22,
-        marginBottom: 8,
-        letterSpacing: -0.3,
+        lineHeight: 18,
+        marginBottom: 4,
+        letterSpacing: -0.2,
     },
     locationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 14,
+        marginBottom: 8,
     },
     location: {
         fontSize: 13,
@@ -291,25 +291,25 @@ const styles = StyleSheet.create({
     detailsContainer: {
         flexDirection: 'row',
         backgroundColor: '#F8F9FB',
-        borderRadius: 14,
-        paddingVertical: 12,
-        paddingHorizontal: 8,
+        borderRadius: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 6,
     },
     detailItem: {
         flex: 1,
         alignItems: 'center',
     },
     detailIconWrapper: {
-        width: 32,
-        height: 32,
-        borderRadius: 10,
-        backgroundColor: 'rgba(185, 28, 28, 0.08)',
+        width: 26,
+        height: 26,
+        borderRadius: 7,
+        backgroundColor: 'rgba(185, 28, 28, 0.1)',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 6,
+        marginBottom: 3,
     },
     detailValue: {
-        fontSize: 14,
+        fontSize: 13,
         color: colors.textPrimary,
         fontFamily: 'Poppins_700Bold',
     },
@@ -317,12 +317,12 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: colors.textTertiary,
         fontFamily: 'Poppins_500Medium',
-        marginTop: 2,
+        marginTop: 0,
     },
     detailDivider: {
         width: 1,
         backgroundColor: colors.border,
-        marginVertical: 4,
+        marginVertical: 2,
     },
 });
 

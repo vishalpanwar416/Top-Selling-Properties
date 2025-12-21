@@ -44,7 +44,7 @@ const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
                         style={styles.image}
                         resizeMode="cover"
                     />
-                    
+
                     {/* Gradient Overlay */}
                     <LinearGradient
                         colors={['rgba(0,0,0,0.3)', 'transparent', 'rgba(0,0,0,0.5)']}
@@ -60,15 +60,15 @@ const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
                             </View>
                         )}
                         <View style={{ flex: 1 }} />
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             style={styles.favoriteButton}
                             onPress={() => setIsFavorite(!isFavorite)}
                             activeOpacity={0.8}
                         >
-                            <Ionicons 
-                                name={isFavorite ? "heart" : "heart-outline"} 
-                                size={18} 
-                                color={isFavorite ? "#FF4757" : colors.white} 
+                            <Ionicons
+                                name={isFavorite ? "heart" : "heart-outline"}
+                                size={18}
+                                color={isFavorite ? "#FF4757" : colors.white}
                             />
                         </TouchableOpacity>
                     </View>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     newBadgeText: {
         color: colors.white,
         fontSize: 9,
-        fontWeight: '800',
+        fontFamily: 'Poppins_800ExtraBold',
         letterSpacing: 0.5,
     },
     favoriteButton: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     photoCountText: {
         color: colors.white,
         fontSize: 11,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         marginLeft: 4,
     },
     content: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 17,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         flex: 1,
         letterSpacing: -0.3,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     typeText: {
         fontSize: 11,
         color: colors.primary,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
     },
     locationRow: {
         flexDirection: 'row',
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: colors.textSecondary,
         flex: 1,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     infoRow: {
         flexDirection: 'row',
@@ -274,16 +274,16 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: colors.textTertiary,
         marginBottom: 4,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     infoValue: {
         fontSize: 16,
-        fontWeight: '800',
+        fontFamily: 'Poppins_800ExtraBold',
         color: colors.primary,
     },
     infoValueSecondary: {
         fontSize: 15,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
     },
     infoDivider: {
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     },
     whatsappText: {
         fontSize: 14,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: '#25D366',
         marginLeft: 6,
     },

@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
     photoCounterText: {
         color: colors.white,
         fontSize: 14,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         marginLeft: 6,
     },
     scrollHintContainer: {
@@ -606,7 +606,7 @@ const styles = StyleSheet.create({
     scrollHintText: {
         color: colors.white,
         fontSize: 11,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
         marginHorizontal: 6,
     },
     contentWrapper: {
@@ -658,7 +658,7 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 26,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         letterSpacing: -0.5,
     },
@@ -675,7 +675,7 @@ const styles = StyleSheet.create({
     truCheckText: {
         color: colors.primary,
         fontSize: 12,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         marginLeft: 4,
     },
     specsRow: {
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
     actionButtonText: {
         color: colors.primary,
         fontSize: 13,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
         marginLeft: 6,
     },
     section: {
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
     },
     descriptionTitle: {
         fontSize: 18,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 12,
         letterSpacing: -0.3,
@@ -744,12 +744,12 @@ const styles = StyleSheet.create({
     readMoreText: {
         color: colors.primary,
         fontSize: 14,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         marginTop: 8,
     },
     sectionTitle: {
         fontSize: 18,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 16,
     },
@@ -788,7 +788,7 @@ const styles = StyleSheet.create({
     },
     infoValue: {
         fontSize: 15,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
         maxWidth: '55%',
         textAlign: 'right',
@@ -883,7 +883,7 @@ const styles = StyleSheet.create({
     },
     popularName: {
         fontSize: 14,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
         flex: 1,
     },
@@ -901,7 +901,7 @@ const styles = StyleSheet.create({
     },
     popularChange: {
         fontSize: 14,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
         marginLeft: 4,
     },
     areaGuideButton: {
@@ -929,7 +929,7 @@ const styles = StyleSheet.create({
     },
     areaGuideName: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
     },
     agentSection: {
@@ -960,7 +960,7 @@ const styles = StyleSheet.create({
     },
     agentBadge: {
         fontSize: 18,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.white,
     },
     agentName: {
@@ -1026,7 +1026,7 @@ const styles = StyleSheet.create({
     bottomButtonText: {
         color: colors.primary,
         fontSize: 15,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         marginLeft: 8,
     },
     bottomButtonWhatsApp: {

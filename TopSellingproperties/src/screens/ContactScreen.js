@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 34,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 12,
         letterSpacing: -0.5,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: colors.textSecondary,
         lineHeight: 26,
-        fontWeight: '400',
+        fontFamily: 'Poppins_400Regular',
     },
     formCard: {
         backgroundColor: colors.white,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     },
     formTitle: {
         fontSize: 22,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 24,
         letterSpacing: -0.3,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 15,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
         marginBottom: 10,
         letterSpacing: 0.1,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     submitButtonText: {
         color: colors.white,
         fontSize: 17,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.5,
     },
     infoCard: {
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     },
     infoTitle: {
         fontSize: 22,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 24,
         letterSpacing: -0.3,
@@ -274,12 +274,12 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: colors.textTertiary,
         marginBottom: 4,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     infoValue: {
         fontSize: 17,
         color: colors.textPrimary,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
     },
 });
 

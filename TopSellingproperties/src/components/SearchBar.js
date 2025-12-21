@@ -5,8 +5,8 @@ import colors from '../theme/colors';
 
 const STICKY_TOP_PADDING = Platform.OS === 'ios' ? 50 : (StatusBar.currentHeight || 24) + 10;
 
-const SearchBar = ({ 
-    onPress, 
+const SearchBar = ({
+    onPress,
     placeholder = 'Search for a locality, area or city',
     value = '',
     style,
@@ -25,7 +25,7 @@ const SearchBar = ({
 
     return (
         <Animated.View style={[
-            styles.container, 
+            styles.container,
             containerStyle,
             { paddingTop: paddingAnim }
         ]}>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 15,
         color: colors.textPrimary,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     placeholder: {
         color: colors.textTertiary,

@@ -56,15 +56,15 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                         </View>
                     )}
                     <View style={{ flex: 1 }} />
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.favoriteButton}
                         onPress={() => setIsFavorite(!isFavorite)}
                         activeOpacity={0.8}
                     >
-                        <Ionicons 
-                            name={isFavorite ? "heart" : "heart-outline"} 
-                            size={20} 
-                            color={isFavorite ? "#FF4757" : colors.white} 
+                        <Ionicons
+                            name={isFavorite ? "heart" : "heart-outline"}
+                            size={20}
+                            color={isFavorite ? "#FF4757" : colors.white}
                         />
                     </TouchableOpacity>
                 </View>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     featuredText: {
         color: '#FFD700',
         fontSize: 10,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.5,
     },
     tagBadge: {
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     tagText: {
         color: colors.white,
         fontSize: 9,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.5,
     },
     favoriteButton: {
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     typeText: {
         color: colors.white,
         fontSize: 10,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.5,
     },
     rentBadge: {
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     rentTagText: {
         color: colors.white,
         fontSize: 8,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.3,
     },
     priceOnImage: {
@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 22,
-        fontWeight: '800',
+        fontFamily: 'Poppins_800ExtraBold',
         color: colors.white,
         letterSpacing: -0.5,
     },
     priceType: {
         fontSize: 13,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
         color: 'rgba(255,255,255,0.8)',
         marginLeft: 2,
     },
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         lineHeight: 22,
         marginBottom: 8,
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
         color: colors.textSecondary,
         flex: 1,
         marginLeft: 4,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     detailsContainer: {
         flexDirection: 'row',
@@ -311,12 +311,12 @@ const styles = StyleSheet.create({
     detailValue: {
         fontSize: 14,
         color: colors.textPrimary,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
     },
     detailLabel: {
         fontSize: 10,
         color: colors.textTertiary,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
         marginTop: 2,
     },
     detailDivider: {

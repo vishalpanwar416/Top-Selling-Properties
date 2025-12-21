@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     backButtonText: {
         fontSize: 28,
         color: colors.textPrimary,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
     },
     searchBox: {
         flexDirection: 'row',
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: colors.textPrimary,
-        fontWeight: '400',
+        fontFamily: 'Poppins_400Regular',
     },
     clearButton: {
         width: 24,
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     },
     filterLabel: {
         fontSize: 10,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textTertiary,
         letterSpacing: 0.5,
         marginRight: 6,
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
     },
     filterValue: {
         fontSize: 13,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
         marginRight: 4,
         flex: 1,
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
     },
     resultsCount: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textSecondary,
     },
     listContent: {
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     },
     emptyTitle: {
         fontSize: 24,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 12,
         letterSpacing: -0.3,

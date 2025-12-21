@@ -77,20 +77,20 @@ const styles = StyleSheet.create({
     },
     logoText: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.white,
         letterSpacing: 0.3,
     },
     logoTextAccent: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.secondary,
         letterSpacing: 0.3,
     },
     tagline: {
         fontSize: 14,
         color: 'rgba(255, 255, 255, 0.85)',
-        fontWeight: '400',
+        fontFamily: 'Poppins_400Regular',
         letterSpacing: 0.2,
     },
     menuContainer: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     menuText: {
         fontSize: 17,
         color: colors.textPrimary,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         letterSpacing: 0.2,
     },
     footer: {
@@ -128,14 +128,14 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: colors.textSecondary,
         textAlign: 'center',
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
     versionText: {
         fontSize: 12,
         color: colors.textTertiary,
         textAlign: 'center',
         marginTop: 6,
-        fontWeight: '400',
+        fontFamily: 'Poppins_400Regular',
     },
 });
 

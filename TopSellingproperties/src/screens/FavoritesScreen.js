@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textPrimary,
         marginBottom: 12,
         letterSpacing: -0.5,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         lineHeight: 26,
         marginBottom: 32,
         paddingHorizontal: 20,
-        fontWeight: '400',
+        fontFamily: 'Poppins_400Regular',
     },
     exploreButton: {
         backgroundColor: colors.secondary,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     exploreButtonText: {
         color: colors.white,
         fontSize: 16,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         letterSpacing: 0.3,
     },
 });

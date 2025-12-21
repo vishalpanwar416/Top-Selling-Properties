@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     },
     welcomeTitle: {
         fontSize: 26,
-        fontWeight: '800',
+        fontFamily: 'Poppins_800ExtraBold',
         color: colors.black,
         marginBottom: 4,
         letterSpacing: -0.8,
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     welcomeSubtitle: {
         fontSize: 15,
         color: colors.textSecondary,
-        fontWeight: '500',
+        fontFamily: 'Poppins_500Medium',
     },
 
     // New Projects Section (inside gradient)
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     },
     sectionTitleWhite: {
         fontSize: 20,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.white,
         marginBottom: 16,
         paddingHorizontal: 20,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     },
     locationTabText: {
         fontSize: 12,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: 'rgba(255, 255, 255, 0.8)',
     },
     activeLocationTabText: {
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     },
     viewAllText: {
         fontSize: 15,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.white,
         marginRight: 4,
     },
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     },
     categoryPillText: {
         fontSize: 12,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.textPrimary,
     },
     activeCategoryPillText: {
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     },
     transactionText: {
         fontSize: 13,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.textSecondary,
     },
     activeTransactionText: {
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     },
     propertiesSectionTitle: {
         fontSize: 20,
-        fontWeight: '700',
+        fontFamily: 'Poppins_700Bold',
         color: colors.white,
         letterSpacing: -0.3,
     },
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     },
     seeAllText: {
         fontSize: 13,
-        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: colors.white,
         marginRight: 4,
     },

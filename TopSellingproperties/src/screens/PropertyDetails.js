@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
+import agentsData from '../data/agents.json';
 
 const { width, height } = Dimensions.get('window');
 const PHOTO_HEIGHT = width * 0.75;
@@ -55,22 +56,29 @@ const PropertyDetails = ({ route, navigation }) => {
             'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
         ];
 
+    // Get agent by ID
+    const getAgentById = (agentId) => {
+        return agentsData.agents.find(agent => agent.id === agentId) || null;
+    };
+
+    const agent = property.agentId ? getAgentById(property.agentId) : (property.agent || null);
+
     const formatPrice = (price) => {
         return `AED  ${price?.toLocaleString() || 'N/A'}`;
     };
 
     const handleCall = () => {
-        const phone = property.agent?.phone || '+971500000000';
+        const phone = agent?.phone || '+971500000000';
         Linking.openURL(`tel:${phone}`);
     };
 
     const handleEmail = () => {
-        const email = property.agent?.email || 'info@property.ae';
+        const email = agent?.email || 'info@property.ae';
         Linking.openURL(`mailto:${email}?subject=Inquiry about ${property.title}`);
     };
 
     const handleWhatsApp = () => {
-        const phone = property.agent?.phone || '+971500000000';
+        const phone = agent?.phone || '+971500000000';
         const message = `Hi, I'm interested in ${property.title}`;
         Linking.openURL(`whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}`);
     };
@@ -245,7 +253,7 @@ const PropertyDetails = ({ route, navigation }) => {
                         <Text style={styles.price}>{formatPrice(property.price)}</Text>
                         <View style={styles.truCheckBadge}>
                             <Ionicons name="checkmark-circle" size={16} color={colors.primary} />
-                            <Text style={styles.truCheckText}>TruCheck™</Text>
+                            <Text style={styles.truCheckText}>TSPCheck™</Text>
                         </View>
                     </View>
 
@@ -461,7 +469,7 @@ const PropertyDetails = ({ route, navigation }) => {
                     </View>
 
                     {/* Agent Card */}
-                    {property.agent && (
+                    {agent && (
                         <View style={styles.agentSection}>
                             <LinearGradient
                                 colors={[colors.maroon, colors.primary]}
@@ -471,13 +479,13 @@ const PropertyDetails = ({ route, navigation }) => {
                             >
                                 <View style={styles.agentImageWrapper}>
                                     <Image
-                                        source={{ uri: property.agent.image || 'https://via.placeholder.com/100' }}
+                                        source={{ uri: agent.image || 'https://via.placeholder.com/100' }}
                                         style={styles.agentImage}
                                     />
                                 </View>
                                 <View style={styles.agentInfo}>
-                                    <Text style={styles.agentBadge}>TruBroker™</Text>
-                                    <Text style={styles.agentName}>{property.agent.name || 'Agent'}</Text>
+                                    <Text style={styles.agentBadge}>TSPBroker™</Text>
+                                    <Text style={styles.agentName}>{agent.name || 'Agent'}</Text>
                                 </View>
                             </LinearGradient>
                         </View>

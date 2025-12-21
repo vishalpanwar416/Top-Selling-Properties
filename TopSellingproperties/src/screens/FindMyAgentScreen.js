@@ -15,56 +15,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
+import agentsData from '../data/agents.json';
 
 const { width } = Dimensions.get('window');
-
-// Mock agent data
-const mockAgents = [
-    {
-        id: '1',
-        name: 'Jitesh Jeswani',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
-        serviceAreas: ['Downtown Dubai', 'Business Bay', 'Dubai Marina'],
-        languages: ['English', 'Hindi'],
-        saleListings: 8,
-        rentListings: 2,
-        agencyLogo: 'https://via.placeholder.com/40?text=ROCKY',
-        agencyName: 'ROCKY',
-    },
-    {
-        id: '2',
-        name: 'George Hamblyn',
-        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
-        serviceAreas: ['Downtown Dubai'],
-        languages: ['English'],
-        saleListings: 11,
-        rentListings: 4,
-        agencyLogo: 'https://via.placeholder.com/40?text=SAVILLS',
-        agencyName: 'savills',
-    },
-    {
-        id: '3',
-        name: 'Liam Joshua Dawett',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200',
-        serviceAreas: ['Dubai Marina', 'JBR'],
-        languages: ['English', 'Arabic'],
-        saleListings: 15,
-        rentListings: 7,
-        agencyLogo: 'https://via.placeholder.com/40?text=AGENCY',
-        agencyName: 'Agency',
-    },
-    {
-        id: '4',
-        name: 'Sarah Johnson',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
-        serviceAreas: ['Palm Jumeirah', 'Dubai Marina'],
-        languages: ['English', 'French'],
-        saleListings: 9,
-        rentListings: 3,
-        agencyLogo: 'https://via.placeholder.com/40?text=AGENCY',
-        agencyName: 'Agency',
-    },
-];
+const mockAgents = agentsData.agents;
 
 const FindMyAgentScreen = ({ navigation }) => {
     const insets = useSafeAreaInsets();
@@ -216,10 +170,10 @@ const FindMyAgentScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* TruBroker Section */}
+                {/* TSPBroker Section */}
                 <View style={styles.truBrokerSection}>
                     <View style={styles.truBrokerBadge}>
-                        <Text style={styles.truBrokerText}>TruBroker™</Text>
+                        <Text style={styles.truBrokerText}>TSPBroker™</Text>
                     </View>
                     <Text style={styles.truBrokerDescription}>
                         Explore agents with a proven track record of high response rates and authentic listings.

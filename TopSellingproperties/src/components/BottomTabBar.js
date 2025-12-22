@@ -157,12 +157,12 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 11,
         color: colors.darkGray,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         marginTop: 2,
     },
     labelFocused: {
         color: colors.red,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
     },
 });
 

@@ -160,11 +160,11 @@ const FindMyAgentScreen = ({ navigation }) => {
 
                 {/* Sticky Search Bar */}
                 <SearchBar
-                    placeholder={activeTab === 'Agents' ? "Search by Agent name or Location" : "Search by Agency name or Location"}
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     editable={true}
                     isSticky={isSticky}
+                    searchType={activeTab === 'Agents' ? 'agents' : 'agencies'}
                 />
 
                 {/* Filters Section */}
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     },
     welcomeTitle: {
         fontSize: 28,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.white,
         marginBottom: 8,
         letterSpacing: -0.5,
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     welcomeSubtitle: {
         fontSize: 16,
         color: 'rgba(255, 255, 255, 0.9)',
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     // Filters Section
     filtersSection: {
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     },
     categoryPillText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     activeCategoryPillText: {
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     },
     transactionText: {
         fontSize: 13,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textSecondary,
     },
     activeTransactionText: {
@@ -384,8 +384,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     locationTab: {
-        paddingHorizontal: 14,
-        paddingVertical: 6,
+        paddingHorizontal: 12,
+        paddingVertical: 3,
         marginRight: 8,
         borderRadius: 16,
         backgroundColor: colors.lightGray,
@@ -397,8 +397,8 @@ const styles = StyleSheet.create({
         borderColor: colors.black,
     },
     locationTabText: {
-        fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeLocationTabText: {
@@ -429,13 +429,13 @@ const styles = StyleSheet.create({
     truBrokerText: {
         color: colors.white,
         fontSize: 14,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
     },
     truBrokerDescription: {
         fontSize: 14,
         lineHeight: 20,
         color: colors.textSecondary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     agentsListContainer: {
         paddingHorizontal: 20,
@@ -476,19 +476,19 @@ const styles = StyleSheet.create({
     },
     agentName: {
         fontSize: 16,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 4,
     },
     serviceAreas: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         marginBottom: 4,
     },
     languages: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         marginBottom: 8,
     },
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
     },
     listingTagText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: '#4299E1',
     },
     agencyLogoContainer: {

@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Dimensions, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import PropertyCard from '../components/PropertyCard';
+import SimplePropertyCard from '../components/SimplePropertyCard';
 import NewProjectCard from '../components/NewProjectCard';
 import CityPropertiesModal from '../components/CityPropertiesModal';
 import colors from '../theme/colors';
@@ -92,6 +92,7 @@ const HomeScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('Search')}
                     value={searchQuery}
                     isSticky={isSticky}
+                    searchType="general"
                 />
 
                 {/* 3. Category Pills & Transaction Types */}
@@ -104,6 +105,15 @@ const HomeScreen = ({ navigation }) => {
                         contentContainerStyle={styles.categoryContent}
                         nestedScrollEnabled={true}
                     >
+                        {/* View All Button */}
+                        <TouchableOpacity
+                            style={styles.viewAllCategoryButton}
+                            onPress={() => navigation.navigate('Properties')}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={styles.viewAllCategoryText}>View All</Text>
+                            <Ionicons name="chevron-forward" size={14} color={colors.white} />
+                        </TouchableOpacity>
                         {propertyCategories.map((cat) => (
                             <TouchableOpacity
                                 key={cat}
@@ -228,20 +238,20 @@ const HomeScreen = ({ navigation }) => {
                                 <Ionicons name="chevron-forward" size={16} color={colors.white} />
                             </TouchableOpacity>
                         </View>
-                        <ScrollView
+                        <FlatList
+                            data={filteredProperties}
+                            keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.propertyCardsContainer}
                             nestedScrollEnabled={true}
-                        >
-                            {filteredProperties.map((item) => (
-                                <PropertyCard
-                                    key={item.id}
+                            renderItem={({ item }) => (
+                                <SimplePropertyCard
                                     property={item}
                                     onPress={() => handlePropertyPress(item)}
                                 />
-                            ))}
-                        </ScrollView>
+                            )}
+                        />
                     </View>
                 </LinearGradient>
             </ScrollView>
@@ -276,7 +286,7 @@ const styles = StyleSheet.create({
     },
     welcomeTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.black,
         marginBottom: 4,
         letterSpacing: -0.5,
@@ -284,7 +294,7 @@ const styles = StyleSheet.create({
     welcomeSubtitle: {
         fontSize: 15,
         color: colors.textSecondary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
 
     newProjectsSection: {
@@ -292,7 +302,7 @@ const styles = StyleSheet.create({
     },
     sectionTitleWhite: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
         marginBottom: 12,
         paddingHorizontal: 20,
@@ -305,8 +315,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     locationTab: {
-        paddingHorizontal: 14,
-        paddingVertical: 6,
+        paddingHorizontal: 12,
+        paddingVertical: 3,
         marginRight: 8,
         borderRadius: 16,
         backgroundColor: 'rgba(255, 255, 255, 0.15)',
@@ -318,8 +328,8 @@ const styles = StyleSheet.create({
         borderColor: colors.white,
     },
     locationTabText: {
-        fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
         color: 'rgba(255, 255, 255, 0.8)',
     },
     activeLocationTabText: {
@@ -343,7 +353,7 @@ const styles = StyleSheet.create({
     },
     viewAllText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
         marginRight: 4,
     },
@@ -363,9 +373,27 @@ const styles = StyleSheet.create({
     categoryContent: {
         paddingHorizontal: 20,
     },
+    viewAllCategoryButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 2,
+        paddingVertical: 3,
+        marginRight: 8,
+        borderRadius: 16,
+        backgroundColor: colors.primary,
+        borderWidth: 1,
+        borderColor: colors.primary,
+    },
+    viewAllCategoryText: {
+        fontSize: 12,
+        fontFamily: 'Lato_400Regular',
+        color: colors.white,
+        marginRight: 4,
+    },
     categoryPill: {
         paddingHorizontal: 14,
-        paddingVertical: 6,
+        paddingVertical: 3,
         marginRight: 8,
         borderRadius: 16,
         backgroundColor: colors.lightGray,
@@ -378,7 +406,7 @@ const styles = StyleSheet.create({
     },
     categoryPillText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     activeCategoryPillText: {
@@ -407,7 +435,7 @@ const styles = StyleSheet.create({
     },
     transactionText: {
         fontSize: 13,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textSecondary,
     },
     activeTransactionText: {
@@ -431,7 +459,7 @@ const styles = StyleSheet.create({
     },
     propertiesSectionTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
         letterSpacing: -0.3,
     },
@@ -445,7 +473,7 @@ const styles = StyleSheet.create({
     },
     seeAllText: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
         marginRight: 4,
     },

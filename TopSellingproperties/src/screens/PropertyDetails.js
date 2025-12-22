@@ -18,6 +18,7 @@ import colors from '../theme/colors';
 import agentsData from '../data/agents.json';
 import agenciesData from '../data/agencies.json';
 import ContactActions from '../components/ContactActions';
+import LikeButton from '../components/LikeButton';
 
 const { width, height } = Dimensions.get('window');
 const PHOTO_HEIGHT = width * 0.75;
@@ -26,7 +27,6 @@ const INITIAL_SHEET_POSITION = height * 0.70;
 const PropertyDetails = ({ route, navigation }) => {
     const { property } = route.params || {};
     const insets = useSafeAreaInsets();
-    const [isFavorite, setIsFavorite] = useState(false);
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [isPhotoScrolling, setIsPhotoScrolling] = useState(false);
     const [isContentScrolling, setIsContentScrolling] = useState(false);
@@ -615,16 +615,13 @@ const PropertyDetails = ({ route, navigation }) => {
                     <TouchableOpacity style={styles.headerButton} onPress={handleShare}>
                         <Ionicons name="share-social-outline" size={22} color={colors.textPrimary} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.headerButton}
-                        onPress={() => setIsFavorite(!isFavorite)}
-                    >
-                        <Ionicons
-                            name={isFavorite ? 'heart' : 'heart-outline'}
-                            size={22}
-                            color={isFavorite ? '#FF4757' : colors.textPrimary}
-                        />
-                    </TouchableOpacity>
+                    <LikeButton
+                        size={22}
+                        likedColor="#FF4757"
+                        unlikedColor={colors.textPrimary}
+                        showBackground={false}
+                        buttonStyle={styles.headerButton}
+                    />
                 </View>
             </View>
 
@@ -683,7 +680,7 @@ const styles = StyleSheet.create({
     photoCounterText: {
         color: colors.white,
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 6,
     },
     scrollHintContainer: {
@@ -705,7 +702,7 @@ const styles = StyleSheet.create({
     scrollHintText: {
         color: colors.white,
         fontSize: 11,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         marginHorizontal: 6,
     },
     contentWrapper: {
@@ -757,7 +754,7 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 26,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         letterSpacing: -0.5,
     },
@@ -774,7 +771,7 @@ const styles = StyleSheet.create({
     truCheckText: {
         color: colors.primary,
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 4,
     },
     specsRow: {
@@ -822,7 +819,7 @@ const styles = StyleSheet.create({
     actionButtonText: {
         color: colors.primary,
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 6,
     },
     section: {
@@ -830,7 +827,7 @@ const styles = StyleSheet.create({
     },
     descriptionTitle: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 12,
         letterSpacing: -0.3,
@@ -843,12 +840,12 @@ const styles = StyleSheet.create({
     readMoreText: {
         color: colors.primary,
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         marginTop: 8,
     },
     sectionTitle: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 16,
     },
@@ -887,7 +884,7 @@ const styles = StyleSheet.create({
     },
     infoValue: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         maxWidth: '55%',
         textAlign: 'right',
@@ -982,7 +979,7 @@ const styles = StyleSheet.create({
     },
     popularName: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         flex: 1,
     },
@@ -1000,7 +997,7 @@ const styles = StyleSheet.create({
     },
     popularChange: {
         fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 4,
     },
     areaGuideButton: {
@@ -1028,7 +1025,7 @@ const styles = StyleSheet.create({
     },
     areaGuideName: {
         fontSize: 16,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     agentSection: {
@@ -1059,12 +1056,12 @@ const styles = StyleSheet.create({
     },
     agentBadge: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
     },
     agentName: {
         fontSize: 16,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
         marginTop: 6,
     },
@@ -1072,7 +1069,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: 'rgba(255,255,255,0.9)',
         marginTop: 4,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     agentDetailsRow: {
         flexDirection: 'row',
@@ -1090,13 +1087,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'rgba(255,255,255,0.9)',
         marginLeft: 4,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     agentServiceAreas: {
         fontSize: 12,
         color: 'rgba(255,255,255,0.8)',
         marginTop: 8,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
     },
     agencySection: {
         marginBottom: 20,
@@ -1134,7 +1131,7 @@ const styles = StyleSheet.create({
     },
     agencyName: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     agencyRatingRow: {
@@ -1143,7 +1140,7 @@ const styles = StyleSheet.create({
     },
     agencyRating: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         marginLeft: 4,
     },
@@ -1170,14 +1167,14 @@ const styles = StyleSheet.create({
     },
     agencyStatValue: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.primary,
         marginBottom: 4,
     },
     agencyStatLabel: {
         fontSize: 12,
         color: colors.textSecondary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     agencyServiceAreas: {
         flexDirection: 'row',

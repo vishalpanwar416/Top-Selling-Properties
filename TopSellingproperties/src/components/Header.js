@@ -76,19 +76,19 @@ const styles = StyleSheet.create({
     },
     topText: {
         fontSize: 17,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.red,
         letterSpacing: -0.5,
     },
     sellingText: {
         fontSize: 17,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.black,
         letterSpacing: -0.5,
     },
     propertiesText: {
         fontSize: 17,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.primary,
         letterSpacing: -0.5,
     },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     logoText: {
         fontSize: 16,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         letterSpacing: 1,
     },
     logoImage: {

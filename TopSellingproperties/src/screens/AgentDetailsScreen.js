@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     },
     brandingText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: 'rgba(255, 255, 255, 0.9)',
         letterSpacing: 0.3,
     },
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     },
     agentName: {
         fontSize: 28,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.textPrimary,
         marginBottom: 4,
         letterSpacing: -0.5,
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: colors.textSecondary,
         marginBottom: 10,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         textAlign: 'left',
     },
     badgesContainer: {
@@ -428,17 +428,17 @@ const styles = StyleSheet.create({
     },
     badgeTextPrimary: {
         fontSize: 10,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
     },
     badgeTextBlue: {
         fontSize: 10,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     badgeTextPurple: {
         fontSize: 10,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     tabsContainer: {
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 20,
-        fontWeight: '700',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 24,
         letterSpacing: -0.3,

@@ -5,6 +5,22 @@ import colors from '../theme/colors';
 
 const STICKY_TOP_PADDING = Platform.OS === 'ios' ? 50 : (StatusBar.currentHeight || 24) + 10;
 
+// Default placeholders based on search type
+const getDefaultPlaceholder = (searchType) => {
+    switch (searchType) {
+        case 'properties':
+            return 'Search location...';
+        case 'projects':
+            return 'Search projects...';
+        case 'agents':
+            return 'Search by Agent name or Location';
+        case 'agencies':
+            return 'Search by Agency name or Location';
+        default:
+            return 'Search for a locality, area or city';
+    }
+};
+
 const SearchBar = ({
     onPress,
     placeholder = 'Search for a locality, area or city',
@@ -17,8 +33,14 @@ const SearchBar = ({
     showSortButton = false,
     sortValue = 'Latest',
     onSortPress,
+    searchType = 'general', // 'general', 'properties', 'projects', 'agents', 'agencies'
+    showClearButton = false,
+    onClear,
+    autoFocus = false,
+    returnKeyType = 'search',
 }) => {
     const paddingAnim = useRef(new Animated.Value(0)).current;
+    const finalPlaceholder = placeholder || getDefaultPlaceholder(searchType);
 
     useEffect(() => {
         Animated.timing(paddingAnim, {
@@ -37,14 +59,25 @@ const SearchBar = ({
                 { paddingTop: paddingAnim }
             ]}>
                 <View style={[styles.searchBox, style]}>
-                    <Ionicons name="search" size={22} color={colors.primary} style={styles.searchIcon} />
+                    <Ionicons name="search" size={18} color={colors.primary} style={styles.searchIcon} />
                     <TextInput
                         style={styles.searchInput}
-                        placeholder={placeholder}
+                        placeholder={finalPlaceholder}
                         placeholderTextColor={colors.textTertiary}
                         value={value}
                         onChangeText={onChangeText}
+                        autoFocus={autoFocus}
+                        returnKeyType={returnKeyType}
                     />
+                    {showClearButton && value.length > 0 && (
+                        <TouchableOpacity
+                            onPress={onClear || (() => onChangeText && onChangeText(''))}
+                            style={styles.clearButton}
+                            activeOpacity={0.7}
+                        >
+                            <Ionicons name="close-circle" size={18} color={colors.textTertiary} />
+                        </TouchableOpacity>
+                    )}
                     {showSortButton && onSortPress && (
                         <TouchableOpacity
                             style={styles.sortButton}
@@ -71,9 +104,9 @@ const SearchBar = ({
                 onPress={onPress}
                 activeOpacity={0.9}
             >
-                <Ionicons name="search" size={22} color={colors.primary} style={styles.searchIcon} />
+                <Ionicons name="search" size={18} color={colors.primary} style={styles.searchIcon} />
                 <Text style={[styles.searchText, !value && styles.placeholder]}>
-                    {value || placeholder}
+                    {value || finalPlaceholder}
                 </Text>
                 {showSortButton && onSortPress && (
                     <TouchableOpacity
@@ -93,7 +126,7 @@ const SearchBar = ({
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'transparent',
-        paddingBottom: 12,
+        paddingBottom: 8,
         paddingHorizontal: 20,
         zIndex: 100,
     },
@@ -101,31 +134,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.white,
-        borderRadius: 26,
-        paddingHorizontal: 18,
-        height: 52,
+        borderRadius: 20,
+        paddingHorizontal: 14,
+        height: 40,
         borderWidth: 1,
         borderColor: colors.border,
         shadowColor: colors.black,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 8,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+        elevation: 4,
     },
     searchIcon: {
-        marginRight: 12,
+        marginRight: 8,
     },
     searchText: {
         flex: 1,
-        fontSize: 15,
+        fontSize: 14,
         color: colors.textPrimary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     searchInput: {
         flex: 1,
-        fontSize: 15,
+        fontSize: 14,
         color: colors.textPrimary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         padding: 0,
     },
     placeholder: {
@@ -144,9 +177,13 @@ const styles = StyleSheet.create({
     },
     sortButtonText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
         marginLeft: 4,
+    },
+    clearButton: {
+        marginLeft: 8,
+        padding: 2,
     },
 });
 

@@ -324,12 +324,11 @@ const AgentsScreen = ({ navigation }) => {
 
                 {/* Sticky Search Bar */}
                 <SearchBar
-                    placeholder="Search by Agent name or Location"
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     editable={true}
                     isSticky={isSticky}
-                    containerStyle={{ backgroundColor: '#FFF5F5' }}
+                    searchType="agents"
                 />
 
                 {/* Location Filter Section */}
@@ -397,26 +396,26 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scrollContent: {
-        paddingBottom: 20,
+        paddingBottom: 16,
     },
     heroSection: {
         backgroundColor: '#FFF5F5',
-        paddingTop: 50,
-        paddingBottom: 24,
+        paddingTop: 40,
+        paddingBottom: 16,
         paddingHorizontal: 20,
     },
     backButton: {
-        marginBottom: 16,
+        marginBottom: 12,
     },
     titleRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
+        marginBottom: 14,
         gap: 10,
     },
     welcomeTitle: {
-        fontSize: 24,
-        fontFamily: 'Poppins_700Bold',
+        fontSize: 22,
+        fontFamily: 'Lato_700Bold',
         color: colors.primary,
         letterSpacing: -0.5,
     },
@@ -426,7 +425,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         padding: 4,
         alignSelf: 'flex-start',
-        marginBottom: 20,
+        marginBottom: 14,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.08,
@@ -434,8 +433,8 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     typeToggleButton: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingHorizontal: 18,
+        paddingVertical: 8,
         borderRadius: 20,
     },
     activeTypeToggleButton: {
@@ -443,7 +442,7 @@ const styles = StyleSheet.create({
     },
     typeToggleText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeTypeToggleText: {
@@ -462,7 +461,7 @@ const styles = StyleSheet.create({
     },
     buyRentButton: {
         flex: 1,
-        paddingVertical: 16,
+        paddingVertical: 12,
         alignItems: 'center',
         borderBottomWidth: 3,
         borderBottomColor: 'transparent',
@@ -472,7 +471,7 @@ const styles = StyleSheet.create({
     },
     buyRentText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeBuyRentText: {
@@ -480,8 +479,8 @@ const styles = StyleSheet.create({
     },
     filtersSection: {
         backgroundColor: '#FFF5F5',
-        paddingTop: 8,
-        paddingBottom: 16,
+        paddingTop: 6,
+        paddingBottom: 12,
     },
     typeContainer: {
         flexDirection: 'row',
@@ -507,7 +506,7 @@ const styles = StyleSheet.create({
     },
     typeText: {
         fontSize: 13,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textSecondary,
     },
     activeTypeText: {
@@ -534,7 +533,7 @@ const styles = StyleSheet.create({
     },
     categoryPillText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     activeCategoryPillText: {
@@ -563,22 +562,22 @@ const styles = StyleSheet.create({
     },
     transactionText: {
         fontSize: 13,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textSecondary,
     },
     activeTransactionText: {
         color: colors.primary,
     },
     locationTabsContainer: {
-        marginTop: 12,
-        marginBottom: 8,
+        marginTop: 8,
+        marginBottom: 6,
     },
     locationTabsContent: {
         paddingHorizontal: 20,
     },
     locationTab: {
-        paddingHorizontal: 14,
-        paddingVertical: 6,
+        paddingHorizontal: 12,
+        paddingVertical: 3,
         marginRight: 8,
         borderRadius: 16,
         backgroundColor: colors.lightGray,
@@ -590,8 +589,8 @@ const styles = StyleSheet.create({
         borderColor: colors.black,
     },
     locationTabText: {
-        fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeLocationTabText: {
@@ -600,8 +599,9 @@ const styles = StyleSheet.create({
     truBrokerSection: {
         backgroundColor: colors.white,
         borderRadius: 12,
-        padding: 16,
-        marginBottom: 20,
+        padding: 12,
+        marginBottom: 14,
+        marginHorizontal: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -611,10 +611,10 @@ const styles = StyleSheet.create({
     truBrokerBadge: {
         backgroundColor: colors.maroon,
         alignSelf: 'flex-start',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         borderRadius: 6,
-        marginBottom: 12,
+        marginBottom: 8,
     },
     truBrokerText: {
         color: colors.white,
@@ -622,22 +622,22 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     truBrokerDescription: {
-        fontSize: 14,
-        lineHeight: 20,
+        fontSize: 13,
+        lineHeight: 18,
         color: colors.textSecondary,
     },
     agentsListContainer: {
         paddingHorizontal: 20,
-        paddingTop: 16,
+        paddingTop: 12,
         backgroundColor: colors.white,
     },
     agentsList: {
-        paddingBottom: 20,
+        paddingBottom: 16,
     },
     agentCard: {
         backgroundColor: colors.white,
-        borderRadius: 16,
-        marginBottom: 16,
+        borderRadius: 14,
+        marginBottom: 12,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.08,
@@ -649,17 +649,17 @@ const styles = StyleSheet.create({
     },
     agentCardContent: {
         flexDirection: 'row',
-        padding: 16,
+        padding: 12,
         alignItems: 'flex-start',
     },
     agentImageWrapper: {
         position: 'relative',
-        marginRight: 12,
+        marginRight: 10,
     },
     agentImage: {
-        width: 75,
-        height: 75,
-        borderRadius: 37.5,
+        width: 65,
+        height: 65,
+        borderRadius: 32.5,
         borderWidth: 2,
         borderColor: 'rgba(185, 28, 28, 0.1)',
     },
@@ -693,30 +693,30 @@ const styles = StyleSheet.create({
     agentHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 4,
+        marginBottom: 3,
     },
     agentName: {
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '700',
         color: colors.textPrimary,
         flex: 1,
     },
     verifiedIcon: {
-        marginLeft: 6,
+        marginLeft: 5,
     },
     agentSpecialization: {
-        fontSize: 13,
+        fontSize: 12,
         color: colors.textSecondary,
-        marginBottom: 8,
+        marginBottom: 6,
         fontWeight: '500',
     },
     serviceAreasRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     serviceAreas: {
-        fontSize: 12,
+        fontSize: 11,
         color: colors.textSecondary,
         marginLeft: 4,
         flex: 1,
@@ -724,48 +724,48 @@ const styles = StyleSheet.create({
     languagesRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 8,
     },
     languages: {
-        fontSize: 12,
+        fontSize: 11,
         color: colors.textSecondary,
         marginLeft: 4,
         flex: 1,
     },
     listingTags: {
         flexDirection: 'row',
-        gap: 8,
+        gap: 6,
     },
     listingTag: {
         backgroundColor: '#E6F3FF',
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 6,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 5,
     },
     listingTagText: {
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: '600',
         color: '#4299E1',
     },
     agencyLogoContainer: {
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 8,
+        marginLeft: 6,
     },
     agencyLogo: {
-        width: 40,
-        height: 40,
+        width: 36,
+        height: 36,
     },
     agencyLogoWrapper: {
         position: 'relative',
-        marginRight: 12,
+        marginRight: 10,
     },
     agencyCardLogo: {
-        width: 70,
-        height: 70,
-        borderRadius: 16,
+        width: 60,
+        height: 60,
+        borderRadius: 14,
         backgroundColor: colors.white,
         borderWidth: 2,
         borderColor: 'rgba(185, 28, 28, 0.1)',
@@ -783,25 +783,25 @@ const styles = StyleSheet.create({
     agencyHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     agencyDescription: {
-        fontSize: 12,
+        fontSize: 11,
         color: colors.textSecondary,
-        marginBottom: 8,
-        lineHeight: 16,
+        marginBottom: 6,
+        lineHeight: 15,
     },
     agencyStatsRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 6,
     },
     agencyStatItem: {
         flexDirection: 'row',
         alignItems: 'center',
     },
     agencyStatText: {
-        fontSize: 12,
+        fontSize: 11,
         color: colors.textSecondary,
         marginLeft: 4,
         fontWeight: '600',

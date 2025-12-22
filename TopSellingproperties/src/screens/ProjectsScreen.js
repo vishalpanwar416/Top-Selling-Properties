@@ -18,6 +18,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Header from '../components/Header';
+import LikeButton from '../components/LikeButton';
 import SearchBar from '../components/SearchBar';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
@@ -100,7 +101,6 @@ const FilterTab = memo(({ tab, isActive, onPress, isCategory = false }) => (
 // Memoized Project Card Component
 const ProjectCard = memo(({ project, onPress, onWhatsApp, onCall, onEmail }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isFavorite, setIsFavorite] = useState(false);
     const images = project.images || [];
 
     const handleNextImage = useCallback(() => {
@@ -184,17 +184,12 @@ const ProjectCard = memo(({ project, onPress, onWhatsApp, onCall, onEmail }) => 
                     </View>
 
                     {/* Favorite Button */}
-                    <TouchableOpacity
-                        style={styles.favoriteButton}
-                        onPress={() => setIsFavorite(!isFavorite)}
-                        activeOpacity={0.8}
-                    >
-                        <Ionicons
-                            name={isFavorite ? "heart" : "heart-outline"}
-                            size={20}
-                            color={isFavorite ? "#FF4757" : "#fff"}
-                        />
-                    </TouchableOpacity>
+                    <LikeButton
+                        size={20}
+                        likedColor="#FF4757"
+                        unlikedColor="#fff"
+                        buttonStyle={styles.favoriteButton}
+                    />
                 </View>
             </TouchableOpacity>
 
@@ -663,11 +658,11 @@ const ProjectsScreen = ({ navigation }) => {
                 <View style={[styles.searchSection, isSticky && styles.searchSectionSticky]}>
                     <View style={styles.searchRow}>
                         <SearchBar
-                            placeholder="Search projects..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                             editable={true}
                             isSticky={isSticky}
+                            searchType="projects"
                             containerStyle={styles.searchBarContainer}
                         />
                         <TouchableOpacity style={styles.saveButton} activeOpacity={0.7}>
@@ -781,7 +776,7 @@ const styles = StyleSheet.create({
     saveButtonText: {
         marginLeft: 4,
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
 
@@ -817,7 +812,7 @@ const styles = StyleSheet.create({
     },
     buyDropdownText: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     filterTab: {
@@ -834,12 +829,12 @@ const styles = StyleSheet.create({
     },
     filterTabText: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeFilterTabText: {
         color: colors.white,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
     },
     activeCategoryTab: {
         borderColor: colors.primary,
@@ -847,7 +842,7 @@ const styles = StyleSheet.create({
     },
     activeCategoryTabText: {
         color: colors.primary,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
     },
 
     // Featured/Expanded Card
@@ -883,7 +878,7 @@ const styles = StyleSheet.create({
     },
     featuredBadgeText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     expandedHeader: {
@@ -899,7 +894,7 @@ const styles = StyleSheet.create({
     },
     expandedTitle: {
         fontSize: 22,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         flex: 1,
         letterSpacing: -0.5,
@@ -919,7 +914,7 @@ const styles = StyleSheet.create({
     },
     expandedType: {
         fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     expandedDot: {
@@ -929,7 +924,7 @@ const styles = StyleSheet.create({
     },
     expandedDeveloper: {
         fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     statusBadgeRow: {
@@ -948,7 +943,7 @@ const styles = StyleSheet.create({
     },
     statusBadgeText: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
     statusBadgeSecondary: {
@@ -962,7 +957,7 @@ const styles = StyleSheet.create({
     },
     statusBadgeTextSecondary: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: '#10B981',
     },
     actionCardsRow: {
@@ -993,7 +988,7 @@ const styles = StyleSheet.create({
     },
     aedText: {
         fontSize: 11,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.primary,
     },
     actionCardContent: {
@@ -1001,12 +996,12 @@ const styles = StyleSheet.create({
     },
     actionCardTitle: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     actionCardSubtitle: {
         fontSize: 11,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     viewMoreButton: {
@@ -1020,7 +1015,7 @@ const styles = StyleSheet.create({
     },
     viewMoreText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     viewMoreIcon: {
@@ -1063,16 +1058,16 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     truBrokerTextBold: {
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     trademark: {
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         fontSize: 10,
     },
     storiesTitleRest: {
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     viewAllButton: {
@@ -1082,12 +1077,12 @@ const styles = StyleSheet.create({
     },
     viewAllText: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
     storiesSubtitle: {
         fontSize: 12,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textTertiary,
         paddingHorizontal: 16,
         marginBottom: 14,
@@ -1145,7 +1140,7 @@ const styles = StyleSheet.create({
         bottom: 6,
         left: 6,
         fontSize: 10,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
 
@@ -1164,12 +1159,12 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 17,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     resultCount: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     sectionActions: {
@@ -1188,7 +1183,7 @@ const styles = StyleSheet.create({
     },
     mapButtonText: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     sortButton: {
@@ -1202,7 +1197,7 @@ const styles = StyleSheet.create({
     },
     sortButtonText: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
 
@@ -1248,7 +1243,7 @@ const styles = StyleSheet.create({
     },
     truCheckText: {
         fontSize: 10,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     offPlanBadge: {
@@ -1259,7 +1254,7 @@ const styles = StyleSheet.create({
     },
     offPlanText: {
         fontSize: 10,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     truBrokerBadge: {
@@ -1284,7 +1279,7 @@ const styles = StyleSheet.create({
     },
     truBrokerBadgeText: {
         fontSize: 11,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     navArrow: {
@@ -1333,7 +1328,7 @@ const styles = StyleSheet.create({
     },
     moreDotsText: {
         fontSize: 10,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
         marginLeft: 4,
     },
@@ -1361,12 +1356,12 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     priceType: {
         fontSize: 12,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     viewedBadge: {
@@ -1380,7 +1375,7 @@ const styles = StyleSheet.create({
     },
     viewedText: {
         fontSize: 11,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     specsRow: {
@@ -1401,12 +1396,12 @@ const styles = StyleSheet.create({
     },
     specText: {
         fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     propertyTitle: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         marginBottom: 6,
         lineHeight: 22,
@@ -1419,7 +1414,7 @@ const styles = StyleSheet.create({
     },
     propertyLocation: {
         fontSize: 13,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         flex: 1,
     },
@@ -1439,12 +1434,12 @@ const styles = StyleSheet.create({
     },
     handoverLabel: {
         fontSize: 12,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     handoverValue: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
     handoverDivider: {
@@ -1472,7 +1467,7 @@ const styles = StyleSheet.create({
     },
     emailButtonText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
     callButton: {
@@ -1489,7 +1484,7 @@ const styles = StyleSheet.create({
     },
     callButtonText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
     whatsappButton: {
@@ -1514,7 +1509,7 @@ const styles = StyleSheet.create({
     },
     loadMoreText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.primary,
     },
 
@@ -1542,12 +1537,12 @@ const styles = StyleSheet.create({
     },
     registerTitle: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     registerSubtitle: {
         fontSize: 12,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     whatsappRegisterButton: {
@@ -1561,7 +1556,7 @@ const styles = StyleSheet.create({
     },
     whatsappRegisterText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: '#fff',
     },
 
@@ -1589,7 +1584,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 16,
     },
@@ -1627,12 +1622,12 @@ const styles = StyleSheet.create({
     },
     sortOptionText: {
         fontSize: 15,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     sortOptionTextActive: {
         color: colors.primary,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
     },
 });
 

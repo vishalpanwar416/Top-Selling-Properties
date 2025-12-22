@@ -4,13 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
 import typography, { fontFamilies } from '../theme/typography';
+import LikeButton from './LikeButton';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.82;
 
 const PropertyCard = ({ property, onPress, fullWidth = false }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-
     if (!property) {
         return null;
     }
@@ -57,17 +56,10 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                         </View>
                     )}
                     <View style={{ flex: 1 }} />
-                    <TouchableOpacity
-                        style={styles.favoriteButton}
-                        onPress={() => setIsFavorite(!isFavorite)}
-                        activeOpacity={0.8}
-                    >
-                        <Ionicons
-                            name={isFavorite ? "heart" : "heart-outline"}
-                            size={18}
-                            color={isFavorite ? "#FF4757" : colors.white}
-                        />
-                    </TouchableOpacity>
+                    <LikeButton
+                        size={18}
+                        buttonStyle={styles.favoriteButton}
+                    />
                 </View>
 
                 {/* Property Type & Transaction Badge */}

@@ -17,6 +17,7 @@ import Header from '../components/Header';
 import colors from '../theme/colors';
 import agentsData from '../data/agents.json';
 import propertiesData from '../data/properties.json';
+import LikeButton from '../components/LikeButton';
 
 const { width, height } = Dimensions.get('window');
 const RED_SHADE = '#B91C1C'; // Red shade (primary)
@@ -327,9 +328,11 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
                                                     </View>
 
                                                     {/* Favorite Icon */}
-                                                    <TouchableOpacity style={styles.favoriteButton}>
-                                                        <Ionicons name="heart-outline" size={24} color={colors.white} />
-                                                    </TouchableOpacity>
+                                                    <LikeButton
+                                                        size={24}
+                                                        unlikedColor={colors.white}
+                                                        buttonStyle={styles.favoriteButton}
+                                                    />
 
                                                     {/* Image Navigation */}
                                                     {images.length > 1 && (
@@ -639,7 +642,7 @@ const styles = StyleSheet.create({
     },
     aboutHeading: {
         fontSize: 24,
-        fontWeight: '800',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 20,
     },

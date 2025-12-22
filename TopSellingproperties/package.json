@@ -9,7 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/lato": "^0.4.1",
     "@expo-google-fonts/poppins": "^0.4.1",
+    "@expo-google-fonts/roboto": "^0.4.2",
     "@react-navigation/bottom-tabs": "^7.9.0",
     "@react-navigation/drawer": "^7.7.10",
     "@react-navigation/native": "^7.1.26",

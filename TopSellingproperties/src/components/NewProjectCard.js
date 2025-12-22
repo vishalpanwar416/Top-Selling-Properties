@@ -3,13 +3,12 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, Linking } 
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
+import LikeButton from './LikeButton';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.85;
 
 const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-
     if (!project) {
         return null;
     }
@@ -60,17 +59,10 @@ const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
                             </View>
                         )}
                         <View style={{ flex: 1 }} />
-                        <TouchableOpacity
-                            style={styles.favoriteButton}
-                            onPress={() => setIsFavorite(!isFavorite)}
-                            activeOpacity={0.8}
-                        >
-                            <Ionicons
-                                name={isFavorite ? "heart" : "heart-outline"}
-                                size={18}
-                                color={isFavorite ? "#FF4757" : colors.white}
-                            />
-                        </TouchableOpacity>
+                        <LikeButton
+                            size={18}
+                            buttonStyle={styles.favoriteButton}
+                        />
                     </View>
 
                     {/* Bottom Row - Photos count */}
@@ -179,7 +171,7 @@ const styles = StyleSheet.create({
     newBadgeText: {
         color: colors.white,
         fontSize: 9,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         letterSpacing: 0.5,
     },
     favoriteButton: {
@@ -206,7 +198,7 @@ const styles = StyleSheet.create({
     photoCountText: {
         color: colors.white,
         fontSize: 11,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 4,
     },
     content: {
@@ -222,7 +214,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 17,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         flex: 1,
         letterSpacing: -0.3,
@@ -237,7 +229,7 @@ const styles = StyleSheet.create({
     typeText: {
         fontSize: 11,
         color: colors.primary,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
     },
     locationRow: {
         flexDirection: 'row',
@@ -257,7 +249,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: colors.textSecondary,
         flex: 1,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     infoRow: {
         flexDirection: 'row',
@@ -274,16 +266,16 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: colors.textTertiary,
         marginBottom: 4,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     infoValue: {
         fontSize: 16,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.primary,
     },
     infoValueSecondary: {
         fontSize: 15,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     infoDivider: {
@@ -307,7 +299,7 @@ const styles = StyleSheet.create({
     },
     whatsappText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: '#25D366',
         marginLeft: 6,
     },

@@ -31,14 +31,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.black,
         marginBottom: 8,
     },
     subtitle: {
         fontSize: 16,
         color: colors.textSecondary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
 });
 

@@ -236,12 +236,11 @@ const PropertiesScreen = ({ navigation }) => {
                 <View style={[styles.searchSection, isSticky && styles.searchSectionSticky]}>
                     <View style={styles.searchRow}>
                         <SearchBar
-                            placeholder="Search location..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                             editable={true}
                             isSticky={isSticky}
-                            style={styles.compactSearchBox}
+                            searchType="properties"
                             containerStyle={styles.searchBarContainer}
                         />
                         <TouchableOpacity style={styles.saveButton}>
@@ -788,7 +787,7 @@ const styles = StyleSheet.create({
     },
     saveButtonText: {
         fontSize: 13,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.filterRed,
     },
 
@@ -825,7 +824,7 @@ const styles = StyleSheet.create({
     },
     buyButtonText: {
         fontSize: 12,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     quickFilterPill: {
@@ -842,7 +841,7 @@ const styles = StyleSheet.create({
     },
     quickFilterText: {
         fontSize: 12,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeQuickFilterText: {
@@ -865,7 +864,7 @@ const styles = StyleSheet.create({
     },
     dropdownPillText: {
         fontSize: 11,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeDropdownPillText: {
@@ -882,12 +881,12 @@ const styles = StyleSheet.create({
     },
     truBrokerText: {
         fontSize: 13,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         marginRight: 4,
     },
     truBrokerBold: {
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     truBrokerSwitch: {
@@ -913,11 +912,11 @@ const styles = StyleSheet.create({
     storiesTitle: {
         flex: 1,
         fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     storiesBold: {
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
     storiesContent: {
@@ -962,7 +961,7 @@ const styles = StyleSheet.create({
     },
     liveText: {
         fontSize: 9,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.white,
         letterSpacing: 0.5,
     },
@@ -987,7 +986,7 @@ const styles = StyleSheet.create({
         left: 8,
         right: 8,
         fontSize: 11,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
         textShadowColor: 'rgba(0,0,0,0.5)',
         textShadowOffset: { width: 0, height: 1 },
@@ -1002,7 +1001,7 @@ const styles = StyleSheet.create({
     },
     resultsText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
 
@@ -1025,14 +1024,14 @@ const styles = StyleSheet.create({
     },
     emptyTitle: {
         fontSize: 18,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginTop: 20,
         marginBottom: 8,
     },
     emptySubtitle: {
         fontSize: 15,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         textAlign: 'center',
         lineHeight: 20,
@@ -1068,7 +1067,7 @@ const styles = StyleSheet.create({
     },
     bottomSheetTitle: {
         fontSize: 17,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
     },
 
@@ -1096,7 +1095,7 @@ const styles = StyleSheet.create({
     },
     transactionModalButtonText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeTransactionModalButtonText: {
@@ -1127,7 +1126,7 @@ const styles = StyleSheet.create({
     },
     categoryTabText: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     activeCategoryTabText: {
@@ -1154,7 +1153,7 @@ const styles = StyleSheet.create({
     },
     propertyTypeCardText: {
         fontSize: 13,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         marginTop: 8,
         textAlign: 'center',
@@ -1171,7 +1170,7 @@ const styles = StyleSheet.create({
     },
     applyButtonText: {
         fontSize: 15,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
     },
 
@@ -1199,7 +1198,7 @@ const styles = StyleSheet.create({
     },
     optionPillText: {
         fontSize: 15,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
     },
     selectedOptionPillText: {

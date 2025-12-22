@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     },
     avatarText: {
         fontSize: 22,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.primary,
     },
     avatarBadge: {
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 17,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
         marginBottom: 4,
         letterSpacing: 0.2,
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     },
     profileSubtext: {
         fontSize: 11,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: 'rgba(255, 255, 255, 0.95)',
     },
     profileDot: {
@@ -415,14 +415,14 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         marginBottom: 5,
         letterSpacing: 0.1,
     },
     cardSubtitle: {
         fontSize: 12,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         lineHeight: 17,
     },
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     },
     sectionHeaderText: {
         fontSize: 11,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textSecondary,
         letterSpacing: 0.5,
         textTransform: 'uppercase',
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
     menuText: {
         fontSize: 14,
         color: colors.textPrimary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         flex: 1,
         letterSpacing: 0.1,
     },
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     },
     newBadgeText: {
         fontSize: 8,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
         letterSpacing: 0.6,
     },
@@ -525,7 +525,7 @@ const styles = StyleSheet.create({
     },
     rateTitle: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
         marginBottom: 10,
         letterSpacing: 0.2,
@@ -556,7 +556,7 @@ const styles = StyleSheet.create({
     },
     rateButtonText: {
         fontSize: 12,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
         marginLeft: 4,
         letterSpacing: 0.2,
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: colors.textSecondary,
         textAlign: 'center',
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         letterSpacing: 0.2,
     },
     versionText: {
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
         color: colors.textTertiary,
         textAlign: 'center',
         marginTop: 4,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Lato_400Regular',
     },
 });
 

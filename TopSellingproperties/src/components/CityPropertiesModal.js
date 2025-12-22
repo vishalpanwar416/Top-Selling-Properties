@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 26,
-        fontFamily: 'Poppins_800ExtraBold',
+        fontFamily: 'Lato_900Black',
         color: colors.white,
         letterSpacing: -0.5,
     },
@@ -468,13 +468,13 @@ const styles = StyleSheet.create({
     },
     countText: {
         fontSize: 13,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.white,
     },
     headerSubtitle: {
         fontSize: 14,
         color: 'rgba(255, 255, 255, 0.75)',
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
         letterSpacing: 0.2,
     },
     searchWrapper: {
@@ -510,7 +510,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 15,
         color: colors.textPrimary,
-        fontFamily: 'Poppins_500Medium',
+        fontFamily: 'Lato_400Regular',
     },
     clearButton: {
         padding: 8,
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
     },
     emptyTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 10,
     },
@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
     },
     clearSearchText: {
         fontSize: 14,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.white,
     },
     // Sort Modal Styles
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
     },
     sortModalTitle: {
         fontSize: 20,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Lato_700Bold',
         color: colors.textPrimary,
         marginBottom: 20,
     },
@@ -633,7 +633,7 @@ const styles = StyleSheet.create({
     sortOptionText: {
         flex: 1,
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         color: colors.textPrimary,
     },
     sortOptionTextActive: {

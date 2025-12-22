@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     bottomButtonText: {
         color: colors.primary,
         fontSize: 15,
-        fontFamily: 'Poppins_600SemiBold',
+        fontFamily: 'Lato_400Regular',
         marginLeft: 8,
     },
     bottomButtonWhatsApp: {

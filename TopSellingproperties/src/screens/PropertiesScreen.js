@@ -9,11 +9,14 @@ import {
     Animated,
     Dimensions,
     TextInput,
-    Switch
+    Switch,
+    Image
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import PropertyCard from '../components/PropertyCard';
 import SearchBar from '../components/SearchBar';
+import StoryViewer from '../components/StoryViewer';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 
@@ -64,9 +67,61 @@ const PropertiesScreen = ({ navigation }) => {
     const [showPriceModal, setShowPriceModal] = useState(false);
     const [showAreaModal, setShowAreaModal] = useState(false);
     const [showBathsModal, setShowBathsModal] = useState(false);
+    const [showStoryViewer, setShowStoryViewer] = useState(false);
+    const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
 
     // Animation values
     const modalAnimation = useRef(new Animated.Value(0)).current;
+
+    // Stories data with actual images
+    const stories = [
+        {
+            id: 1,
+            name: 'John D.',
+            location: 'Downtown',
+            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+            time: '2h ago',
+            media: [
+                { url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800' },
+                { url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800' },
+                { url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800' },
+            ],
+        },
+        {
+            id: 2,
+            name: 'Sarah M.',
+            location: 'Marina',
+            avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+            time: '5h ago',
+            media: [
+                { url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800' },
+                { url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800' },
+            ],
+        },
+        {
+            id: 3,
+            name: 'Ahmed K.',
+            location: 'JBR',
+            avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+            time: '1d ago',
+            media: [
+                { url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800' },
+                { url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800' },
+                { url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800' },
+            ],
+        },
+        {
+            id: 4,
+            name: 'Lisa P.',
+            location: 'Palm',
+            avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+            time: '2d ago',
+            media: [
+                { url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800' },
+                { url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800' },
+            ],
+        },
+    ];
 
     // Filter properties
     const filteredProperties = properties.filter(property => {
@@ -376,20 +431,42 @@ const PropertiesScreen = ({ navigation }) => {
                         contentContainerStyle={styles.storiesContent}
                     >
                         {/* Story Cards */}
-                        {[
-                            { id: 1, broker: 'John D.', location: 'Downtown' },
-                            { id: 2, broker: 'Sarah M.', location: 'Marina' },
-                            { id: 3, broker: 'Ahmed K.', location: 'JBR' },
-                            { id: 4, broker: 'Lisa P.', location: 'Palm' },
-                        ].map((story) => (
-                            <TouchableOpacity key={story.id} style={styles.storyCard}>
+                        {stories.map((story, index) => (
+                            <TouchableOpacity
+                                key={story.id}
+                                style={styles.storyCard}
+                                onPress={() => {
+                                    setSelectedStoryIndex(index);
+                                    setShowStoryViewer(true);
+                                }}
+                                activeOpacity={0.9}
+                            >
                                 <View style={styles.storyImageContainer}>
-                                    <View style={styles.storyImagePlaceholder}>
-                                        <Ionicons name="image-outline" size={32} color={colors.textTertiary} />
+                                    <Image
+                                        source={{ uri: story.media[0].url }}
+                                        style={styles.storyImage}
+                                        resizeMode="cover"
+                                    />
+                                    <LinearGradient
+                                        colors={['transparent', 'rgba(0,0,0,0.6)']}
+                                        style={styles.storyGradient}
+                                    />
+                                    {/* Live Indicator */}
+                                    <View style={styles.liveIndicator}>
+                                        <View style={styles.liveDot} />
+                                        <Text style={styles.liveText}>LIVE</Text>
                                     </View>
+                                    {/* Broker Avatar */}
                                     <View style={styles.brokerAvatar}>
-                                        <Ionicons name="person" size={16} color={colors.white} />
+                                        <Image
+                                            source={{ uri: story.avatar }}
+                                            style={styles.brokerAvatarImage}
+                                        />
                                     </View>
+                                    {/* Broker Name */}
+                                    <Text style={styles.brokerName} numberOfLines={1}>
+                                        {story.name}
+                                    </Text>
                                 </View>
                             </TouchableOpacity>
                         ))}
@@ -653,6 +730,14 @@ const PropertiesScreen = ({ navigation }) => {
                 </View>,
                 'water-outline'
             )}
+
+            {/* Story Viewer */}
+            <StoryViewer
+                visible={showStoryViewer}
+                stories={stories}
+                initialIndex={selectedStoryIndex}
+                onClose={() => setShowStoryViewer(false)}
+            />
         </View>
     );
 };
@@ -844,32 +929,69 @@ const styles = StyleSheet.create({
         height: 140,
         borderRadius: 12,
         overflow: 'hidden',
+        marginRight: 12,
     },
     storyImageContainer: {
         flex: 1,
         position: 'relative',
     },
-    storyImagePlaceholder: {
-        flex: 1,
-        backgroundColor: colors.lightGray,
-        borderRadius: 12,
+    storyImage: {
+        width: '100%',
+        height: '100%',
+    },
+    storyGradient: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    liveIndicator: {
+        position: 'absolute',
+        top: 8,
+        left: 8,
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: colors.border,
+        backgroundColor: 'rgba(255, 0, 0, 0.8)',
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 8,
+    },
+    liveDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: colors.white,
+        marginRight: 4,
+    },
+    liveText: {
+        fontSize: 9,
+        fontFamily: 'Poppins_800ExtraBold',
+        color: colors.white,
+        letterSpacing: 0.5,
     },
     brokerAvatar: {
         position: 'absolute',
-        bottom: 8,
+        bottom: 30,
         left: 8,
         width: 32,
         height: 32,
         borderRadius: 16,
-        backgroundColor: colors.filterRed,
-        alignItems: 'center',
-        justifyContent: 'center',
         borderWidth: 2,
         borderColor: colors.white,
+        overflow: 'hidden',
+    },
+    brokerAvatarImage: {
+        width: '100%',
+        height: '100%',
+    },
+    brokerName: {
+        position: 'absolute',
+        bottom: 8,
+        left: 8,
+        right: 8,
+        fontSize: 11,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.white,
+        textShadowColor: 'rgba(0,0,0,0.5)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 2,
     },
 
     // Results Section

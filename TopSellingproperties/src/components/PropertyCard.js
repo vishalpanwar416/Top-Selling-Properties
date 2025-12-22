@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
+import typography, { fontFamilies } from '../theme/typography';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.82;
@@ -81,12 +82,16 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     )}
                 </View>
 
+                {/* Rating Badge on Image - MakeMyTrip Style */}
+                {property.rating && (
+                    <View style={styles.ratingBadgeOnImage}>
+                        <Text style={styles.ratingTextOnImage}>{property.rating}</Text>
+                    </View>
+                )}
+
                 {/* Price on Image */}
                 <View style={styles.priceOnImage}>
                     <Text style={styles.priceText}>{formatPrice(property.price)}</Text>
-                    {property.priceType && (
-                        <Text style={styles.priceType}>/{property.priceType}</Text>
-                    )}
                 </View>
             </View>
 
@@ -95,10 +100,44 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                 {/* Title */}
                 <Text style={styles.title} numberOfLines={2}>{property.title || 'Property'}</Text>
 
+                {/* Rating Row - MakeMyTrip Style */}
+                <View style={styles.ratingRow}>
+                    <View style={styles.ratingBadge}>
+                        <Text style={styles.ratingText}>{property.rating || '4.0'}</Text>
+                    </View>
+                    <View style={styles.starRating}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <Ionicons
+                                key={star}
+                                name={star <= Math.floor(property.rating || 4) ? "star" : "star-outline"}
+                                size={12}
+                                color="#FFB800"
+                            />
+                        ))}
+                    </View>
+                    {property.reviewsCount && (
+                        <Text style={styles.reviewsText}>({property.reviewsCount} Reviews)</Text>
+                    )}
+                </View>
+
                 {/* Location */}
                 <View style={styles.locationRow}>
-                    <Ionicons name="location-sharp" size={13} color={colors.primary} />
+                    <Ionicons name="location-sharp" size={14} color={colors.textSecondary} />
                     <Text style={styles.location} numberOfLines={1}>{property.location || 'Location not available'}</Text>
+                </View>
+
+                {/* Price Section - MakeMyTrip Style */}
+                <View style={styles.priceSection}>
+                    <View>
+                        <Text style={styles.priceMain}>{formatPrice(property.price)}</Text>
+                        <Text style={styles.pricePerNight}>Per {property.priceType || 'Month'}</Text>
+                    </View>
+                    {property.freeCancellation && (
+                        <View style={styles.cancellationBadge}>
+                            <Ionicons name="checkmark-circle" size={12} color="#10B981" />
+                            <Text style={styles.cancellationText}>Free Cancellation</Text>
+                        </View>
+                    )}
                 </View>
 
                 {/* Property Details */}
@@ -154,7 +193,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        height: 150,
+        height: 180,
         position: 'relative',
     },
     image: {
@@ -166,7 +205,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 60,
+        height: 70,
     },
     topRow: {
         position: 'absolute',
@@ -186,10 +225,8 @@ const styles = StyleSheet.create({
         backdropFilter: 'blur(10px)',
     },
     featuredText: {
+        ...typography.badge,
         color: '#FFD700',
-        fontSize: 10,
-        fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.3,
     },
     tagBadge: {
         backgroundColor: 'rgba(72, 187, 120, 0.95)',
@@ -198,10 +235,8 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     tagText: {
+        ...typography.badge,
         color: colors.white,
-        fontSize: 10,
-        fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.3,
     },
     favoriteButton: {
         width: 32,
@@ -225,10 +260,8 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     typeText: {
+        ...typography.badge,
         color: colors.white,
-        fontSize: 10,
-        fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.3,
     },
     rentBadge: {
         backgroundColor: '#2563EB',
@@ -241,10 +274,8 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     rentTagText: {
+        ...typography.badgeSmall,
         color: colors.white,
-        fontSize: 9,
-        fontFamily: 'Poppins_700Bold',
-        letterSpacing: 0.2,
     },
     priceOnImage: {
         position: 'absolute',
@@ -254,39 +285,96 @@ const styles = StyleSheet.create({
         alignItems: 'baseline',
     },
     priceText: {
-        fontSize: 17,
-        fontFamily: 'Poppins_800ExtraBold',
+        ...typography.price,
         color: colors.white,
-        letterSpacing: -0.4,
-    },
-    priceType: {
-        fontSize: 12,
-        fontFamily: 'Poppins_500Medium',
-        color: 'rgba(255,255,255,0.85)',
-        marginLeft: 2,
     },
     content: {
-        padding: 10,
+        padding: 12,
     },
     title: {
-        fontSize: 14,
-        fontFamily: 'Poppins_700Bold',
+        ...typography.propertyTitle,
         color: colors.textPrimary,
-        lineHeight: 18,
-        marginBottom: 4,
-        letterSpacing: -0.2,
+        marginBottom: 6,
+    },
+    ratingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    ratingBadge: {
+        backgroundColor: '#1E40AF',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
+        marginRight: 6,
+    },
+    ratingText: {
+        ...typography.rating,
+        color: colors.white,
+    },
+    starRating: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 6,
+    },
+    reviewsText: {
+        ...typography.ratingLabel,
+        color: colors.textSecondary,
+    },
+    ratingBadgeOnImage: {
+        position: 'absolute',
+        top: 8,
+        right: 8,
+        backgroundColor: '#1E40AF',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
+    },
+    ratingTextOnImage: {
+        ...typography.rating,
+        color: colors.white,
     },
     locationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 10,
     },
     location: {
-        fontSize: 13,
+        ...typography.bodySmall,
         color: colors.textSecondary,
         flex: 1,
         marginLeft: 4,
-        fontFamily: 'Poppins_500Medium',
+    },
+    priceSection: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: 10,
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: colors.border,
+    },
+    priceMain: {
+        ...typography.price,
+        color: colors.textPrimary,
+    },
+    pricePerNight: {
+        ...typography.pricePerNight,
+        color: colors.textSecondary,
+        marginTop: 2,
+    },
+    cancellationBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F0FDF4',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 6,
+        gap: 4,
+    },
+    cancellationText: {
+        ...typography.caption,
+        color: '#10B981',
     },
     detailsContainer: {
         flexDirection: 'row',
@@ -309,14 +397,13 @@ const styles = StyleSheet.create({
         marginBottom: 3,
     },
     detailValue: {
-        fontSize: 13,
+        ...typography.bodySmall,
         color: colors.textPrimary,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: fontFamilies.bold,
     },
     detailLabel: {
-        fontSize: 10,
+        ...typography.caption,
         color: colors.textTertiary,
-        fontFamily: 'Poppins_500Medium',
         marginTop: 0,
     },
     detailDivider: {

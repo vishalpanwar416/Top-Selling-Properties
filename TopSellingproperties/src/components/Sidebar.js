@@ -1,54 +1,300 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import colors from '../theme/colors';
-
-const menuItems = [
-    { name: 'Home', icon: 'home', iconType: 'Ionicons', screen: 'Home' },
-    { name: 'Favorites', icon: 'heart', iconType: 'Ionicons', screen: 'Favorites' },
-    { name: 'Contact Us', icon: 'call', iconType: 'Ionicons', screen: 'Contact' },
-];
 
 const Sidebar = (props) => {
     const { navigation } = props;
     const insets = useSafeAreaInsets();
+    const [rating, setRating] = useState(0);
+
+    const handleNavigation = (screen, nestedScreen = null) => {
+        navigation.closeDrawer();
+        setTimeout(() => {
+            if (nestedScreen) {
+                navigation.navigate('MainTabs', {
+                    screen: screen,
+                    params: {
+                        screen: nestedScreen
+                    }
+                });
+            } else {
+                navigation.navigate('MainTabs', {
+                    screen: screen
+                });
+            }
+        }, 100);
+    };
+
+    const handleCardPress = (action) => {
+        navigation.closeDrawer();
+        setTimeout(() => {
+            switch(action) {
+                case 'post-property':
+                    navigation.navigate('MainTabs', {
+                        screen: 'Home',
+                        params: {
+                            screen: 'PostProperty'
+                        }
+                    });
+                    break;
+                case 'post-whatsapp':
+                    navigation.navigate('MainTabs', {
+                        screen: 'Home',
+                        params: {
+                            screen: 'PostPropertyWhatsApp'
+                        }
+                    });
+                    break;
+                default:
+                    console.log('Card pressed:', action);
+            }
+        }, 100);
+    };
+
+    const renderCard = (title, subtitle, icon, iconColor, gradientColors, onPress) => (
+        <TouchableOpacity
+            style={styles.card}
+            onPress={onPress}
+            activeOpacity={0.85}
+        >
+            <LinearGradient
+                colors={gradientColors || [colors.white, colors.white]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cardGradient}
+            >
+                <View style={styles.cardContent}>
+                    <View style={styles.cardTextContainer}>
+                        <Text style={styles.cardTitle}>{title}</Text>
+                        <Text style={styles.cardSubtitle}>{subtitle}</Text>
+                    </View>
+                    <View style={styles.cardRightSection}>
+                        <View style={[styles.cardIconContainer, { backgroundColor: iconColor + '15' }]}>
+                            <MaterialCommunityIcons name={icon} size={26} color={iconColor} />
+                        </View>
+                        <Ionicons name="chevron-forward" size={18} color={iconColor} style={styles.cardArrow} />
+                    </View>
+                </View>
+            </LinearGradient>
+        </TouchableOpacity>
+    );
+
+    const renderMenuItem = (name, icon, iconType, hasNew = false, iconColor = null, onPress) => {
+        const IconComponent = iconType === 'Ionicons' ? Ionicons : 
+                            iconType === 'MaterialIcons' ? MaterialIcons :
+                            iconType === 'MaterialCommunityIcons' ? MaterialCommunityIcons :
+                            FontAwesome5;
+        
+        return (
+            <TouchableOpacity
+                style={styles.menuItem}
+                onPress={onPress}
+                activeOpacity={0.7}
+            >
+                <View style={[styles.menuIconContainer, iconColor && { backgroundColor: iconColor + '10' }]}>
+                    <IconComponent 
+                        name={icon} 
+                        size={20} 
+                        color={iconColor || colors.textPrimary} 
+                    />
+                </View>
+                <Text style={styles.menuText}>{name}</Text>
+                {hasNew && (
+                    <View style={styles.newBadge}>
+                        <LinearGradient
+                            colors={[colors.warning, colors.accent]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={styles.newBadgeGradient}
+                        >
+                            <Text style={styles.newBadgeText}>NEW</Text>
+                        </LinearGradient>
+                    </View>
+                )}
+                <Ionicons name="chevron-forward" size={16} color={colors.textTertiary} style={styles.menuArrow} />
+            </TouchableOpacity>
+        );
+    };
+
+    const renderSectionHeader = (title) => (
+        <View style={styles.sectionHeader}>
+            <Text style={styles.sectionHeaderText}>{title}</Text>
+        </View>
+    );
 
     return (
         <View style={styles.container}>
-            <View style={[styles.header, { paddingTop: insets.top + 32 }]}>
-                <View style={styles.logoContainer}>
-                    <Text style={styles.logoText}>TOP SELLING</Text>
-                    <Text style={styles.logoTextAccent}> PROPERTIES</Text>
+            <LinearGradient
+                colors={[colors.primary, colors.maroon, colors.primary]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={[styles.header, { paddingTop: insets.top + 12 }]}
+            >
+                <View style={styles.profileContainer}>
+                    <View style={styles.avatarContainer}>
+                        <LinearGradient
+                            colors={[colors.white, colors.filterRedLight]}
+                            style={styles.avatar}
+                        >
+                            <Text style={styles.avatarText}>S</Text>
+                        </LinearGradient>
+                        <View style={styles.avatarBadge} />
+                    </View>
+                    <View style={styles.profileInfo}>
+                        <Text style={styles.username}>sam</Text>
+                        <View style={styles.profileSubtextContainer}>
+                            <Text style={styles.profileSubtext}>Dealer Profile</Text>
+                            <View style={styles.profileDot} />
+                            <Text style={styles.profileSubtext}>Manage Profile</Text>
+                        </View>
+                    </View>
                 </View>
-                <Text style={styles.tagline}>Premium Real Estate Experience 🔥</Text>
-            </View>
+            </LinearGradient>
 
             <DrawerContentScrollView 
                 {...props} 
                 contentContainerStyle={styles.menuContainer}
                 showsVerticalScrollIndicator={false}
             >
-                {menuItems.map((item, index) => {
-                    const IconComponent = item.iconType === 'Ionicons' ? Ionicons : MaterialIcons;
-                    return (
-                        <TouchableOpacity
-                            key={index}
-                            style={styles.menuItem}
-                            onPress={() => navigation.navigate(item.screen)}
-                            activeOpacity={0.7}
+                {/* Property Posting Section */}
+                {renderCard(
+                    'Post Property',
+                    'Sell/ Rent faster with 99acres.',
+                    'home-plus',
+                    colors.primary,
+                    [colors.filterRedLight, colors.white],
+                    () => handleCardPress('post-property')
+                )}
+                
+                {renderCard(
+                    'Post Property via Whatsapp',
+                    'Faster property posting experience.',
+                    'whatsapp',
+                    '#25D366',
+                    ['#E8F5E9', '#FFFFFF'],
+                    () => handleCardPress('post-whatsapp')
+                )}
+
+                {/* Property Search Section */}
+                {renderCard(
+                    'Search Properties',
+                    'Explore residential and commercial properties.',
+                    'home-search',
+                    colors.warning,
+                    ['#FFF3E0', colors.white],
+                    () => {
+                        navigation.closeDrawer();
+                        setTimeout(() => {
+                            navigation.navigate('MainTabs', {
+                                screen: 'Home',
+                                params: {
+                                    screen: 'Search'
+                                }
+                            });
+                        }, 100);
+                    }
+                )}
+
+                {/* Manage Your Property Section */}
+                {renderSectionHeader('MANAGE YOUR PROPERTY')}
+                
+                {renderMenuItem(
+                    'View Responses',
+                    'message-text-outline',
+                    'MaterialCommunityIcons',
+                    false,
+                    colors.info,
+                    () => handleCardPress('view-responses')
+                )}
+                
+                {renderMenuItem(
+                    'Manage/ Edit your listings',
+                    'office-building',
+                    'MaterialCommunityIcons',
+                    false,
+                    colors.primary,
+                    () => handleCardPress('manage-listings')
+                )}
+                
+                {renderMenuItem(
+                    'Self verify your property',
+                    'shield-check',
+                    'MaterialCommunityIcons',
+                    false,
+                    colors.teal,
+                    () => handleCardPress('self-verify')
+                )}
+                
+                {renderMenuItem(
+                    'Upload Media',
+                    'upload',
+                    'MaterialCommunityIcons',
+                    true,
+                    colors.warning,
+                    () => handleCardPress('upload-media')
+                )}
+                
+                {renderMenuItem(
+                    'Homepage',
+                    'home',
+                    'Ionicons',
+                    false,
+                    colors.primary,
+                    () => handleNavigation('Home')
+                )}
+
+                {/* Plans and Services Section */}
+                {renderSectionHeader('PLANS AND SERVICES')}
+                
+                {renderMenuItem(
+                    'Dealer Plans',
+                    'crown',
+                    'MaterialCommunityIcons',
+                    false,
+                    colors.warning,
+                    () => handleCardPress('dealer-plans')
+                )}
+
+                {/* Rate Our App Section */}
+                <View style={styles.rateSection}>
+                    <View style={styles.rateContent}>
+                        <Text style={styles.rateTitle}>Rate Our App</Text>
+                        <View style={styles.starsContainer}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <TouchableOpacity
+                                    key={star}
+                                    onPress={() => setRating(star)}
+                                    activeOpacity={0.7}
+                                    style={styles.starButton}
+                                >
+                                    <Ionicons
+                                        name={star <= rating ? 'star' : 'star-outline'}
+                                        size={22}
+                                        color={star <= rating ? colors.warning : colors.textTertiary}
+                                    />
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </View>
+                    <TouchableOpacity
+                        onPress={() => handleCardPress('rate-app')}
+                        activeOpacity={0.8}
+                    >
+                        <LinearGradient
+                            colors={[colors.primary, colors.maroon]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={styles.rateButton}
                         >
-                            <IconComponent 
-                                name={item.icon} 
-                                size={24} 
-                                color={colors.primary} 
-                                style={styles.menuIcon}
-                            />
-                            <Text style={styles.menuText}>{item.name}</Text>
-                        </TouchableOpacity>
-                    );
-                })}
+                            <Ionicons name="star" size={14} color={colors.white} />
+                            <Text style={styles.rateButtonText}>Rate App</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </View>
             </DrawerContentScrollView>
 
             <View style={styles.footer}>
@@ -66,75 +312,278 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     header: {
-        backgroundColor: colors.primary,
-        paddingHorizontal: 24,
-        paddingBottom: 32,
+        paddingHorizontal: 16,
+        paddingBottom: 20,
     },
-    logoContainer: {
+    profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
     },
-    logoText: {
-        fontSize: 16,
-        fontFamily: 'Poppins_600SemiBold',
+    avatarContainer: {
+        position: 'relative',
+        marginRight: 12,
+    },
+    avatar: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4,
+    },
+    avatarText: {
+        fontSize: 22,
+        fontFamily: 'Poppins_700Bold',
+        color: colors.primary,
+    },
+    avatarBadge: {
+        position: 'absolute',
+        bottom: 1,
+        right: 1,
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        backgroundColor: colors.success,
+        borderWidth: 2,
+        borderColor: colors.primary,
+    },
+    profileInfo: {
+        flex: 1,
+    },
+    username: {
+        fontSize: 17,
+        fontFamily: 'Poppins_700Bold',
         color: colors.white,
-        letterSpacing: 0.3,
-    },
-    logoTextAccent: {
-        fontSize: 16,
-        fontFamily: 'Poppins_600SemiBold',
-        color: colors.secondary,
-        letterSpacing: 0.3,
-    },
-    tagline: {
-        fontSize: 14,
-        color: 'rgba(255, 255, 255, 0.85)',
-        fontFamily: 'Poppins_400Regular',
+        marginBottom: 4,
         letterSpacing: 0.2,
     },
+    profileSubtextContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    profileSubtext: {
+        fontSize: 11,
+        fontFamily: 'Poppins_400Regular',
+        color: 'rgba(255, 255, 255, 0.95)',
+    },
+    profileDot: {
+        width: 3,
+        height: 3,
+        borderRadius: 1.5,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        marginHorizontal: 6,
+    },
     menuContainer: {
+        paddingTop: 16,
+        paddingBottom: 20,
+    },
+    card: {
+        marginHorizontal: 16,
+        marginBottom: 12,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.08,
+        shadowRadius: 6,
+        elevation: 2,
+        overflow: 'hidden',
+    },
+    cardGradient: {
+        padding: 16,
+        borderRadius: 12,
+        borderWidth: 0.5,
+        borderColor: 'rgba(0, 0, 0, 0.08)',
+    },
+    cardContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    cardTextContainer: {
+        flex: 1,
+        marginRight: 10,
+    },
+    cardTitle: {
+        fontSize: 15,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.textPrimary,
+        marginBottom: 5,
+        letterSpacing: 0.1,
+    },
+    cardSubtitle: {
+        fontSize: 12,
+        fontFamily: 'Poppins_400Regular',
+        color: colors.textSecondary,
+        lineHeight: 17,
+    },
+    cardRightSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    cardIconContainer: {
+        width: 48,
+        height: 48,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    cardArrow: {
+        opacity: 0.6,
+    },
+    sectionHeader: {
+        paddingHorizontal: 20,
         paddingTop: 20,
+        paddingBottom: 10,
+        marginTop: 4,
+    },
+    sectionHeaderLine: {
+        display: 'none',
+    },
+    sectionHeaderText: {
+        fontSize: 11,
+        fontFamily: 'Poppins_600SemiBold',
+        color: colors.textSecondary,
+        letterSpacing: 0.5,
+        textTransform: 'uppercase',
     },
     menuItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 18,
-        paddingHorizontal: 24,
-        marginHorizontal: 12,
-        marginVertical: 4,
-        borderRadius: 16,
-        backgroundColor: 'transparent',
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        marginHorizontal: 16,
+        marginVertical: 1,
     },
-    menuIcon: {
-        marginRight: 20,
+    menuIconContainer: {
+        width: 32,
+        height: 32,
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 14,
     },
     menuText: {
-        fontSize: 17,
+        fontSize: 14,
         color: colors.textPrimary,
+        fontFamily: 'Poppins_500Medium',
+        flex: 1,
+        letterSpacing: 0.1,
+    },
+    menuArrow: {
+        marginLeft: 8,
+        opacity: 0.4,
+    },
+    newBadge: {
+        marginLeft: 8,
+        borderRadius: 6,
+        overflow: 'hidden',
+    },
+    newBadgeGradient: {
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+    },
+    newBadgeText: {
+        fontSize: 8,
+        fontFamily: 'Poppins_700Bold',
+        color: colors.white,
+        letterSpacing: 0.6,
+    },
+    rateSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+        marginTop: 20,
+        marginBottom: 16,
+        padding: 16,
+        borderRadius: 12,
+        backgroundColor: colors.white,
+        borderWidth: 0.5,
+        borderColor: 'rgba(0, 0, 0, 0.08)',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    rateContent: {
+        flex: 1,
+    },
+    rateTitle: {
+        fontSize: 14,
         fontFamily: 'Poppins_600SemiBold',
+        color: colors.textPrimary,
+        marginBottom: 10,
+        letterSpacing: 0.2,
+    },
+    starsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    starButton: {
+        marginRight: 4,
+        padding: 1,
+    },
+    rateButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 14,
+        paddingVertical: 9,
+        borderRadius: 10,
+        marginLeft: 10,
+        shadowColor: colors.primary,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    rateButtonText: {
+        fontSize: 12,
+        fontFamily: 'Poppins_700Bold',
+        color: colors.white,
+        marginLeft: 4,
         letterSpacing: 0.2,
     },
     footer: {
-        paddingHorizontal: 24,
-        paddingBottom: 32,
+        paddingHorizontal: 16,
+        paddingBottom: 20,
+        paddingTop: 12,
+        backgroundColor: colors.white,
     },
     divider: {
         height: 1,
         backgroundColor: colors.border,
-        marginBottom: 20,
+        marginBottom: 12,
     },
     footerText: {
-        fontSize: 13,
+        fontSize: 10,
         color: colors.textSecondary,
         textAlign: 'center',
         fontFamily: 'Poppins_500Medium',
+        letterSpacing: 0.2,
     },
     versionText: {
-        fontSize: 12,
+        fontSize: 9,
         color: colors.textTertiary,
         textAlign: 'center',
-        marginTop: 6,
+        marginTop: 4,
         fontFamily: 'Poppins_400Regular',
     },
 });

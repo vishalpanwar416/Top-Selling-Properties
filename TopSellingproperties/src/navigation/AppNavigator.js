@@ -15,6 +15,8 @@ import AgentsScreen from '../screens/AgentsScreen';
 import AgentDetailsScreen from '../screens/AgentDetailsScreen';
 import AgencyDetailsScreen from '../screens/AgencyDetailsScreen';
 import MoreScreen from '../screens/MoreScreen';
+import PostPropertyScreen from '../screens/PostPropertyScreen';
+import PostPropertyWhatsAppScreen from '../screens/PostPropertyWhatsAppScreen';
 import Sidebar from '../components/Sidebar';
 import BottomTabBar from '../components/BottomTabBar';
 import colors from '../theme/colors';
@@ -45,6 +47,8 @@ const HomeStack = () => {
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
+            <Stack.Screen name="PostProperty" component={PostPropertyScreen} />
+            <Stack.Screen name="PostPropertyWhatsApp" component={PostPropertyWhatsAppScreen} />
         </Stack.Navigator>
     );
 };
@@ -167,7 +171,26 @@ const TabNavigator = () => {
 const AppNavigator = () => {
     return (
         <NavigationContainer>
-            <TabNavigator />
+            <Drawer.Navigator
+                drawerContent={(props) => <Sidebar {...props} />}
+                screenOptions={{
+                    headerShown: false,
+                    drawerType: 'slide',
+                    drawerStyle: {
+                        width: 280,
+                    },
+                    overlayColor: 'rgba(0, 0, 0, 0.5)',
+                }}
+            >
+                <Drawer.Screen 
+                    name="MainTabs" 
+                    component={TabNavigator}
+                    options={{
+                        drawerLabel: () => null,
+                        drawerItemStyle: { display: 'none' },
+                    }}
+                />
+            </Drawer.Navigator>
         </NavigationContainer>
     );
 };

@@ -847,6 +847,648 @@
                     "floorPlan": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
                 }
             ]
+        },
+        {
+            "id": "project-7",
+            "name": "Marina Gate",
+            "developer": "Omniyat",
+            "location": "Dubai Marina, Dubai",
+            "city": "Dubai",
+            "description": "Marina Gate is a luxury residential tower offering stunning marina views, premium finishes, and world-class amenities in the heart of Dubai Marina.",
+            "completion": "Ready",
+            "handover": "Ready to Move",
+            "paymentPlan": "Cash/Mortgage",
+            "startingPrice": 2100000,
+            "priceRange": "AED 2.1M - 15M",
+            "totalUnits": 280,
+            "availableUnits": 38,
+            "propertyTypes": [
+                "Apartment",
+                "Penthouse"
+            ],
+            "bedroomRange": "1BR - 4BR",
+            "featured": false,
+            "status": "Ready to Move",
+            "masterPlan": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+                "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800",
+                "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+                "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800"
+            ],
+            "amenities": [
+                "Marina View",
+                "Infinity Pool",
+                "Gym",
+                "Spa",
+                "Concierge",
+                "Valet Parking",
+                "Rooftop Terrace",
+                "Kids Play Area"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Dubai Marina Walk",
+                    "distance": "2 min walk"
+                },
+                {
+                    "name": "JBR Beach",
+                    "distance": "5 min"
+                },
+                {
+                    "name": "Dubai Marina Mall",
+                    "distance": "3 min walk"
+                },
+                {
+                    "name": "Palm Jumeirah",
+                    "distance": "10 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-7-1",
+                    "title": "1BR Marina View",
+                    "price": 2100000,
+                    "currency": "AED",
+                    "bedrooms": 1,
+                    "bathrooms": 2,
+                    "area": 920,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "15-20",
+                    "view": "Marina View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "MARINA VIEW",
+                        "INVESTMENT"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+                        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800"
+                },
+                {
+                    "id": "prop-7-2",
+                    "title": "3BR Premium Marina View",
+                    "price": 6800000,
+                    "currency": "AED",
+                    "bedrooms": 3,
+                    "bathrooms": 4,
+                    "area": 2200,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "30-35",
+                    "view": "Full Marina View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "PREMIUM",
+                        "MARINA VIEW"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+                        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-8",
+            "name": "Al Habtoor City",
+            "developer": "Al Habtoor Group",
+            "location": "Business Bay, Dubai",
+            "city": "Dubai",
+            "description": "Al Habtoor City is a prestigious mixed-use development featuring luxury residences, hotels, and entertainment venues along Dubai Canal.",
+            "completion": "Ready",
+            "handover": "Ready to Move",
+            "paymentPlan": "Cash/Mortgage",
+            "startingPrice": 3200000,
+            "priceRange": "AED 3.2M - 25M",
+            "totalUnits": 350,
+            "availableUnits": 52,
+            "propertyTypes": [
+                "Apartment",
+                "Penthouse"
+            ],
+            "bedroomRange": "2BR - 5BR",
+            "featured": false,
+            "status": "Ready to Move",
+            "masterPlan": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+                "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+                "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+            ],
+            "amenities": [
+                "Canal View",
+                "Infinity Pool",
+                "Gym",
+                "Spa",
+                "Concierge",
+                "Valet Parking",
+                "Rooftop Lounge",
+                "Business Center"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Dubai Canal",
+                    "distance": "1 min walk"
+                },
+                {
+                    "name": "Downtown Dubai",
+                    "distance": "8 min"
+                },
+                {
+                    "name": "DIFC",
+                    "distance": "10 min"
+                },
+                {
+                    "name": "Dubai Mall",
+                    "distance": "12 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-8-1",
+                    "title": "2BR Canal View",
+                    "price": 3200000,
+                    "currency": "AED",
+                    "bedrooms": 2,
+                    "bathrooms": 3,
+                    "area": 1450,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "20-25",
+                    "view": "Canal View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "CANAL VIEW",
+                        "PREMIUM"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+                        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800"
+                },
+                {
+                    "id": "prop-8-2",
+                    "title": "4BR Sky Penthouse",
+                    "price": 25000000,
+                    "currency": "AED",
+                    "bedrooms": 4,
+                    "bathrooms": 5,
+                    "area": 5800,
+                    "areaUnit": "sqft",
+                    "type": "Penthouse",
+                    "floor": "Top Floor",
+                    "view": "360° City View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "ULTRA LUXURY",
+                        "PENTHOUSE"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+                        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-9",
+            "name": "The Residences at Address",
+            "developer": "Emaar",
+            "location": "Downtown Dubai, Dubai",
+            "city": "Dubai",
+            "description": "The Residences at Address offers ultra-luxury living with direct access to Address Hotels, featuring premium apartments with Burj Khalifa views.",
+            "completion": "Off-Plan",
+            "handover": "Q3 2027",
+            "paymentPlan": "70/30",
+            "startingPrice": 4500000,
+            "priceRange": "AED 4.5M - 50M",
+            "totalUnits": 200,
+            "availableUnits": 65,
+            "propertyTypes": [
+                "Apartment",
+                "Penthouse"
+            ],
+            "bedroomRange": "2BR - 5BR",
+            "featured": true,
+            "status": "Under Construction",
+            "masterPlan": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+                "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+                "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800"
+            ],
+            "amenities": [
+                "Burj Khalifa View",
+                "Hotel Services",
+                "Infinity Pool",
+                "Sky Pool",
+                "Gym",
+                "Spa",
+                "Concierge",
+                "Private Beach Access"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Burj Khalifa",
+                    "distance": "1 min walk"
+                },
+                {
+                    "name": "Dubai Mall",
+                    "distance": "3 min walk"
+                },
+                {
+                    "name": "Dubai Fountain",
+                    "distance": "2 min walk"
+                },
+                {
+                    "name": "DIFC",
+                    "distance": "8 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-9-1",
+                    "title": "2BR Burj View",
+                    "price": 4500000,
+                    "currency": "AED",
+                    "bedrooms": 2,
+                    "bathrooms": 3,
+                    "area": 1650,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "30-35",
+                    "view": "Burj Khalifa View",
+                    "status": "Available",
+                    "tags": [
+                        "Off-Plan",
+                        "BURJ VIEW",
+                        "ULTRA LUXURY"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+                        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
+                },
+                {
+                    "id": "prop-9-2",
+                    "title": "5BR Sky Mansion",
+                    "price": 50000000,
+                    "currency": "AED",
+                    "bedrooms": 5,
+                    "bathrooms": 6,
+                    "area": 12000,
+                    "areaUnit": "sqft",
+                    "type": "Penthouse",
+                    "floor": "Top 3 Floors",
+                    "view": "360° Burj & Fountain View",
+                    "status": "Available",
+                    "tags": [
+                        "Off-Plan",
+                        "SKY MANSION",
+                        "CELEBRITY HOME"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+                        "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-10",
+            "name": "Jumeirah Living",
+            "developer": "Meraas",
+            "location": "Jumeirah, Dubai",
+            "city": "Dubai",
+            "description": "Jumeirah Living offers beachfront luxury residences with direct beach access, premium amenities, and stunning sea views in the prestigious Jumeirah area.",
+            "completion": "Ready",
+            "handover": "Ready to Move",
+            "paymentPlan": "Cash/Mortgage",
+            "startingPrice": 3800000,
+            "priceRange": "AED 3.8M - 18M",
+            "totalUnits": 180,
+            "availableUnits": 28,
+            "propertyTypes": [
+                "Apartment",
+                "Penthouse"
+            ],
+            "bedroomRange": "2BR - 4BR",
+            "featured": false,
+            "status": "Ready to Move",
+            "masterPlan": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+                "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800",
+                "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+                "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800"
+            ],
+            "amenities": [
+                "Beach Access",
+                "Infinity Pool",
+                "Beach Club",
+                "Gym",
+                "Spa",
+                "Concierge",
+                "Valet Parking",
+                "Rooftop Lounge"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Jumeirah Beach",
+                    "distance": "Direct Access"
+                },
+                {
+                    "name": "Burj Al Arab",
+                    "distance": "5 min"
+                },
+                {
+                    "name": "Madinat Jumeirah",
+                    "distance": "8 min"
+                },
+                {
+                    "name": "Dubai Marina",
+                    "distance": "15 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-10-1",
+                    "title": "2BR Beachfront",
+                    "price": 3800000,
+                    "currency": "AED",
+                    "bedrooms": 2,
+                    "bathrooms": 3,
+                    "area": 1580,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "10-15",
+                    "view": "Sea View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "BEACHFRONT",
+                        "SEA VIEW"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800",
+                        "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800"
+                },
+                {
+                    "id": "prop-10-2",
+                    "title": "4BR Sea View Penthouse",
+                    "price": 18000000,
+                    "currency": "AED",
+                    "bedrooms": 4,
+                    "bathrooms": 5,
+                    "area": 5200,
+                    "areaUnit": "sqft",
+                    "type": "Penthouse",
+                    "floor": "Top Floor",
+                    "view": "Panoramic Sea View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "PENTHOUSE",
+                        "SEA VIEW"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800",
+                        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-11",
+            "name": "Dubai Hills Estate",
+            "developer": "Emaar",
+            "location": "Dubai Hills, Dubai",
+            "city": "Dubai",
+            "description": "Dubai Hills Estate is a master-planned community featuring luxury villas and townhouses surrounded by an 18-hole championship golf course.",
+            "completion": "Ready",
+            "handover": "Ready to Move",
+            "paymentPlan": "Cash/Mortgage",
+            "startingPrice": 4200000,
+            "priceRange": "AED 4.2M - 12M",
+            "totalUnits": 1200,
+            "availableUnits": 185,
+            "propertyTypes": [
+                "Townhouse",
+                "Villa"
+            ],
+            "bedroomRange": "4BR - 6BR",
+            "featured": false,
+            "status": "Ready to Move",
+            "masterPlan": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+                "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800",
+                "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+                "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+            ],
+            "amenities": [
+                "Golf Course",
+                "Community Pool",
+                "Parks",
+                "Sports Courts",
+                "Retail Center",
+                "Schools",
+                "Hospitals",
+                "Walking Trails"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Dubai Hills Mall",
+                    "distance": "5 min"
+                },
+                {
+                    "name": "Dubai Hills Golf Club",
+                    "distance": "2 min"
+                },
+                {
+                    "name": "Downtown Dubai",
+                    "distance": "20 min"
+                },
+                {
+                    "name": "Dubai Airport",
+                    "distance": "25 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-11-1",
+                    "title": "4BR Golf View Villa",
+                    "price": 4200000,
+                    "currency": "AED",
+                    "bedrooms": 4,
+                    "bathrooms": 5,
+                    "area": 3800,
+                    "areaUnit": "sqft",
+                    "type": "Villa",
+                    "floor": "G+1",
+                    "view": "Golf Course View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "GOLF VIEW",
+                        "FAMILY HOME"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800",
+                        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800"
+                },
+                {
+                    "id": "prop-11-2",
+                    "title": "6BR Premium Villa",
+                    "price": 12000000,
+                    "currency": "AED",
+                    "bedrooms": 6,
+                    "bathrooms": 7,
+                    "area": 6800,
+                    "areaUnit": "sqft",
+                    "type": "Villa",
+                    "floor": "G+2",
+                    "view": "Golf & Park View",
+                    "status": "Available",
+                    "tags": [
+                        "READY",
+                        "PREMIUM",
+                        "SPACIOUS"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800",
+                        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-12",
+            "name": "Bluewaters Residences",
+            "developer": "Meraas",
+            "location": "Bluewaters Island, Dubai",
+            "city": "Dubai",
+            "description": "Bluewaters Residences offers luxury beachfront living on Bluewaters Island with stunning views of Ain Dubai and the Arabian Gulf.",
+            "completion": "Off-Plan",
+            "handover": "Q2 2026",
+            "paymentPlan": "65/35",
+            "startingPrice": 5200000,
+            "priceRange": "AED 5.2M - 30M",
+            "totalUnits": 150,
+            "availableUnits": 42,
+            "propertyTypes": [
+                "Apartment",
+                "Penthouse"
+            ],
+            "bedroomRange": "2BR - 5BR",
+            "featured": true,
+            "status": "Under Construction",
+            "masterPlan": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+                "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800"
+            ],
+            "amenities": [
+                "Ain Dubai View",
+                "Beach Access",
+                "Infinity Pool",
+                "Beach Club",
+                "Gym",
+                "Spa",
+                "Concierge",
+                "Private Beach"
+            ],
+            "nearbyPlaces": [
+                {
+                    "name": "Ain Dubai",
+                    "distance": "2 min walk"
+                },
+                {
+                    "name": "JBR Beach",
+                    "distance": "5 min"
+                },
+                {
+                    "name": "Dubai Marina",
+                    "distance": "8 min"
+                },
+                {
+                    "name": "Palm Jumeirah",
+                    "distance": "10 min"
+                }
+            ],
+            "properties": [
+                {
+                    "id": "prop-12-1",
+                    "title": "2BR Ain Dubai View",
+                    "price": 5200000,
+                    "currency": "AED",
+                    "bedrooms": 2,
+                    "bathrooms": 3,
+                    "area": 1750,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "20-25",
+                    "view": "Ain Dubai View",
+                    "status": "Available",
+                    "tags": [
+                        "Off-Plan",
+                        "AIN DUBAI VIEW",
+                        "BEACHFRONT"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+                        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800"
+                },
+                {
+                    "id": "prop-12-2",
+                    "title": "5BR Sky Penthouse",
+                    "price": 30000000,
+                    "currency": "AED",
+                    "bedrooms": 5,
+                    "bathrooms": 6,
+                    "area": 8500,
+                    "areaUnit": "sqft",
+                    "type": "Penthouse",
+                    "floor": "Top 2 Floors",
+                    "view": "360° Sea & Ain Dubai View",
+                    "status": "Available",
+                    "tags": [
+                        "Off-Plan",
+                        "ULTRA LUXURY",
+                        "SKY VILLA"
+                    ],
+                    "images": [
+                        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+                        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800"
+                    ],
+                    "floorPlan": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+                }
+            ]
         }
     ]
 }

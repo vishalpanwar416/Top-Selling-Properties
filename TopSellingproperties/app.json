@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.TopSellingProperties"
+      "bundleIdentifier": "com.anonymous.TopSellingProperties",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to automatically detect your city and show relevant properties."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +25,11 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.TopSellingProperties"
+      "package": "com.anonymous.TopSellingProperties",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

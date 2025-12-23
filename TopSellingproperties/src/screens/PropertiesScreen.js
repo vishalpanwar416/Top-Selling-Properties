@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import PropertyCard from '../components/PropertyCard';
 import SearchBar from '../components/SearchBar';
 import StoryViewer from '../components/StoryViewer';
+import LocationSelector from '../components/LocationSelector';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 
@@ -69,6 +70,7 @@ const PropertiesScreen = ({ navigation }) => {
     const [showBathsModal, setShowBathsModal] = useState(false);
     const [showStoryViewer, setShowStoryViewer] = useState(false);
     const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
+    const [selectedLocation, setSelectedLocation] = useState('UAE');
 
     // Animation values
     const modalAnimation = useRef(new Animated.Value(0)).current;
@@ -228,10 +230,40 @@ const PropertiesScreen = ({ navigation }) => {
             <ScrollView
                 style={styles.scrollView}
                 showsVerticalScrollIndicator={false}
-                stickyHeaderIndices={[1]}
+                stickyHeaderIndices={[2]}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
             >
+                {/* Hero Section with Back Button and UAE */}
+                <View style={styles.heroSection}>
+                    {/* Header Row with Back Button, Title, and Location */}
+                    <View style={styles.headerRow}>
+                        <TouchableOpacity
+                            style={styles.backButton}
+                            onPress={() => navigation.goBack()}
+                            activeOpacity={0.7}
+                        >
+                            <View style={styles.backButtonContainer}>
+                                <Ionicons name="chevron-back" size={24} color="#991B1B" />
+                            </View>
+                        </TouchableOpacity>
+
+                        {/* Title with Icon - Centered */}
+                        <View style={styles.titleRow}>
+                            <View style={styles.iconContainer}>
+                                <Ionicons name="home" size={24} color="#991B1B" />
+                            </View>
+                            <Text style={styles.welcomeTitle}>Properties</Text>
+                        </View>
+
+                        {/* Location Selector - Right Side */}
+                        <LocationSelector
+                            selectedLocation={selectedLocation}
+                            onLocationChange={setSelectedLocation}
+                        />
+                    </View>
+                </View>
+
                 {/* Search Bar Section */}
                 <View style={[styles.searchSection, isSticky && styles.searchSectionSticky]}>
                     <View style={styles.searchRow}>
@@ -750,11 +782,62 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 
+    // Hero Section
+    heroSection: {
+        backgroundColor: '#FFF5F5',
+        paddingTop: 44,
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(185, 28, 28, 0.08)',
+    },
+    headerRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        position: 'relative',
+    },
+    backButton: {
+        zIndex: 1,
+    },
+    backButtonContainer: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(153, 27, 27, 0.08)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    titleRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        zIndex: 0,
+    },
+    iconContainer: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(153, 27, 27, 0.08)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    welcomeTitle: {
+        fontSize: 24,
+        fontFamily: 'Lato_700Bold',
+        color: '#991B1B',
+        letterSpacing: -0.3,
+    },
+
     // Search Section
     searchSection: {
         backgroundColor: colors.white,
         paddingHorizontal: 12,
-        paddingTop: 44,
+        paddingTop: 12,
         paddingBottom: 6,
         zIndex: 100,
     },

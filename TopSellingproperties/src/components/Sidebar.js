@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Platform } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,6 +9,7 @@ import colors from '../theme/colors';
 const Sidebar = (props) => {
     const { navigation } = props;
     const insets = useSafeAreaInsets();
+    const [showRatingModal, setShowRatingModal] = useState(false);
     const [rating, setRating] = useState(0);
 
     const handleNavigation = (screen, nestedScreen = null) => {
@@ -49,10 +50,33 @@ const Sidebar = (props) => {
                         }
                     });
                     break;
+                case 'rate-app':
+                    setShowRatingModal(true);
+                    break;
                 default:
                     console.log('Card pressed:', action);
             }
         }, 100);
+    };
+
+    const handleRatingSubmit = async () => {
+        if (rating > 0) {
+            setShowRatingModal(false);
+            // Open app store for rating
+            const appStoreUrl = Platform.OS === 'ios' 
+                ? 'https://apps.apple.com/app/idYOUR_APP_ID' // Replace with your iOS app ID
+                : 'https://play.google.com/store/apps/details?id=com.anonymous.TopSellingProperties';
+            
+            try {
+                const canOpen = await Linking.canOpenURL(appStoreUrl);
+                if (canOpen) {
+                    await Linking.openURL(appStoreUrl);
+                }
+            } catch (error) {
+                console.log('Error opening app store:', error);
+            }
+            setRating(0);
+        }
     };
 
     const renderCard = (title, subtitle, icon, iconColor, gradientColors, onPress) => (
@@ -160,43 +184,13 @@ const Sidebar = (props) => {
                 contentContainerStyle={styles.menuContainer}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Property Posting Section */}
-                {renderCard(
-                    'Post Property',
-                    'Sell/ Rent faster with 99acres.',
-                    'home-plus',
-                    colors.primary,
-                    [colors.filterRedLight, colors.white],
-                    () => handleCardPress('post-property')
-                )}
-                
-                {renderCard(
+                {renderMenuItem(
                     'Post Property via Whatsapp',
-                    'Faster property posting experience.',
                     'whatsapp',
+                    'FontAwesome5',
+                    false,
                     '#25D366',
-                    ['#E8F5E9', '#FFFFFF'],
                     () => handleCardPress('post-whatsapp')
-                )}
-
-                {/* Property Search Section */}
-                {renderCard(
-                    'Search Properties',
-                    'Explore residential and commercial properties.',
-                    'home-search',
-                    colors.warning,
-                    ['#FFF3E0', colors.white],
-                    () => {
-                        navigation.closeDrawer();
-                        setTimeout(() => {
-                            navigation.navigate('MainTabs', {
-                                screen: 'Home',
-                                params: {
-                                    screen: 'Search'
-                                }
-                            });
-                        }, 100);
-                    }
                 )}
 
                 {/* Manage Your Property Section */}
@@ -260,9 +254,37 @@ const Sidebar = (props) => {
                 )}
 
                 {/* Rate Our App Section */}
-                <View style={styles.rateSection}>
-                    <View style={styles.rateContent}>
-                        <Text style={styles.rateTitle}>Rate Our App</Text>
+                {renderMenuItem(
+                    'Rate Our App',
+                    'star',
+                    'Ionicons',
+                    false,
+                    colors.warning,
+                    () => handleCardPress('rate-app')
+                )}
+            </DrawerContentScrollView>
+
+            <View style={styles.footer}>
+                <View style={styles.divider} />
+                <Text style={styles.footerText}>© 2024 Top Selling Properties</Text>
+                <Text style={styles.versionText}>Version 1.0.0</Text>
+            </View>
+
+            {/* Rating Modal */}
+            <Modal
+                visible={showRatingModal}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => {
+                    setShowRatingModal(false);
+                    setRating(0);
+                }}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Rate Our App</Text>
+                        <Text style={styles.modalSubtitle}>How would you rate your experience?</Text>
+                        
                         <View style={styles.starsContainer}>
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <TouchableOpacity
@@ -273,35 +295,42 @@ const Sidebar = (props) => {
                                 >
                                     <Ionicons
                                         name={star <= rating ? 'star' : 'star-outline'}
-                                        size={22}
+                                        size={40}
                                         color={star <= rating ? colors.warning : colors.textTertiary}
                                     />
                                 </TouchableOpacity>
                             ))}
                         </View>
-                    </View>
-                    <TouchableOpacity
-                        onPress={() => handleCardPress('rate-app')}
-                        activeOpacity={0.8}
-                    >
-                        <LinearGradient
-                            colors={[colors.primary, colors.maroon]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            style={styles.rateButton}
-                        >
-                            <Ionicons name="star" size={14} color={colors.white} />
-                            <Text style={styles.rateButtonText}>Rate App</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
-                </View>
-            </DrawerContentScrollView>
 
-            <View style={styles.footer}>
-                <View style={styles.divider} />
-                <Text style={styles.footerText}>© 2024 Top Selling Properties</Text>
-                <Text style={styles.versionText}>Version 1.0.0</Text>
-            </View>
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity
+                                style={[styles.modalButton, styles.cancelButton]}
+                                onPress={() => {
+                                    setShowRatingModal(false);
+                                    setRating(0);
+                                }}
+                            >
+                                <Text style={styles.cancelButtonText}>Cancel</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity
+                                style={[styles.modalButton, styles.submitButton, rating === 0 && styles.submitButtonDisabled]}
+                                onPress={handleRatingSubmit}
+                                disabled={rating === 0}
+                            >
+                                <LinearGradient
+                                    colors={rating > 0 ? [colors.primary, colors.maroon] : [colors.textTertiary, colors.textTertiary]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}
+                                    style={styles.submitButtonGradient}
+                                >
+                                    <Text style={styles.submitButtonText}>Submit</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -499,68 +528,6 @@ const styles = StyleSheet.create({
         color: colors.white,
         letterSpacing: 0.6,
     },
-    rateSection: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginHorizontal: 16,
-        marginTop: 20,
-        marginBottom: 16,
-        padding: 16,
-        borderRadius: 12,
-        backgroundColor: colors.white,
-        borderWidth: 0.5,
-        borderColor: 'rgba(0, 0, 0, 0.08)',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2,
-    },
-    rateContent: {
-        flex: 1,
-    },
-    rateTitle: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textPrimary,
-        marginBottom: 10,
-        letterSpacing: 0.2,
-    },
-    starsContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    starButton: {
-        marginRight: 4,
-        padding: 1,
-    },
-    rateButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 14,
-        paddingVertical: 9,
-        borderRadius: 10,
-        marginLeft: 10,
-        shadowColor: colors.primary,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    rateButtonText: {
-        fontSize: 12,
-        fontFamily: 'Lato_700Bold',
-        color: colors.white,
-        marginLeft: 4,
-        letterSpacing: 0.2,
-    },
     footer: {
         paddingHorizontal: 16,
         paddingBottom: 20,
@@ -585,6 +552,88 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 4,
         fontFamily: 'Lato_400Regular',
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: colors.white,
+        borderRadius: 16,
+        padding: 24,
+        width: '85%',
+        maxWidth: 400,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 8,
+    },
+    modalTitle: {
+        fontSize: 22,
+        fontFamily: 'Lato_700Bold',
+        color: colors.textPrimary,
+        marginBottom: 8,
+        textAlign: 'center',
+    },
+    modalSubtitle: {
+        fontSize: 14,
+        fontFamily: 'Lato_400Regular',
+        color: colors.textSecondary,
+        marginBottom: 24,
+        textAlign: 'center',
+    },
+    starsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 32,
+        gap: 8,
+    },
+    starButton: {
+        padding: 4,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        width: '100%',
+        gap: 12,
+    },
+    modalButton: {
+        flex: 1,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    cancelButton: {
+        backgroundColor: colors.border,
+    },
+    cancelButtonText: {
+        fontSize: 14,
+        fontFamily: 'Lato_600SemiBold',
+        color: colors.textPrimary,
+        textAlign: 'center',
+        paddingVertical: 12,
+    },
+    submitButton: {
+        borderRadius: 10,
+    },
+    submitButtonDisabled: {
+        opacity: 0.5,
+    },
+    submitButtonGradient: {
+        paddingVertical: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    submitButtonText: {
+        fontSize: 14,
+        fontFamily: 'Lato_700Bold',
+        color: colors.white,
     },
 });
 

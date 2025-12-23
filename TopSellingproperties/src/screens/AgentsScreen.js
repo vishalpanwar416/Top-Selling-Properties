@@ -111,10 +111,11 @@ const AgentsScreen = ({ navigation }) => {
                         <Image
                             source={{ uri: item.image }}
                             style={styles.agentImage}
+                            resizeMode="cover"
                         />
                         {item.rating && (
                             <View style={styles.ratingBadge}>
-                                <Ionicons name="star" size={12} color="#FFD700" />
+                                <Ionicons name="star" size={10} color="#FFD700" />
                                 <Text style={styles.ratingBadgeText}>{item.rating}</Text>
                             </View>
                         )}
@@ -123,18 +124,18 @@ const AgentsScreen = ({ navigation }) => {
                         <View style={styles.agentHeader}>
                             <Text style={styles.agentName} numberOfLines={1}>{item.name}</Text>
                             <View style={styles.verifiedIcon}>
-                                <Ionicons name="checkmark-circle" size={16} color={colors.primary} />
+                                <Ionicons name="checkmark-circle" size={14} color={colors.primary} />
                             </View>
                         </View>
                         <Text style={styles.agentSpecialization} numberOfLines={1}>
                             {item.specialization || 'Real Estate Professional'}
                         </Text>
                         <View style={styles.serviceAreasRow}>
-                            <Ionicons name="location" size={12} color={colors.textSecondary} />
+                            <Ionicons name="location" size={11} color={colors.textSecondary} />
                             <Text style={styles.serviceAreas} numberOfLines={1}>{serviceAreasText}</Text>
                         </View>
                         <View style={styles.languagesRow}>
-                            <Ionicons name="chatbubbles" size={12} color={colors.textSecondary} />
+                            <Ionicons name="chatbubbles" size={11} color={colors.textSecondary} />
                             <Text style={styles.languages} numberOfLines={1}>{languagesText}</Text>
                         </View>
                         <View style={styles.listingTags}>
@@ -636,7 +637,7 @@ const styles = StyleSheet.create({
     },
     agentCard: {
         backgroundColor: colors.white,
-        borderRadius: 14,
+        borderRadius: 12,
         marginBottom: 12,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -650,29 +651,29 @@ const styles = StyleSheet.create({
     agentCardContent: {
         flexDirection: 'row',
         padding: 12,
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     agentImageWrapper: {
         position: 'relative',
-        marginRight: 10,
+        marginRight: 12,
     },
     agentImage: {
-        width: 65,
-        height: 65,
-        borderRadius: 32.5,
-        borderWidth: 2,
+        width: 60,
+        height: 80,
+        borderRadius: 8,
+        borderWidth: 1,
         borderColor: 'rgba(185, 28, 28, 0.1)',
     },
     ratingBadge: {
         position: 'absolute',
-        bottom: -2,
-        right: -2,
+        bottom: -4,
+        right: -4,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: colors.white,
-        paddingHorizontal: 6,
+        paddingHorizontal: 4,
         paddingVertical: 2,
-        borderRadius: 10,
+        borderRadius: 8,
         borderWidth: 1.5,
         borderColor: '#FFD700',
         shadowColor: '#000',
@@ -682,13 +683,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     ratingBadgeText: {
-        fontSize: 10,
+        fontSize: 9,
         fontWeight: '700',
         color: colors.textPrimary,
         marginLeft: 2,
     },
     agentInfo: {
         flex: 1,
+        justifyContent: 'center',
     },
     agentHeader: {
         flexDirection: 'row',
@@ -696,7 +698,7 @@ const styles = StyleSheet.create({
         marginBottom: 3,
     },
     agentName: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
         color: colors.textPrimary,
         flex: 1,
@@ -705,9 +707,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
     },
     agentSpecialization: {
-        fontSize: 12,
+        fontSize: 11,
         color: colors.textSecondary,
-        marginBottom: 6,
+        marginBottom: 5,
         fontWeight: '500',
     },
     serviceAreasRow: {
@@ -716,7 +718,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     serviceAreas: {
-        fontSize: 11,
+        fontSize: 10,
         color: colors.textSecondary,
         marginLeft: 4,
         flex: 1,
@@ -724,10 +726,10 @@ const styles = StyleSheet.create({
     languagesRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 6,
     },
     languages: {
-        fontSize: 11,
+        fontSize: 10,
         color: colors.textSecondary,
         marginLeft: 4,
         flex: 1,
@@ -735,28 +737,29 @@ const styles = StyleSheet.create({
     listingTags: {
         flexDirection: 'row',
         gap: 6,
+        marginTop: 2,
     },
     listingTag: {
         backgroundColor: '#E6F3FF',
-        paddingHorizontal: 8,
-        paddingVertical: 3,
-        borderRadius: 5,
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+        borderRadius: 4,
     },
     listingTagText: {
-        fontSize: 11,
+        fontSize: 10,
         fontWeight: '600',
         color: '#4299E1',
     },
     agencyLogoContainer: {
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 6,
+        marginLeft: 8,
     },
     agencyLogo: {
-        width: 36,
-        height: 36,
+        width: 32,
+        height: 32,
     },
     agencyLogoWrapper: {
         position: 'relative',

@@ -62,15 +62,6 @@ const ProjectCard = ({ project, onPress, fullWidth = false }) => {
         return `AED ${price.toLocaleString()}`;
     };
 
-    const handleWhatsApp = () => {
-        const message = `Hi, I'm interested in ${project.name || project.title}`;
-        const phoneNumber = '+971500000000';
-        const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-        Linking.openURL(url).catch(() => {
-            alert('WhatsApp is not installed');
-        });
-    };
-
     const handleCall = () => {
         const phoneNumber = '+971500000000';
         Linking.openURL(`tel:${phoneNumber}`).catch(() => {
@@ -254,14 +245,6 @@ const ProjectCard = ({ project, onPress, fullWidth = false }) => {
 
                 {/* Action Buttons */}
                 <View style={styles.actionRow}>
-                    <TouchableOpacity 
-                        style={styles.whatsappButton} 
-                        onPress={handleWhatsApp} 
-                        activeOpacity={0.8}
-                    >
-                        <Ionicons name="logo-whatsapp" size={18} color="#25D366" />
-                        <Text style={styles.whatsappText}>WhatsApp</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.callButton} 
                         onPress={handleCall}
@@ -552,21 +535,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-    },
-    whatsappButton: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(37, 211, 102, 0.1)',
-        paddingVertical: 12,
-        borderRadius: 12,
-        gap: 6,
-    },
-    whatsappText: {
-        fontSize: 14,
-        fontFamily: fontFamilies.regular,
-        color: '#25D366',
     },
     callButton: {
         width: 48,

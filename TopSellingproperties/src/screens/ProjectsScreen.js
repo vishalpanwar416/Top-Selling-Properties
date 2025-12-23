@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -6,727 +6,655 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
-    Dimensions,
     Modal,
-    Linking,
     Animated,
-    FlatList,
     RefreshControl,
-    ActivityIndicator
+    StatusBar,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Header from '../components/Header';
 import LikeButton from '../components/LikeButton';
-import SearchBar from '../components/SearchBar';
-import colors from '../theme/colors';
-import propertiesData from '../data/properties.json';
+import projectsData from '../data/projects.json';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+// Premium Color Palette
+const COLORS = {
+    primary: '#B91C1C',
+    primaryDark: '#991B1B',
+    primaryLight: 'rgba(185, 28, 28, 0.08)',
+    secondary: '#1E293B',
+    accent: '#F59E0B',
+    success: '#10B981',
+    background: '#F8FAFC',
+    cardBg: '#FFFFFF',
+    text: '#0F172A',
+    textSecondary: '#64748B',
+    textMuted: '#94A3B8',
+    border: '#E2E8F0',
+    gradient1: ['#B91C1C', '#DC2626', '#EF4444'],
+    gradient2: ['#1E293B', '#334155', '#475569'],
+    gradient3: ['#0F172A', '#1E293B'],
+    glassBg: 'rgba(255, 255, 255, 0.85)',
+    overlay: 'rgba(0, 0, 0, 0.6)',
+};
 
 // Constants
-const FILTER_TABS = ['All', 'Ready', 'Off-Plan'];
-const CATEGORY_TABS = ['Residential', 'Commercial'];
-const STICKY_THRESHOLD = 120;
-
-const SORT_OPTIONS = [
-    { label: 'Latest', value: 'Latest', icon: 'time-outline' },
-    { label: 'Price: Low to High', value: 'PriceLow', icon: 'arrow-up-outline' },
-    { label: 'Price: High to Low', value: 'PriceHigh', icon: 'arrow-down-outline' },
-    { label: 'Most Popular', value: 'Popular', icon: 'trending-up-outline' },
+const FILTER_TABS = [
+    { id: 'all', label: 'All Projects', icon: 'apps' },
+    { id: 'ready', label: 'Ready', icon: 'checkmark-circle' },
+    { id: 'offplan', label: 'Off-Plan', icon: 'construct' },
 ];
 
-const TRUBROKER_STORIES = [
-    { id: '1', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400', agent: 'https://randomuser.me/api/portraits/women/44.jpg', name: 'Sarah A.' },
-    { id: '2', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400', agent: 'https://randomuser.me/api/portraits/men/32.jpg', name: 'John M.' },
-    { id: '3', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400', agent: 'https://randomuser.me/api/portraits/women/68.jpg', name: 'Lisa K.' },
-    { id: '4', image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=400', agent: 'https://randomuser.me/api/portraits/men/45.jpg', name: 'Mike R.' },
-    { id: '5', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400', agent: 'https://randomuser.me/api/portraits/women/22.jpg', name: 'Emma S.' },
+const SORT_OPTIONS = [
+    { label: 'Newest First', value: 'Latest', icon: 'time-outline' },
+    { label: 'Price: Low to High', value: 'PriceLow', icon: 'trending-up-outline' },
+    { label: 'Price: High to Low', value: 'PriceHigh', icon: 'trending-down-outline' },
+    { label: 'Most Popular', value: 'Popular', icon: 'star-outline' },
 ];
 
 // Utility Functions
 const formatPrice = (price) => {
-    if (!price) return 'AED N/A';
+    if (!price) return 'Price on Request';
     if (price >= 1000000) {
         return `AED ${(price / 1000000).toFixed(1)}M`;
     }
-    return `AED ${price.toLocaleString()}`;
+    return `AED ${(price / 1000).toFixed(0)}K`;
 };
 
-const formatArea = (area) => {
-    if (!area) return 'N/A';
-    return `${area.toLocaleString()} sqft`;
-};
+// Animated Header Component
+const AnimatedHeader = memo(({ scrollY, insets, onMenuPress, onSearchPress }) => {
+    const headerOpacity = scrollY.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+    });
 
-// Memoized Story Card Component
-const StoryCard = memo(({ story, onPress }) => (
-    <TouchableOpacity style={styles.storyCard} onPress={() => onPress(story)} activeOpacity={0.9}>
-        <Image source={{ uri: story.image }} style={styles.storyImage} />
-        <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.6)']}
-            style={styles.storyGradient}
-        />
-        <View style={styles.agentAvatarContainer}>
-            <View style={styles.agentAvatar}>
-                <Image source={{ uri: story.agent }} style={styles.agentImage} />
-            </View>
-            <View style={styles.liveIndicator}>
-                <Ionicons name="play" size={8} color="#fff" />
-            </View>
-        </View>
-        <Text style={styles.storyAgentName}>{story.name}</Text>
-    </TouchableOpacity>
-));
+    const titleTranslate = scrollY.interpolate({
+        inputRange: [0, 100],
+        outputRange: [30, 0],
+        extrapolate: 'clamp',
+    });
 
-// Memoized Filter Tab Component
-const FilterTab = memo(({ tab, isActive, onPress, isCategory = false }) => (
+    return (
+        <Animated.View style={[styles.animatedHeader, { paddingTop: insets.top }]}>
+            <Animated.View style={[styles.headerBackground, { opacity: headerOpacity }]} />
+            <View style={styles.headerContent}>
+                <TouchableOpacity style={styles.headerIconBtn} onPress={onMenuPress}>
+                    <Ionicons name="menu-outline" size={26} color={COLORS.text} />
+                </TouchableOpacity>
+                <Animated.Text
+                    style={[styles.headerTitle, { transform: [{ translateY: titleTranslate }] }]}
+                >
+                    Projects
+                </Animated.Text>
+                <TouchableOpacity style={styles.headerIconBtn} onPress={onSearchPress}>
+                    <Ionicons name="search-outline" size={24} color={COLORS.text} />
+                </TouchableOpacity>
+            </View>
+        </Animated.View>
+    );
+});
+
+// Hero Section Component
+const HeroSection = memo(({ project, onPress, scrollY }) => {
+    const scale = scrollY.interpolate({
+        inputRange: [-100, 0],
+        outputRange: [1.2, 1],
+        extrapolate: 'clamp',
+    });
+
+    if (!project) return null;
+
+    return (
+        <TouchableOpacity
+            style={styles.heroContainer}
+            onPress={() => onPress(project)}
+            activeOpacity={0.95}
+        >
+            <Animated.Image
+                source={{ uri: project.images?.[0] || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800' }}
+                style={[styles.heroImage, { transform: [{ scale }] }]}
+                resizeMode="cover"
+            />
+            <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.3)', 'rgba(0,0,0,0.85)']}
+                locations={[0, 0.5, 1]}
+                style={styles.heroGradient}
+            />
+
+            {/* Top Badges */}
+            <View style={styles.heroBadgesTop}>
+                <View style={styles.featuredBadge}>
+                    <LinearGradient
+                        colors={COLORS.gradient1}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={styles.featuredBadgeBg}
+                    />
+                    <Ionicons name="star" size={12} color="#FFD700" />
+                    <Text style={styles.featuredBadgeText}>Featured Project</Text>
+                </View>
+                <LikeButton
+                    size={22}
+                    likedColor="#FF4757"
+                    unlikedColor="#fff"
+                    buttonStyle={styles.heroLikeBtn}
+                />
+            </View>
+
+            {/* Hero Content */}
+            <View style={styles.heroContent}>
+                <View style={styles.developerRow}>
+                    <View style={styles.developerBadge}>
+                        <FontAwesome5 name="building" size={10} color="#fff" />
+                        <Text style={styles.developerText}>{project.developer}</Text>
+                    </View>
+                    <View style={styles.statusBadge}>
+                        <View style={[styles.statusDot, project.completion === 'Ready' && styles.statusDotReady]} />
+                        <Text style={styles.statusText}>{project.completion}</Text>
+                    </View>
+                </View>
+
+                <Text style={styles.heroTitle}>{project.name}</Text>
+
+                <View style={styles.heroLocationRow}>
+                    <Ionicons name="location-sharp" size={16} color={COLORS.accent} />
+                    <Text style={styles.heroLocation}>{project.location}</Text>
+                </View>
+
+                {/* Quick Stats Row */}
+                <View style={styles.heroStatsRow}>
+                    <View style={styles.heroStatItem}>
+                        <Text style={styles.heroStatValue}>{formatPrice(project.startingPrice)}</Text>
+                        <Text style={styles.heroStatLabel}>Starting from</Text>
+                    </View>
+                    <View style={styles.heroStatDivider} />
+                    <View style={styles.heroStatItem}>
+                        <Text style={styles.heroStatValue}>{project.properties?.length || 0}</Text>
+                        <Text style={styles.heroStatLabel}>Units</Text>
+                    </View>
+                    <View style={styles.heroStatDivider} />
+                    <View style={styles.heroStatItem}>
+                        <Text style={styles.heroStatValue}>{project.handover}</Text>
+                        <Text style={styles.heroStatLabel}>Handover</Text>
+                    </View>
+                </View>
+
+                {/* CTA Button */}
+                <TouchableOpacity style={styles.heroCTA} onPress={() => onPress(project)}>
+                    <LinearGradient
+                        colors={['rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)']}
+                        style={styles.heroCTABg}
+                    />
+                    <Text style={styles.heroCTAText}>Explore Project</Text>
+                    <Ionicons name="arrow-forward" size={18} color="#fff" />
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    );
+});
+
+// Filter Chip Component
+const FilterChip = memo(({ filter, isActive, onPress }) => (
     <TouchableOpacity
-        style={[
-            styles.filterTab,
-            isActive && (isCategory ? styles.activeCategoryTab : styles.activeFilterTab)
-        ]}
-        onPress={() => onPress(tab)}
+        style={[styles.filterChip, isActive && styles.filterChipActive]}
+        onPress={() => onPress(filter.id)}
         activeOpacity={0.7}
     >
-        <Text style={[
-            styles.filterTabText,
-            isActive && (isCategory ? styles.activeCategoryTabText : styles.activeFilterTabText)
-        ]}>
-            {tab}
+        {isActive && (
+            <LinearGradient
+                colors={COLORS.gradient1}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.filterChipGradient}
+            />
+        )}
+        <Ionicons
+            name={filter.icon}
+            size={16}
+            color={isActive ? '#fff' : COLORS.textSecondary}
+        />
+        <Text style={[styles.filterChipText, isActive && styles.filterChipTextActive]}>
+            {filter.label}
         </Text>
     </TouchableOpacity>
 ));
 
-// Memoized Project Card Component
-const ProjectCard = memo(({ project, onPress, onWhatsApp, onCall, onEmail }) => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+// Stats Card Component
+const StatsCard = memo(({ projects }) => {
+    const totalUnits = useMemo(() =>
+        projects.reduce((sum, p) => sum + (p.properties?.length || 0), 0),
+        [projects]
+    );
+    const readyProjects = projects.filter(p => p.completion === 'Ready').length;
+    const offPlanProjects = projects.filter(p => p.completion === 'Off-Plan').length;
+
+    return (
+        <View style={styles.statsCard}>
+            <LinearGradient
+                colors={COLORS.gradient2}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.statsCardBg}
+            />
+            <View style={styles.statsCardContent}>
+                <View style={styles.statBox}>
+                    <View style={styles.statIconBox}>
+                        <Ionicons name="business" size={20} color="#fff" />
+                    </View>
+                    <Text style={styles.statNumber}>{projects.length}</Text>
+                    <Text style={styles.statLabel}>Projects</Text>
+                </View>
+                <View style={styles.statDivider} />
+                <View style={styles.statBox}>
+                    <View style={[styles.statIconBox, { backgroundColor: 'rgba(16, 185, 129, 0.3)' }]}>
+                        <Ionicons name="home" size={20} color="#10B981" />
+                    </View>
+                    <Text style={styles.statNumber}>{totalUnits}</Text>
+                    <Text style={styles.statLabel}>Properties</Text>
+                </View>
+                <View style={styles.statDivider} />
+                <View style={styles.statBox}>
+                    <View style={[styles.statIconBox, { backgroundColor: 'rgba(245, 158, 11, 0.3)' }]}>
+                        <Ionicons name="checkmark-done" size={20} color="#F59E0B" />
+                    </View>
+                    <Text style={styles.statNumber}>{readyProjects}</Text>
+                    <Text style={styles.statLabel}>Ready</Text>
+                </View>
+                <View style={styles.statDivider} />
+                <View style={styles.statBox}>
+                    <View style={[styles.statIconBox, { backgroundColor: 'rgba(185, 28, 28, 0.3)' }]}>
+                        <Ionicons name="construct" size={20} color={COLORS.primary} />
+                    </View>
+                    <Text style={styles.statNumber}>{offPlanProjects}</Text>
+                    <Text style={styles.statLabel}>Off-Plan</Text>
+                </View>
+            </View>
+        </View>
+    );
+});
+
+// Premium Project Card Component
+const ProjectCard = memo(({ project, onPress, index }) => {
+    const [currentImage, setCurrentImage] = useState(0);
     const images = project.images || [];
+    const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    const handleNextImage = useCallback(() => {
-        setCurrentImageIndex(prev => (prev < images.length - 1 ? prev + 1 : 0));
-    }, [images.length]);
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 400,
+            delay: index * 100,
+            useNativeDriver: true,
+        }).start();
+    }, []);
 
-    const handlePrevImage = useCallback(() => {
-        setCurrentImageIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));
+    const handleImageNav = useCallback((direction) => {
+        if (direction === 'next') {
+            setCurrentImage(prev => (prev < images.length - 1 ? prev + 1 : 0));
+        } else {
+            setCurrentImage(prev => (prev > 0 ? prev - 1 : images.length - 1));
+        }
     }, [images.length]);
 
     return (
-        <View style={styles.propertyCard}>
-            {/* Image Carousel */}
-            <TouchableOpacity activeOpacity={0.95} onPress={() => onPress(project)}>
-                <View style={styles.imageCarousel}>
+        <Animated.View style={[styles.projectCard, { opacity: fadeAnim, transform: [{ translateY: fadeAnim.interpolate({ inputRange: [0, 1], outputRange: [30, 0] }) }] }]}>
+            <TouchableOpacity onPress={() => onPress(project)} activeOpacity={0.95}>
+                {/* Image Section */}
+                <View style={styles.cardImageContainer}>
                     <Image
-                        source={{ uri: images[currentImageIndex] || 'https://via.placeholder.com/400x250' }}
-                        style={styles.propertyImage}
+                        source={{ uri: images[currentImage] || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800' }}
+                        style={styles.cardImage}
                         resizeMode="cover"
                     />
-
-                    {/* Gradient Overlay */}
                     <LinearGradient
-                        colors={['rgba(0,0,0,0.4)', 'transparent', 'rgba(0,0,0,0.35)']}
-                        locations={[0, 0.5, 1]}
-                        style={styles.imageGradient}
+                        colors={['rgba(0,0,0,0.3)', 'transparent', 'rgba(0,0,0,0.5)']}
+                        locations={[0, 0.4, 1]}
+                        style={styles.cardImageGradient}
                     />
 
-                    {/* Top Badges */}
-                    <View style={styles.topBadges}>
-                        <View style={styles.truCheckBadge}>
-                            <Ionicons name="checkmark-circle" size={12} color="#fff" />
-                            <Text style={styles.truCheckText}>TruCheck™</Text>
+                    {/* Badges */}
+                    <View style={styles.cardBadgesTop}>
+                        <View style={[styles.cardStatusBadge, project.completion === 'Ready' ? styles.readyBadge : styles.offPlanBadge]}>
+                            <Ionicons
+                                name={project.completion === 'Ready' ? 'checkmark-circle' : 'time'}
+                                size={12}
+                                color="#fff"
+                            />
+                            <Text style={styles.cardStatusText}>{project.completion}</Text>
                         </View>
-                        {project.completion === 'Off-Plan' && (
-                            <View style={styles.offPlanBadge}>
-                                <Text style={styles.offPlanText}>Off-Plan</Text>
+                        {project.featured && (
+                            <View style={styles.cardFeaturedBadge}>
+                                <Ionicons name="star" size={10} color="#FFD700" />
                             </View>
                         )}
-                    </View>
-
-                    {/* TruBroker Badge */}
-                    <View style={styles.truBrokerBadge}>
-                        <View style={styles.truBrokerIcon}>
-                            <Ionicons name="play" size={8} color="#fff" />
-                        </View>
-                        <Text style={styles.truBrokerBadgeText}>TruBroker™</Text>
                     </View>
 
                     {/* Navigation Arrows */}
                     {images.length > 1 && (
                         <>
                             <TouchableOpacity
-                                style={[styles.navArrow, styles.navArrowLeft]}
-                                onPress={handlePrevImage}
-                                activeOpacity={0.8}
+                                style={[styles.cardNavArrow, styles.cardNavLeft]}
+                                onPress={() => handleImageNav('prev')}
                             >
-                                <Ionicons name="chevron-back" size={18} color="#fff" />
+                                <Ionicons name="chevron-back" size={16} color="#fff" />
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[styles.navArrow, styles.navArrowRight]}
-                                onPress={handleNextImage}
-                                activeOpacity={0.8}
+                                style={[styles.cardNavArrow, styles.cardNavRight]}
+                                onPress={() => handleImageNav('next')}
                             >
-                                <Ionicons name="chevron-forward" size={18} color="#fff" />
+                                <Ionicons name="chevron-forward" size={16} color="#fff" />
                             </TouchableOpacity>
                         </>
                     )}
 
                     {/* Image Dots */}
-                    <View style={styles.imageDots}>
-                        {images.slice(0, 6).map((_, idx) => (
-                            <View
-                                key={idx}
-                                style={[styles.dot, currentImageIndex === idx && styles.activeDot]}
-                            />
+                    <View style={styles.cardDots}>
+                        {images.slice(0, 5).map((_, idx) => (
+                            <View key={idx} style={[styles.cardDot, currentImage === idx && styles.cardDotActive]} />
                         ))}
-                        {images.length > 6 && (
-                            <Text style={styles.moreDotsText}>+{images.length - 6}</Text>
-                        )}
                     </View>
 
-                    {/* Favorite Button */}
+                    {/* Like Button */}
                     <LikeButton
-                        size={20}
+                        size={18}
                         likedColor="#FF4757"
                         unlikedColor="#fff"
-                        buttonStyle={styles.favoriteButton}
+                        buttonStyle={styles.cardLikeBtn}
                     />
+
+                    {/* Developer Tag */}
+                    <View style={styles.cardDeveloperTag}>
+                        <Text style={styles.cardDeveloperText}>by {project.developer}</Text>
+                    </View>
+                </View>
+
+                {/* Content Section */}
+                <View style={styles.cardContent}>
+                    {/* Title & Location */}
+                    <Text style={styles.cardTitle} numberOfLines={1}>{project.name}</Text>
+                    <View style={styles.cardLocationRow}>
+                        <Ionicons name="location" size={14} color={COLORS.primary} />
+                        <Text style={styles.cardLocation} numberOfLines={1}>{project.location}</Text>
+                    </View>
+
+                    {/* Price Section */}
+                    <View style={styles.cardPriceSection}>
+                        <View>
+                            <Text style={styles.cardPriceLabel}>Starting from</Text>
+                            <Text style={styles.cardPrice}>{formatPrice(project.startingPrice)}</Text>
+                        </View>
+                        <View style={styles.cardPriceRange}>
+                            <Text style={styles.cardPriceRangeText}>{project.priceRange}</Text>
+                        </View>
+                    </View>
+
+                    {/* Quick Info Pills */}
+                    <View style={styles.cardInfoPills}>
+                        <View style={styles.cardInfoPill}>
+                            <Ionicons name="home-outline" size={14} color={COLORS.textSecondary} />
+                            <Text style={styles.cardInfoPillText}>{project.properties?.length || 0} Units</Text>
+                        </View>
+                        <View style={styles.cardInfoPill}>
+                            <Ionicons name="bed-outline" size={14} color={COLORS.textSecondary} />
+                            <Text style={styles.cardInfoPillText}>{project.bedroomRange}</Text>
+                        </View>
+                        <View style={styles.cardInfoPill}>
+                            <Ionicons name="calendar-outline" size={14} color={COLORS.textSecondary} />
+                            <Text style={styles.cardInfoPillText}>{project.handover}</Text>
+                        </View>
+                    </View>
+
+                    {/* Property Types */}
+                    <View style={styles.cardTypesRow}>
+                        {project.propertyTypes?.slice(0, 3).map((type, idx) => (
+                            <View key={idx} style={styles.cardTypePill}>
+                                <Text style={styles.cardTypePillText}>{type}</Text>
+                            </View>
+                        ))}
+                    </View>
+
+                    {/* Footer */}
+                    <View style={styles.cardFooter}>
+                        <View style={styles.cardAvailability}>
+                            <View style={styles.availabilityDot} />
+                            <Text style={styles.availabilityText}>
+                                {project.availableUnits} of {project.totalUnits} available
+                            </Text>
+                        </View>
+                        <View style={styles.cardViewBtn}>
+                            <Text style={styles.cardViewBtnText}>View</Text>
+                            <Ionicons name="arrow-forward" size={14} color="#fff" />
+                        </View>
+                    </View>
                 </View>
             </TouchableOpacity>
+        </Animated.View>
+    );
+});
 
-            {/* Property Info */}
-            <View style={styles.propertyInfo}>
-                {/* Price & Viewed Badge */}
-                <View style={styles.priceRow}>
-                    <View>
-                        <Text style={styles.price}>{formatPrice(project.price)}</Text>
-                        {project.priceType && (
-                            <Text style={styles.priceType}>/{project.priceType}</Text>
-                        )}
-                    </View>
-                    <View style={styles.viewedBadge}>
-                        <Ionicons name="eye-outline" size={14} color={colors.textSecondary} />
-                        <Text style={styles.viewedText}>Recently Viewed</Text>
-                    </View>
-                </View>
+// Section Header Component
+const SectionHeader = memo(({ title, count, onSortPress, sortBy }) => (
+    <View style={styles.sectionHeader}>
+        <View style={styles.sectionTitleRow}>
+            <View>
+                <Text style={styles.sectionTitle}>{title}</Text>
+                <Text style={styles.sectionCount}>{count} projects found</Text>
+            </View>
+        </View>
+        <TouchableOpacity style={styles.sortBtn} onPress={onSortPress}>
+            <Ionicons name="swap-vertical" size={18} color={COLORS.primary} />
+            <Text style={styles.sortBtnText}>{sortBy}</Text>
+            <Ionicons name="chevron-down" size={14} color={COLORS.textSecondary} />
+        </TouchableOpacity>
+    </View>
+));
 
-                {/* Specs */}
-                <View style={styles.specsRow}>
-                    <View style={styles.specItem}>
-                        <Ionicons name="bed-outline" size={16} color={colors.textSecondary} />
-                        <Text style={styles.specText}>{project.bedrooms || 0}</Text>
-                    </View>
-                    <View style={styles.specDivider} />
-                    <View style={styles.specItem}>
-                        <Ionicons name="water-outline" size={16} color={colors.textSecondary} />
-                        <Text style={styles.specText}>{project.bathrooms || 0}</Text>
-                    </View>
-                    <View style={styles.specDivider} />
-                    <View style={styles.specItem}>
-                        <MaterialCommunityIcons name="vector-square" size={16} color={colors.textSecondary} />
-                        <Text style={styles.specText}>{formatArea(project.area)}</Text>
-                    </View>
-                </View>
-
-                {/* Title */}
-                <Text style={styles.propertyTitle} numberOfLines={2}>
-                    {project.title || 'Property Title'}
-                </Text>
-
-                {/* Location */}
-                <View style={styles.locationRow}>
-                    <Ionicons name="location" size={14} color={colors.primary} />
-                    <Text style={styles.propertyLocation} numberOfLines={1}>
-                        {project.location || 'Location not available'}
-                    </Text>
-                </View>
-
-                {/* Handover & Payment Plan */}
-                <View style={styles.handoverRow}>
-                    <View style={styles.handoverItem}>
-                        <Ionicons name="calendar-outline" size={14} color={colors.textSecondary} />
-                        <Text style={styles.handoverLabel}>Handover: </Text>
-                        <Text style={styles.handoverValue}>{project.handover || 'Q4 2027'}</Text>
-                    </View>
-                    <View style={styles.handoverDivider} />
-                    <View style={styles.handoverItem}>
-                        <Ionicons name="card-outline" size={14} color={colors.textSecondary} />
-                        <Text style={styles.handoverLabel}>Plan: </Text>
-                        <Text style={styles.handoverValue}>{project.paymentPlan || '60/40'}</Text>
-                    </View>
-                </View>
-
-                {/* Action Buttons */}
-                <View style={styles.contactButtons}>
-                    <TouchableOpacity style={styles.emailButton} onPress={() => onEmail(project)} activeOpacity={0.8}>
-                        <Ionicons name="mail-outline" size={16} color={colors.primary} />
-                        <Text style={styles.emailButtonText}>Email</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.callButton} onPress={() => onCall(project)} activeOpacity={0.8}>
-                        <Ionicons name="call-outline" size={16} color={colors.primary} />
-                        <Text style={styles.callButtonText}>Call</Text>
-                    </TouchableOpacity>
+// Sort Modal Component
+const SortModal = memo(({ visible, onClose, sortBy, onSelect }) => (
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={onClose}>
+            <View style={styles.sortModal}>
+                <View style={styles.modalHandle} />
+                <Text style={styles.modalTitle}>Sort Projects</Text>
+                {SORT_OPTIONS.map((option) => (
                     <TouchableOpacity
-                        style={styles.whatsappButton}
-                        onPress={() => onWhatsApp(project)}
-                        activeOpacity={0.8}
+                        key={option.value}
+                        style={[styles.sortOption, sortBy === option.value && styles.sortOptionActive]}
+                        onPress={() => { onSelect(option.value); onClose(); }}
                     >
-                        <Ionicons name="logo-whatsapp" size={20} color="#25D366" />
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    );
-});
-
-// Memoized Featured Project Component
-const FeaturedProject = memo(({ project, onPress }) => {
-    if (!project) return null;
-
-    return (
-        <View style={styles.expandedCard}>
-            {/* Project Image */}
-            <TouchableOpacity onPress={() => onPress(project)} activeOpacity={0.95}>
-                <View style={styles.featuredImageContainer}>
-                    <Image
-                        source={{ uri: project.images?.[0] || 'https://via.placeholder.com/400x200' }}
-                        style={styles.featuredImage}
-                        resizeMode="cover"
-                    />
-                    <LinearGradient
-                        colors={['transparent', 'rgba(0,0,0,0.7)']}
-                        style={styles.featuredGradient}
-                    />
-                    <View style={styles.featuredBadge}>
-                        <Ionicons name="star" size={12} color="#FFD700" />
-                        <Text style={styles.featuredBadgeText}>Featured Project</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-
-            {/* Project Info */}
-            <View style={styles.expandedHeader}>
-                <View style={styles.expandedTitleRow}>
-                    <View style={styles.expandedTitleContainer}>
-                        <Text style={styles.expandedTitle}>
-                            {project.title?.split(' in ')[0] || 'Premium Project'}
+                        <View style={[styles.sortOptionIcon, sortBy === option.value && styles.sortOptionIconActive]}>
+                            <Ionicons
+                                name={option.icon}
+                                size={20}
+                                color={sortBy === option.value ? COLORS.primary : COLORS.textSecondary}
+                            />
+                        </View>
+                        <Text style={[styles.sortOptionText, sortBy === option.value && styles.sortOptionTextActive]}>
+                            {option.label}
                         </Text>
-                        <TouchableOpacity style={styles.dropdownIcon}>
-                            <Ionicons name="chevron-down" size={18} color={colors.textSecondary} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View style={styles.projectMeta}>
-                    <Text style={styles.expandedType}>{project.type || 'Apartments'}</Text>
-                    <Text style={styles.expandedDot}>•</Text>
-                    <Text style={styles.expandedDeveloper}>by {project.developer || 'Top Developer'}</Text>
-                </View>
-
-                {/* Status Badges */}
-                <View style={styles.statusBadgeRow}>
-                    <View style={styles.statusBadge}>
-                        <Ionicons name="construct-outline" size={14} color={colors.primary} />
-                        <Text style={styles.statusBadgeText}>
-                            {project.completion === 'Ready' ? 'Ready to Move' : 'Under Construction'}
-                        </Text>
-                    </View>
-                    <View style={styles.statusBadgeSecondary}>
-                        <Ionicons name="trending-up" size={14} color="#10B981" />
-                        <Text style={styles.statusBadgeTextSecondary}>High Demand</Text>
-                    </View>
-                </View>
-
-                {/* Action Cards */}
-                <View style={styles.actionCardsRow}>
-                    <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-                        <View style={styles.actionCardIconContainer}>
-                            <Text style={styles.aedText}>AED</Text>
-                        </View>
-                        <View style={styles.actionCardContent}>
-                            <Text style={styles.actionCardTitle}>Payment Plan</Text>
-                            <Text style={styles.actionCardSubtitle}>60/40 Available</Text>
-                        </View>
-                        <Ionicons name="chevron-forward" size={16} color={colors.textTertiary} />
+                        {sortBy === option.value && (
+                            <Ionicons name="checkmark-circle" size={22} color={COLORS.primary} />
+                        )}
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.actionCard} activeOpacity={0.8}>
-                        <View style={[styles.actionCardIconContainer, styles.actionCardIconBlue]}>
-                            <Ionicons name="grid-outline" size={16} color="#3B82F6" />
-                        </View>
-                        <View style={styles.actionCardContent}>
-                            <Text style={styles.actionCardTitle}>Unit Types</Text>
-                            <Text style={styles.actionCardSubtitle}>1-4 Bedrooms</Text>
-                        </View>
-                        <Ionicons name="chevron-forward" size={16} color={colors.textTertiary} />
-                    </TouchableOpacity>
-                </View>
-
-                {/* View More Button */}
-                <TouchableOpacity
-                    style={styles.viewMoreButton}
-                    onPress={() => onPress(project)}
-                    activeOpacity={0.7}
-                >
-                    <Text style={styles.viewMoreText}>View Project Details</Text>
-                    <View style={styles.viewMoreIcon}>
-                        <Ionicons name="arrow-forward" size={16} color="#fff" />
-                    </View>
-                </TouchableOpacity>
+                ))}
             </View>
-        </View>
-    );
-});
+        </TouchableOpacity>
+    </Modal>
+));
 
 // Main Component
 const ProjectsScreen = ({ navigation }) => {
     const insets = useSafeAreaInsets();
-    const [searchQuery, setSearchQuery] = useState('');
-    const [activeFilter, setActiveFilter] = useState('All');
-    const [activeCategory, setActiveCategory] = useState('Residential');
-    const [buyType, setBuyType] = useState('Buy');
-    const [showBuyDropdown, setShowBuyDropdown] = useState(false);
+    const scrollY = useRef(new Animated.Value(0)).current;
+    const [activeFilter, setActiveFilter] = useState('all');
     const [showSortModal, setShowSortModal] = useState(false);
     const [sortBy, setSortBy] = useState('Latest');
-    const [isSticky, setIsSticky] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const [projects] = useState(propertiesData.properties);
+    const [projects] = useState(projectsData.projects);
 
-    // Memoized filtered and sorted projects
+    // Filtered and sorted projects
     const filteredProjects = useMemo(() => {
         let result = projects.filter(project => {
-            const matchesSearch =
-                !searchQuery ||
-                project.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                project.location?.toLowerCase().includes(searchQuery.toLowerCase());
-
-            const matchesFilter = activeFilter === 'All' ||
-                (activeFilter === 'Ready' && project.completion === 'Ready') ||
-                (activeFilter === 'Off-Plan' && project.completion === 'Off-Plan');
-
-            return matchesSearch && matchesFilter;
+            if (activeFilter === 'all') return true;
+            if (activeFilter === 'ready') return project.completion === 'Ready';
+            if (activeFilter === 'offplan') return project.completion === 'Off-Plan';
+            return true;
         });
 
-        // Sort logic
         switch (sortBy) {
             case 'PriceLow':
-                result.sort((a, b) => (a.price || 0) - (b.price || 0));
+                result = [...result].sort((a, b) => (a.startingPrice || 0) - (b.startingPrice || 0));
                 break;
             case 'PriceHigh':
-                result.sort((a, b) => (b.price || 0) - (a.price || 0));
+                result = [...result].sort((a, b) => (b.startingPrice || 0) - (a.startingPrice || 0));
                 break;
             case 'Popular':
-                result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+                result = [...result].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
                 break;
             default:
-                // Latest - keep original order
                 break;
         }
 
         return result;
-    }, [projects, searchQuery, activeFilter, sortBy]);
+    }, [projects, activeFilter, sortBy]);
 
-    const featuredProject = useMemo(() => filteredProjects[0], [filteredProjects]);
-
-    // Callbacks
-    const handleScroll = useCallback((event) => {
-        const offsetY = event.nativeEvent.contentOffset.y;
-        setIsSticky(offsetY > STICKY_THRESHOLD);
-    }, []);
+    const featuredProject = useMemo(() =>
+        filteredProjects.find(p => p.featured) || filteredProjects[0],
+        [filteredProjects]
+    );
 
     const handleProjectPress = useCallback((project) => {
-        navigation.navigate('PropertyDetails', { property: project });
+        navigation.navigate('ProjectDetail', { project });
     }, [navigation]);
-
-    const handleWhatsApp = useCallback((project) => {
-        const message = `Hi, I'm interested in ${project.title}`;
-        const phoneNumber = '+971500000000';
-        const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
-        Linking.openURL(url).catch(() => {
-            alert('WhatsApp is not installed');
-        });
-    }, []);
-
-    const handleCall = useCallback(() => {
-        Linking.openURL('tel:+971500000000');
-    }, []);
-
-    const handleEmail = useCallback(() => {
-        Linking.openURL('mailto:info@properties.ae');
-    }, []);
 
     const handleRefresh = useCallback(() => {
         setIsRefreshing(true);
         setTimeout(() => setIsRefreshing(false), 1000);
     }, []);
 
-    const handleStoryPress = useCallback((story) => {
-        // Handle story press - could open a modal or navigate
-        console.log('Story pressed:', story.name);
-    }, []);
+    const handleMenuPress = useCallback(() => {
+        navigation.openDrawer();
+    }, [navigation]);
 
-    const handleSortSelect = useCallback((value) => {
-        setSortBy(value);
-        setShowSortModal(false);
-    }, []);
-
-    // Render TruBroker Stories Section
-    const renderStoriesSection = () => (
-        <View style={styles.storiesSection}>
-            <View style={styles.storiesHeader}>
-                <View style={styles.storiesTitleContainer}>
-                    <View style={styles.playIconContainer}>
-                        <Ionicons name="play" size={12} color="#fff" />
-                    </View>
-                    <Text style={styles.storiesTitle}>
-                        <Text style={styles.truBrokerTextBold}>TruBroker</Text>
-                        <Text style={styles.trademark}>™</Text>
-                        <Text style={styles.storiesTitleRest}> Stories</Text>
-                    </Text>
-                </View>
-                <TouchableOpacity style={styles.viewAllButton}>
-                    <Text style={styles.viewAllText}>View All</Text>
-                    <Ionicons name="chevron-forward" size={14} color={colors.primary} />
-                </TouchableOpacity>
-            </View>
-            <Text style={styles.storiesSubtitle}>
-                Explore top agents in Motor City and nearby locations
-            </Text>
-            <FlatList
-                horizontal
-                data={TRUBROKER_STORIES}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <StoryCard story={item} onPress={handleStoryPress} />
-                )}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.storiesContent}
-            />
-        </View>
-    );
-
-    // Render Filter Section
-    const renderFilterSection = () => (
-        <View style={styles.filterSection}>
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.filterContent}
-            >
-                {/* Filter Icon */}
-                <TouchableOpacity style={styles.filterIconButton} activeOpacity={0.7}>
-                    <Ionicons name="options-outline" size={18} color={colors.textSecondary} />
-                </TouchableOpacity>
-
-                {/* Buy Dropdown */}
-                <TouchableOpacity
-                    style={styles.buyDropdown}
-                    onPress={() => setShowBuyDropdown(!showBuyDropdown)}
-                    activeOpacity={0.8}
-                >
-                    <Text style={styles.buyDropdownText}>{buyType}</Text>
-                    <Ionicons name="chevron-down" size={12} color={colors.white} />
-                </TouchableOpacity>
-
-                {/* Filter Tabs */}
-                {FILTER_TABS.map((tab) => (
-                    <FilterTab
-                        key={tab}
-                        tab={tab}
-                        isActive={activeFilter === tab}
-                        onPress={setActiveFilter}
-                    />
-                ))}
-
-                {/* Category Tabs */}
-                {CATEGORY_TABS.map((tab) => (
-                    <FilterTab
-                        key={tab}
-                        tab={tab}
-                        isActive={activeCategory === tab}
-                        onPress={setActiveCategory}
-                        isCategory
-                    />
-                ))}
-            </ScrollView>
-        </View>
-    );
-
-    // Render Section Header
-    const renderSectionHeader = () => (
-        <View style={styles.sectionHeader}>
-            <View style={styles.sectionTitleRow}>
-                <Text style={styles.sectionTitle}>
-                    Properties for sale
-                </Text>
-                <Text style={styles.resultCount}>
-                    {filteredProjects.length} results
-                </Text>
-            </View>
-            <View style={styles.sectionActions}>
-                <TouchableOpacity style={styles.mapButton} activeOpacity={0.7}>
-                    <Ionicons name="map-outline" size={16} color={colors.textSecondary} />
-                    <Text style={styles.mapButtonText}>Map</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.sortButton}
-                    onPress={() => setShowSortModal(true)}
-                    activeOpacity={0.7}
-                >
-                    <Ionicons name="swap-vertical" size={16} color={colors.textSecondary} />
-                    <Text style={styles.sortButtonText}>{sortBy}</Text>
-                    <Ionicons name="chevron-down" size={12} color={colors.textSecondary} />
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-
-    // Render Sort Modal
-    const renderSortModal = () => (
-        <Modal
-            visible={showSortModal}
-            transparent
-            animationType="slide"
-            onRequestClose={() => setShowSortModal(false)}
-        >
-            <TouchableOpacity
-                style={styles.modalOverlay}
-                activeOpacity={1}
-                onPress={() => setShowSortModal(false)}
-            >
-                <View style={styles.sortModal}>
-                    <View style={styles.modalHandle} />
-                    <Text style={styles.modalTitle}>Sort by</Text>
-                    {SORT_OPTIONS.map((option) => (
-                        <TouchableOpacity
-                            key={option.value}
-                            style={[
-                                styles.sortOption,
-                                sortBy === option.value && styles.sortOptionActive
-                            ]}
-                            onPress={() => handleSortSelect(option.value)}
-                            activeOpacity={0.7}
-                        >
-                            <View style={styles.sortOptionContent}>
-                                <View style={[
-                                    styles.sortOptionIcon,
-                                    sortBy === option.value && styles.sortOptionIconActive
-                                ]}>
-                                    <Ionicons
-                                        name={option.icon}
-                                        size={18}
-                                        color={sortBy === option.value ? colors.primary : colors.textSecondary}
-                                    />
-                                </View>
-                                <Text style={[
-                                    styles.sortOptionText,
-                                    sortBy === option.value && styles.sortOptionTextActive
-                                ]}>
-                                    {option.label}
-                                </Text>
-                            </View>
-                            {sortBy === option.value && (
-                                <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                            )}
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </TouchableOpacity>
-        </Modal>
-    );
+    const handleSearchPress = useCallback(() => {
+        navigation.navigate('Search');
+    }, [navigation]);
 
     return (
         <View style={styles.container}>
-            {/* Main Content */}
-            <ScrollView
+            <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+
+            {/* Animated Header */}
+            <AnimatedHeader
+                scrollY={scrollY}
+                insets={insets}
+                onMenuPress={handleMenuPress}
+                onSearchPress={handleSearchPress}
+            />
+
+            <Animated.ScrollView
                 style={styles.scrollView}
+                contentContainerStyle={{ paddingTop: insets.top + 60 }}
                 showsVerticalScrollIndicator={false}
-                stickyHeaderIndices={[1]}
-                onScroll={handleScroll}
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    { useNativeDriver: true }
+                )}
                 scrollEventThrottle={16}
                 refreshControl={
                     <RefreshControl
                         refreshing={isRefreshing}
                         onRefresh={handleRefresh}
-                        tintColor={colors.primary}
+                        tintColor={COLORS.primary}
+                        progressViewOffset={insets.top + 60}
                     />
                 }
             >
-                {/* Header */}
-                <Header navigation={navigation} />
-
-                {/* Search Bar Section */}
-                <View style={[styles.searchSection, isSticky && styles.searchSectionSticky]}>
-                    <View style={styles.searchRow}>
-                        <SearchBar
-                            value={searchQuery}
-                            onChangeText={setSearchQuery}
-                            editable={true}
-                            isSticky={isSticky}
-                            searchType="projects"
-                            containerStyle={styles.searchBarContainer}
-                        />
-                        <TouchableOpacity style={styles.saveButton} activeOpacity={0.7}>
-                            <Ionicons name="bookmark-outline" size={18} color={colors.primary} />
-                            <Text style={styles.saveButtonText}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {/* Filter Tabs */}
-                {renderFilterSection()}
-
-                {/* Featured Project */}
-                <FeaturedProject
+                {/* Hero Featured Project */}
+                <HeroSection
                     project={featuredProject}
                     onPress={handleProjectPress}
+                    scrollY={scrollY}
                 />
 
-                {/* TruBroker Stories */}
-                {renderStoriesSection()}
+                {/* Stats Card */}
+                <StatsCard projects={projects} />
+
+                {/* Filter Chips */}
+                <View style={styles.filterSection}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.filterContent}
+                    >
+                        {FILTER_TABS.map((filter) => (
+                            <FilterChip
+                                key={filter.id}
+                                filter={filter}
+                                isActive={activeFilter === filter.id}
+                                onPress={setActiveFilter}
+                            />
+                        ))}
+                    </ScrollView>
+                </View>
 
                 {/* Section Header */}
-                {renderSectionHeader()}
+                <SectionHeader
+                    title="Explore Projects"
+                    count={filteredProjects.length}
+                    onSortPress={() => setShowSortModal(true)}
+                    sortBy={sortBy}
+                />
 
-                {/* Property Cards */}
-                <View style={styles.propertiesContainer}>
-                    {filteredProjects.slice(1, 10).map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            onPress={handleProjectPress}
-                            onWhatsApp={handleWhatsApp}
-                            onCall={handleCall}
-                            onEmail={handleEmail}
-                        />
-                    ))}
-
-                    {/* Load More Indicator */}
-                    {filteredProjects.length > 10 && (
-                        <TouchableOpacity style={styles.loadMoreButton} activeOpacity={0.8}>
-                            <Text style={styles.loadMoreText}>Load More Properties</Text>
-                            <Ionicons name="chevron-down" size={18} color={colors.primary} />
-                        </TouchableOpacity>
-                    )}
+                {/* Project Cards */}
+                <View style={styles.projectsGrid}>
+                    {filteredProjects
+                        .filter(p => p !== featuredProject)
+                        .map((project, index) => (
+                            <ProjectCard
+                                key={project.id}
+                                project={project}
+                                onPress={handleProjectPress}
+                                index={index}
+                            />
+                        ))}
                 </View>
+
+                {/* No Results */}
+                {filteredProjects.length === 0 && (
+                    <View style={styles.noResults}>
+                        <View style={styles.noResultsIcon}>
+                            <Ionicons name="search-outline" size={48} color={COLORS.textMuted} />
+                        </View>
+                        <Text style={styles.noResultsTitle}>No projects found</Text>
+                        <Text style={styles.noResultsText}>Try adjusting your filters</Text>
+                    </View>
+                )}
 
                 {/* Bottom Padding */}
                 <View style={{ height: insets.bottom + 100 }} />
-            </ScrollView>
+            </Animated.ScrollView>
 
-            {/* Register Interest Bar */}
-            <View style={[styles.registerBar, { bottom: insets.bottom + 56 }]}>
-                <View style={styles.registerContent}>
-                    <Text style={styles.registerTitle}>Interested in this project?</Text>
-                    <Text style={styles.registerSubtitle}>Connect with our experts</Text>
-                </View>
-                <TouchableOpacity style={styles.whatsappRegisterButton} activeOpacity={0.8}>
-                    <Ionicons name="logo-whatsapp" size={20} color="#fff" />
-                    <Text style={styles.whatsappRegisterText}>WhatsApp</Text>
-                </TouchableOpacity>
+            {/* Floating CTA */}
+            <View style={[styles.floatingCTA, { bottom: insets.bottom + 70 }]}>
+                <LinearGradient
+                    colors={['#25D366', '#128C7E']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.floatingCTABg}
+                />
+                <Ionicons name="logo-whatsapp" size={22} color="#fff" />
+                <Text style={styles.floatingCTAText}>Get Expert Help</Text>
             </View>
 
             {/* Sort Modal */}
-            {renderSortModal()}
+            <SortModal
+                visible={showSortModal}
+                onClose={() => setShowSortModal(false)}
+                sortBy={sortBy}
+                onSelect={setSortBy}
+            />
         </View>
     );
 };
@@ -734,840 +662,636 @@ const ProjectsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: COLORS.background,
     },
     scrollView: {
         flex: 1,
     },
 
-    // Search Section
-    searchSection: {
-        backgroundColor: colors.white,
-        paddingHorizontal: 16,
-        paddingTop: 4,
-        paddingBottom: 10,
+    // Animated Header
+    animatedHeader: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
     },
-    searchSectionSticky: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 4,
-    },
-    searchRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    searchBarContainer: {
-        flex: 1,
-        paddingHorizontal: 0,
-        paddingBottom: 0,
-    },
-    saveButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 12,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        backgroundColor: 'rgba(185, 28, 28, 0.06)',
-        borderRadius: 20,
-    },
-    saveButtonText: {
-        marginLeft: 4,
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-
-    // Filter Section
-    filterSection: {
-        backgroundColor: colors.white,
-        paddingBottom: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
-    },
-    filterContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        gap: 8,
-    },
-    filterIconButton: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        backgroundColor: colors.lightGray,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buyDropdown: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: colors.primary,
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        borderRadius: 18,
-        gap: 6,
-    },
-    buyDropdownText: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
-    },
-    filterTab: {
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        borderRadius: 18,
-        backgroundColor: colors.white,
-        borderWidth: 1.5,
-        borderColor: colors.border,
-    },
-    activeFilterTab: {
-        backgroundColor: colors.primary,
-        borderColor: colors.primary,
-    },
-    filterTabText: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    activeFilterTabText: {
-        color: colors.white,
-        fontFamily: 'Lato_400Regular',
-    },
-    activeCategoryTab: {
-        borderColor: colors.primary,
-        backgroundColor: 'rgba(185, 28, 28, 0.06)',
-    },
-    activeCategoryTabText: {
-        color: colors.primary,
-        fontFamily: 'Lato_400Regular',
-    },
-
-    // Featured/Expanded Card
-    expandedCard: {
-        backgroundColor: colors.white,
-        marginHorizontal: 0,
-        borderBottomWidth: 8,
-        borderBottomColor: colors.lightGray,
-    },
-    featuredImageContainer: {
-        width: '100%',
-        height: 200,
-        position: 'relative',
-    },
-    featuredImage: {
-        width: '100%',
-        height: '100%',
-    },
-    featuredGradient: {
+    headerBackground: {
         ...StyleSheet.absoluteFillObject,
+        backgroundColor: COLORS.background,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.border,
     },
-    featuredBadge: {
-        position: 'absolute',
-        top: 16,
-        left: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 20,
-        gap: 6,
-    },
-    featuredBadgeText: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
-    },
-    expandedHeader: {
-        padding: 16,
-    },
-    expandedTitleRow: {
-        marginBottom: 6,
-    },
-    expandedTitleContainer: {
+    headerContent: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        height: 56,
     },
-    expandedTitle: {
-        fontSize: 22,
-        fontFamily: 'Lato_700Bold',
-        color: colors.textPrimary,
-        flex: 1,
-        letterSpacing: -0.5,
-    },
-    dropdownIcon: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: colors.lightGray,
+    headerIconBtn: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    projectMeta: {
+    headerTitle: {
+        fontSize: 20,
+        fontFamily: 'Lato_700Bold',
+        color: COLORS.text,
+    },
+
+    // Hero Section
+    heroContainer: {
+        height: 420,
+        marginHorizontal: 16,
+        borderRadius: 24,
+        overflow: 'hidden',
+        marginBottom: 16,
+    },
+    heroImage: {
+        width: '100%',
+        height: '100%',
+    },
+    heroGradient: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    heroBadgesTop: {
+        position: 'absolute',
+        top: 16,
+        left: 16,
+        right: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    featuredBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 20,
+        gap: 6,
+        overflow: 'hidden',
     },
-    expandedType: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+    featuredBadgeBg: {
+        ...StyleSheet.absoluteFillObject,
     },
-    expandedDot: {
-        fontSize: 14,
-        color: colors.textTertiary,
-        marginHorizontal: 8,
+    featuredBadgeText: {
+        color: '#fff',
+        fontSize: 12,
+        fontFamily: 'Lato_700Bold',
     },
-    expandedDeveloper: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+    heroLikeBtn: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    statusBadgeRow: {
+    heroContent: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: 20,
+    },
+    developerRow: {
         flexDirection: 'row',
-        marginBottom: 16,
+        alignItems: 'center',
         gap: 10,
+        marginBottom: 10,
+    },
+    developerBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 16,
+        gap: 6,
+    },
+    developerText: {
+        color: '#fff',
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
     },
     statusBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(185, 28, 28, 0.08)',
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        borderRadius: 20,
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 16,
         gap: 6,
     },
-    statusBadgeText: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
+    statusDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: COLORS.primary,
     },
-    statusBadgeSecondary: {
+    statusDotReady: {
+        backgroundColor: COLORS.success,
+    },
+    statusText: {
+        color: '#fff',
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
+    },
+    heroTitle: {
+        fontSize: 28,
+        fontFamily: 'Lato_700Bold',
+        color: '#fff',
+        marginBottom: 8,
+    },
+    heroLocationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(16, 185, 129, 0.08)',
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        borderRadius: 20,
         gap: 6,
-    },
-    statusBadgeTextSecondary: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: '#10B981',
-    },
-    actionCardsRow: {
-        flexDirection: 'row',
         marginBottom: 16,
-        gap: 12,
     },
-    actionCard: {
-        flex: 1,
+    heroLocation: {
+        color: 'rgba(255,255,255,0.9)',
+        fontSize: 14,
+        fontFamily: 'Lato_400Regular',
+    },
+    heroStatsRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.white,
-        borderWidth: 1.5,
-        borderColor: colors.border,
-        borderRadius: 14,
-        paddingHorizontal: 14,
-        paddingVertical: 12,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 16,
+        padding: 14,
+        marginBottom: 16,
     },
-    actionCardIconContainer: {
-        backgroundColor: 'rgba(185, 28, 28, 0.1)',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 8,
-        marginRight: 10,
-    },
-    actionCardIconBlue: {
-        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-    },
-    aedText: {
-        fontSize: 11,
-        fontFamily: 'Lato_900Black',
-        color: colors.primary,
-    },
-    actionCardContent: {
+    heroStatItem: {
         flex: 1,
+        alignItems: 'center',
     },
-    actionCardTitle: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textPrimary,
+    heroStatValue: {
+        fontSize: 16,
+        fontFamily: 'Lato_700Bold',
+        color: '#fff',
     },
-    actionCardSubtitle: {
+    heroStatLabel: {
         fontSize: 11,
         fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+        color: 'rgba(255,255,255,0.7)',
+        marginTop: 2,
     },
-    viewMoreButton: {
+    heroStatDivider: {
+        width: 1,
+        height: 30,
+        backgroundColor: 'rgba(255,255,255,0.2)',
+    },
+    heroCTA: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.primary,
         paddingVertical: 14,
         borderRadius: 14,
         gap: 8,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.3)',
     },
-    viewMoreText: {
+    heroCTABg: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    heroCTAText: {
+        color: '#fff',
         fontSize: 15,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
+        fontFamily: 'Lato_700Bold',
     },
-    viewMoreIcon: {
-        width: 28,
-        height: 28,
-        borderRadius: 14,
+
+    // Stats Card
+    statsCard: {
+        marginHorizontal: 16,
+        borderRadius: 20,
+        overflow: 'hidden',
+        marginBottom: 20,
+    },
+    statsCardBg: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    statsCardContent: {
+        flexDirection: 'row',
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+    },
+    statBox: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    statIconBox: {
+        width: 40,
+        height: 40,
+        borderRadius: 12,
         backgroundColor: 'rgba(255,255,255,0.2)',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 8,
+    },
+    statNumber: {
+        fontSize: 20,
+        fontFamily: 'Lato_700Bold',
+        color: '#fff',
+    },
+    statLabel: {
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
+        color: 'rgba(255,255,255,0.7)',
+        marginTop: 2,
+    },
+    statDivider: {
+        width: 1,
+        height: '60%',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        alignSelf: 'center',
     },
 
-    // Stories Section
-    storiesSection: {
-        backgroundColor: colors.white,
-        paddingVertical: 20,
-        borderBottomWidth: 8,
-        borderBottomColor: colors.lightGray,
+    // Filter Section
+    filterSection: {
+        marginBottom: 16,
     },
-    storiesHeader: {
+    filterContent: {
+        paddingHorizontal: 16,
+        gap: 10,
+    },
+    filterChip: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
         paddingHorizontal: 16,
-        marginBottom: 6,
-    },
-    storiesTitleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    playIconContainer: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        backgroundColor: colors.primary,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-    },
-    storiesTitle: {
-        fontSize: 15,
-    },
-    truBrokerTextBold: {
-        fontFamily: 'Lato_700Bold',
-        color: colors.textPrimary,
-    },
-    trademark: {
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-        fontSize: 10,
-    },
-    storiesTitleRest: {
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    viewAllButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    viewAllText: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-    storiesSubtitle: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textTertiary,
-        paddingHorizontal: 16,
-        marginBottom: 14,
-    },
-    storiesContent: {
-        paddingHorizontal: 16,
-        gap: 12,
-    },
-    storyCard: {
-        width: 90,
-        height: 130,
-        borderRadius: 14,
+        paddingVertical: 10,
+        borderRadius: 24,
+        backgroundColor: COLORS.cardBg,
+        gap: 8,
+        borderWidth: 1,
+        borderColor: COLORS.border,
         overflow: 'hidden',
-        position: 'relative',
     },
-    storyImage: {
-        width: '100%',
-        height: '100%',
+    filterChipActive: {
+        borderColor: COLORS.primary,
     },
-    storyGradient: {
+    filterChipGradient: {
         ...StyleSheet.absoluteFillObject,
     },
-    agentAvatarContainer: {
-        position: 'absolute',
-        bottom: 26,
-        left: 8,
-    },
-    agentAvatar: {
-        width: 34,
-        height: 34,
-        borderRadius: 17,
-        borderWidth: 2,
-        borderColor: colors.primary,
-        overflow: 'hidden',
-    },
-    agentImage: {
-        width: '100%',
-        height: '100%',
-    },
-    liveIndicator: {
-        position: 'absolute',
-        bottom: -2,
-        right: -2,
-        width: 16,
-        height: 16,
-        borderRadius: 8,
-        backgroundColor: colors.primary,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 2,
-        borderColor: '#fff',
-    },
-    storyAgentName: {
-        position: 'absolute',
-        bottom: 6,
-        left: 6,
-        fontSize: 10,
+    filterChipText: {
+        fontSize: 13,
         fontFamily: 'Lato_400Regular',
-        color: colors.white,
+        color: COLORS.textSecondary,
+    },
+    filterChipTextActive: {
+        fontFamily: 'Lato_700Bold',
+        color: '#fff',
     },
 
     // Section Header
     sectionHeader: {
-        backgroundColor: colors.white,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         paddingHorizontal: 16,
-        paddingTop: 16,
-        paddingBottom: 12,
+        marginBottom: 16,
     },
     sectionTitleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 10,
+        flex: 1,
     },
     sectionTitle: {
-        fontSize: 17,
+        fontSize: 20,
         fontFamily: 'Lato_700Bold',
-        color: colors.textPrimary,
+        color: COLORS.text,
     },
-    resultCount: {
+    sectionCount: {
         fontSize: 13,
         fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+        color: COLORS.textSecondary,
+        marginTop: 2,
     },
-    sectionActions: {
+    sortBtn: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 12,
-    },
-    mapButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        backgroundColor: COLORS.cardBg,
         paddingHorizontal: 14,
-        paddingVertical: 8,
-        backgroundColor: colors.lightGray,
+        paddingVertical: 10,
         borderRadius: 20,
         gap: 6,
+        borderWidth: 1,
+        borderColor: COLORS.border,
     },
-    mapButtonText: {
+    sortBtnText: {
         fontSize: 13,
         fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+        color: COLORS.text,
     },
-    sortButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        backgroundColor: colors.lightGray,
+
+    // Projects Grid
+    projectsGrid: {
+        paddingHorizontal: 16,
+    },
+
+    // Project Card
+    projectCard: {
+        backgroundColor: COLORS.cardBg,
         borderRadius: 20,
-        gap: 6,
+        marginBottom: 20,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.08,
+        shadowRadius: 16,
+        elevation: 5,
     },
-    sortButtonText: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-
-    // Properties Container
-    propertiesContainer: {
-        paddingHorizontal: 0,
-    },
-
-    // Property Card
-    propertyCard: {
-        backgroundColor: colors.white,
-        borderBottomWidth: 8,
-        borderBottomColor: colors.lightGray,
-    },
-    imageCarousel: {
-        width: '100%',
-        height: 240,
+    cardImageContainer: {
+        height: 200,
         position: 'relative',
     },
-    propertyImage: {
+    cardImage: {
         width: '100%',
         height: '100%',
     },
-    imageGradient: {
+    cardImageGradient: {
         ...StyleSheet.absoluteFillObject,
     },
-    topBadges: {
+    cardBadgesTop: {
         position: 'absolute',
-        top: 14,
-        left: 14,
+        top: 12,
+        left: 12,
         flexDirection: 'row',
-        alignItems: 'center',
         gap: 8,
     },
-    truCheckBadge: {
+    cardStatusBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.primary,
         paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 6,
+        paddingVertical: 6,
+        borderRadius: 8,
         gap: 4,
     },
-    truCheckText: {
-        fontSize: 10,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
+    readyBadge: {
+        backgroundColor: COLORS.success,
     },
     offPlanBadge: {
-        backgroundColor: 'rgba(0,0,0,0.65)',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 6,
+        backgroundColor: COLORS.primary,
     },
-    offPlanText: {
-        fontSize: 10,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
+    cardStatusText: {
+        color: '#fff',
+        fontSize: 11,
+        fontFamily: 'Lato_700Bold',
     },
-    truBrokerBadge: {
-        position: 'absolute',
-        bottom: 44,
-        left: 14,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.75)',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 18,
-        gap: 6,
-    },
-    truBrokerIcon: {
-        width: 18,
-        height: 18,
-        borderRadius: 9,
-        backgroundColor: colors.primary,
+    cardFeaturedBadge: {
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: 'rgba(0,0,0,0.5)',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    truBrokerBadgeText: {
-        fontSize: 11,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
-    },
-    navArrow: {
+    cardNavArrow: {
         position: 'absolute',
         top: '50%',
-        marginTop: -20,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255,255,255,0.95)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    navArrowLeft: {
-        left: 14,
-    },
-    navArrowRight: {
-        right: 14,
-    },
-    imageDots: {
-        position: 'absolute',
-        bottom: 14,
-        left: 0,
-        right: 0,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 6,
-    },
-    dot: {
-        width: 6,
-        height: 6,
-        borderRadius: 3,
-        backgroundColor: 'rgba(255,255,255,0.5)',
-    },
-    activeDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: colors.white,
-    },
-    moreDotsText: {
-        fontSize: 10,
-        fontFamily: 'Lato_400Regular',
-        color: colors.white,
-        marginLeft: 4,
-    },
-    favoriteButton: {
-        position: 'absolute',
-        top: 14,
-        right: 14,
-        width: 40,
-        height: 40,
-        borderRadius: 20,
+        marginTop: -16,
+        width: 32,
+        height: 32,
+        borderRadius: 16,
         backgroundColor: 'rgba(0,0,0,0.4)',
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-    // Property Info
-    propertyInfo: {
-        padding: 16,
+    cardNavLeft: {
+        left: 10,
     },
-    priceRow: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
-        marginBottom: 10,
+    cardNavRight: {
+        right: 10,
     },
-    price: {
-        fontSize: 20,
-        fontFamily: 'Lato_700Bold',
-        color: colors.textPrimary,
-    },
-    priceType: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    viewedBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: colors.lightGray,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 14,
-        gap: 4,
-    },
-    viewedText: {
-        fontSize: 11,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    specsRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    specItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    specDivider: {
-        width: 1,
-        height: 14,
-        backgroundColor: colors.border,
-        marginHorizontal: 12,
-    },
-    specText: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    propertyTitle: {
-        fontSize: 15,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textPrimary,
-        marginBottom: 6,
-        lineHeight: 22,
-    },
-    locationRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 12,
-        gap: 4,
-    },
-    propertyLocation: {
-        fontSize: 13,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-        flex: 1,
-    },
-    handoverRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 14,
-        backgroundColor: colors.lightGray,
-        paddingHorizontal: 14,
-        paddingVertical: 10,
-        borderRadius: 12,
-    },
-    handoverItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    handoverLabel: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
-    },
-    handoverValue: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-    handoverDivider: {
-        width: 1,
-        height: 16,
-        backgroundColor: colors.border,
-        marginHorizontal: 14,
-    },
-    contactButtons: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-    emailButton: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.white,
-        borderWidth: 1.5,
-        borderColor: colors.border,
-        borderRadius: 12,
-        paddingVertical: 12,
-        gap: 6,
-    },
-    emailButtonText: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-    callButton: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.white,
-        borderWidth: 1.5,
-        borderColor: colors.border,
-        borderRadius: 12,
-        paddingVertical: 12,
-        gap: 6,
-    },
-    callButtonText: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-    whatsappButton: {
-        width: 48,
-        height: 48,
-        borderRadius: 12,
-        backgroundColor: 'rgba(37, 211, 102, 0.12)',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    // Load More
-    loadMoreButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.white,
-        paddingVertical: 16,
-        borderBottomWidth: 8,
-        borderBottomColor: colors.lightGray,
-        gap: 8,
-    },
-    loadMoreText: {
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        color: colors.primary,
-    },
-
-    // Register Bar
-    registerBar: {
+    cardDots: {
         position: 'absolute',
+        bottom: 12,
         left: 0,
         right: 0,
         flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 4,
+    },
+    cardDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: 'rgba(255,255,255,0.4)',
+    },
+    cardDotActive: {
+        backgroundColor: '#fff',
+        width: 16,
+    },
+    cardLikeBtn: {
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: 'rgba(0,0,0,0.3)',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: colors.white,
-        borderTopWidth: 1,
-        borderTopColor: colors.border,
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 8,
+        justifyContent: 'center',
     },
-    registerContent: {
-        flex: 1,
+    cardDeveloperTag: {
+        position: 'absolute',
+        bottom: 12,
+        left: 12,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        borderRadius: 12,
     },
-    registerTitle: {
-        fontSize: 14,
+    cardDeveloperText: {
+        color: '#fff',
+        fontSize: 11,
         fontFamily: 'Lato_400Regular',
-        color: colors.textPrimary,
     },
-    registerSubtitle: {
-        fontSize: 12,
-        fontFamily: 'Lato_400Regular',
-        color: colors.textSecondary,
+    cardContent: {
+        padding: 16,
     },
-    whatsappRegisterButton: {
+    cardTitle: {
+        fontSize: 18,
+        fontFamily: 'Lato_700Bold',
+        color: COLORS.text,
+        marginBottom: 6,
+    },
+    cardLocationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#25D366',
-        paddingHorizontal: 20,
-        paddingVertical: 12,
-        borderRadius: 25,
-        gap: 8,
+        gap: 4,
+        marginBottom: 12,
     },
-    whatsappRegisterText: {
-        fontSize: 14,
+    cardLocation: {
+        fontSize: 13,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.textSecondary,
+        flex: 1,
+    },
+    cardPriceSection: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 14,
+        paddingBottom: 14,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.border,
+    },
+    cardPriceLabel: {
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.textSecondary,
+    },
+    cardPrice: {
+        fontSize: 20,
+        fontFamily: 'Lato_700Bold',
+        color: COLORS.primary,
+    },
+    cardPriceRange: {
+        backgroundColor: COLORS.primaryLight,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+    },
+    cardPriceRangeText: {
+        fontSize: 11,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.primary,
+    },
+    cardInfoPills: {
+        flexDirection: 'row',
+        gap: 8,
+        marginBottom: 12,
+    },
+    cardInfoPill: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: COLORS.background,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+        gap: 4,
+    },
+    cardInfoPillText: {
+        fontSize: 12,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.textSecondary,
+    },
+    cardTypesRow: {
+        flexDirection: 'row',
+        gap: 6,
+        marginBottom: 14,
+    },
+    cardTypePill: {
+        backgroundColor: COLORS.secondary,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 6,
+    },
+    cardTypePillText: {
+        fontSize: 11,
         fontFamily: 'Lato_400Regular',
         color: '#fff',
     },
+    cardFooter: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardAvailability: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+    },
+    availabilityDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: COLORS.success,
+    },
+    availabilityText: {
+        fontSize: 12,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.textSecondary,
+    },
+    cardViewBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: COLORS.primary,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        gap: 6,
+    },
+    cardViewBtnText: {
+        color: '#fff',
+        fontSize: 13,
+        fontFamily: 'Lato_700Bold',
+    },
 
-    // Sort Modal
+    // No Results
+    noResults: {
+        alignItems: 'center',
+        paddingVertical: 60,
+    },
+    noResultsIcon: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        backgroundColor: COLORS.border,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 16,
+    },
+    noResultsTitle: {
+        fontSize: 18,
+        fontFamily: 'Lato_700Bold',
+        color: COLORS.text,
+    },
+    noResultsText: {
+        fontSize: 14,
+        fontFamily: 'Lato_400Regular',
+        color: COLORS.textSecondary,
+        marginTop: 4,
+    },
+
+    // Floating CTA
+    floatingCTA: {
+        position: 'absolute',
+        right: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 18,
+        paddingVertical: 14,
+        borderRadius: 30,
+        gap: 8,
+        overflow: 'hidden',
+        shadowColor: '#25D366',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+        elevation: 8,
+    },
+    floatingCTABg: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    floatingCTAText: {
+        color: '#fff',
+        fontSize: 14,
+        fontFamily: 'Lato_700Bold',
+    },
+
+    // Modal
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.5)',
         justifyContent: 'flex-end',
     },
     sortModal: {
-        backgroundColor: colors.white,
+        backgroundColor: COLORS.cardBg,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         paddingHorizontal: 20,
@@ -1576,58 +1300,50 @@ const styles = StyleSheet.create({
     modalHandle: {
         width: 40,
         height: 4,
-        backgroundColor: colors.border,
+        backgroundColor: COLORS.border,
         borderRadius: 2,
         alignSelf: 'center',
         marginTop: 12,
-        marginBottom: 20,
+        marginBottom: 24,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: 'Lato_700Bold',
-        color: colors.textPrimary,
-        marginBottom: 16,
+        color: COLORS.text,
+        marginBottom: 20,
     },
     sortOption: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
         paddingVertical: 14,
-        paddingHorizontal: 4,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
+        paddingHorizontal: 12,
+        borderRadius: 16,
+        marginBottom: 8,
     },
     sortOptionActive: {
-        backgroundColor: 'rgba(185, 28, 28, 0.04)',
-        marginHorizontal: -20,
-        paddingHorizontal: 24,
-        borderBottomColor: 'transparent',
-        borderRadius: 12,
-    },
-    sortOptionContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
+        backgroundColor: COLORS.primaryLight,
     },
     sortOptionIcon: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        backgroundColor: colors.lightGray,
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: COLORS.background,
         alignItems: 'center',
         justifyContent: 'center',
+        marginRight: 14,
     },
     sortOptionIconActive: {
-        backgroundColor: 'rgba(185, 28, 28, 0.1)',
+        backgroundColor: 'rgba(185, 28, 28, 0.15)',
     },
     sortOptionText: {
+        flex: 1,
         fontSize: 15,
         fontFamily: 'Lato_400Regular',
-        color: colors.textPrimary,
+        color: COLORS.text,
     },
     sortOptionTextActive: {
-        color: colors.primary,
-        fontFamily: 'Lato_400Regular',
+        fontFamily: 'Lato_700Bold',
+        color: COLORS.primary,
     },
 });
 

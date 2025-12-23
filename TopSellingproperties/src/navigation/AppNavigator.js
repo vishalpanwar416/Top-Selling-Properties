@@ -11,6 +11,7 @@ import SearchScreen from '../screens/SearchScreen';
 import FindMyAgentScreen from '../screens/FindMyAgentScreen';
 import PropertiesScreen from '../screens/PropertiesScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
+import ProjectDetailScreen from '../screens/ProjectDetailScreen';
 import AgentsScreen from '../screens/AgentsScreen';
 import AgentDetailsScreen from '../screens/AgentDetailsScreen';
 import AgencyDetailsScreen from '../screens/AgencyDetailsScreen';
@@ -27,14 +28,14 @@ const Tab = createBottomTabNavigator();
 
 const HomeStack = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
+        <Stack.Navigator
+            screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen name="HomeMain" component={HomeScreen} />
-            <Stack.Screen 
-                name="Search" 
+            <Stack.Screen
+                name="Search"
                 component={SearchScreen}
                 options={{
                     presentation: 'modal',
@@ -55,16 +56,16 @@ const HomeStack = () => {
 
 const PropertiesStack = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
+        <Stack.Navigator
+            screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen name="PropertiesMain" component={PropertiesScreen} />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
-            <Stack.Screen 
-                name="Search" 
+            <Stack.Screen
+                name="Search"
                 component={SearchScreen}
                 options={{
                     presentation: 'modal',
@@ -80,12 +81,13 @@ const PropertiesStack = () => {
 
 const ProjectsStack = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
+        <Stack.Navigator
+            screenOptions={{
                 headerShown: false,
             }}
         >
             <Stack.Screen name="ProjectsMain" component={ProjectsScreen} />
+            <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
         </Stack.Navigator>
@@ -94,8 +96,8 @@ const ProjectsStack = () => {
 
 const AgentsStack = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
+        <Stack.Navigator
+            screenOptions={{
                 headerShown: false,
             }}
         >
@@ -109,8 +111,8 @@ const AgentsStack = () => {
 
 const MoreStack = () => {
     return (
-        <Stack.Navigator 
-            screenOptions={{ 
+        <Stack.Navigator
+            screenOptions={{
                 headerShown: false,
             }}
         >
@@ -129,36 +131,36 @@ const TabNavigator = () => {
                 headerShown: false,
             }}
         >
-            <Tab.Screen 
-                name="Home" 
+            <Tab.Screen
+                name="Home"
                 component={HomeStack}
                 options={{
                     tabBarLabel: 'Home',
                 }}
             />
-            <Tab.Screen 
-                name="Properties" 
+            <Tab.Screen
+                name="Properties"
                 component={PropertiesStack}
                 options={{
                     tabBarLabel: 'Properties',
                 }}
             />
-            <Tab.Screen 
-                name="Projects" 
+            <Tab.Screen
+                name="Projects"
                 component={ProjectsStack}
                 options={{
                     tabBarLabel: 'Projects',
                 }}
             />
-            <Tab.Screen 
-                name="Agents" 
+            <Tab.Screen
+                name="Agents"
                 component={AgentsStack}
                 options={{
                     tabBarLabel: 'Agents',
                 }}
             />
-            <Tab.Screen 
-                name="More" 
+            <Tab.Screen
+                name="More"
                 component={MoreStack}
                 options={{
                     tabBarLabel: 'More',
@@ -182,8 +184,8 @@ const AppNavigator = () => {
                     overlayColor: 'rgba(0, 0, 0, 0.5)',
                 }}
             >
-                <Drawer.Screen 
-                    name="MainTabs" 
+                <Drawer.Screen
+                    name="MainTabs"
                     component={TabNavigator}
                     options={{
                         drawerLabel: () => null,

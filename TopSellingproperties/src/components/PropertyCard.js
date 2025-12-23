@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../theme/colors';
@@ -8,8 +8,45 @@ import LikeButton from './LikeButton';
 
 const { width } = Dimensions.get('window');
 const cardWidth = width * 0.82;
+const imageWidth = cardWidth;
 
 const PropertyCard = ({ property, onPress, fullWidth = false }) => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const scrollViewRef = useRef(null);
+    const autoScrollTimer = useRef(null);
+
+    const images = property?.images && property.images.length > 0 
+        ? property.images 
+        : ['https://via.placeholder.com/400x200'];
+
+    useEffect(() => {
+        // Auto-scroll images every 3 seconds
+        if (images.length > 1) {
+            autoScrollTimer.current = setInterval(() => {
+                setCurrentImageIndex((prevIndex) => {
+                    const nextIndex = (prevIndex + 1) % images.length;
+                    scrollViewRef.current?.scrollTo({
+                        x: nextIndex * imageWidth,
+                        animated: true,
+                    });
+                    return nextIndex;
+                });
+            }, 3000);
+        }
+
+        return () => {
+            if (autoScrollTimer.current) {
+                clearInterval(autoScrollTimer.current);
+            }
+        };
+    }, [images.length]);
+
+    const handleScroll = (event) => {
+        const scrollPosition = event.nativeEvent.contentOffset.x;
+        const index = Math.round(scrollPosition / imageWidth);
+        setCurrentImageIndex(index);
+    };
+
     if (!property) {
         return null;
     }
@@ -30,23 +67,52 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
         >
             {/* Image Container with Gradient Overlay */}
             <View style={styles.imageContainer}>
-                <Image
-                    source={{ uri: property.images && property.images[0] ? property.images[0] : 'https://via.placeholder.com/400x200' }}
-                    style={styles.image}
-                    resizeMode="cover"
-                />
+                <ScrollView
+                    ref={scrollViewRef}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={handleScroll}
+                    scrollEventThrottle={16}
+                    style={styles.imageScrollView}
+                    contentContainerStyle={styles.imageScrollContent}
+                >
+                    {images.map((imageUri, index) => (
+                        <View key={index} style={styles.imageWrapper}>
+                            <Image
+                                source={{ uri: imageUri }}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                            {/* Bottom Gradient Overlay */}
+                            <LinearGradient
+                                colors={['transparent', 'rgba(0,0,0,0.7)']}
+                                style={styles.imageGradient}
+                            />
+                        </View>
+                    ))}
+                </ScrollView>
 
-                {/* Bottom Gradient Overlay */}
-                <LinearGradient
-                    colors={['transparent', 'rgba(0,0,0,0.7)']}
-                    style={styles.imageGradient}
-                />
+                {/* Pagination Indicators */}
+                {images.length > 1 && (
+                    <View style={styles.paginationContainer}>
+                        {images.map((_, index) => (
+                            <View
+                                key={index}
+                                style={[
+                                    styles.paginationDot,
+                                    index === currentImageIndex && styles.paginationDotActive
+                                ]}
+                            />
+                        ))}
+                    </View>
+                )}
 
                 {/* Top Badges Row */}
                 <View style={styles.topRow}>
                     {property.featured && (
                         <View style={styles.featuredBadge}>
-                            <Ionicons name="star" size={9} color="#FFD700" style={{ marginRight: 3 }} />
+                            <Ionicons name="star" size={8} color="#FFD700" style={{ marginRight: 2 }} />
                             <Text style={styles.featuredText}>FEATURED</Text>
                         </View>
                     )}
@@ -57,7 +123,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     )}
                     <View style={{ flex: 1 }} />
                     <LikeButton
-                        size={18}
+                        size={16}
                         buttonStyle={styles.favoriteButton}
                     />
                 </View>
@@ -102,7 +168,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                             <Ionicons
                                 key={star}
                                 name={star <= Math.floor(property.rating || 4) ? "star" : "star-outline"}
-                                size={12}
+                                size={10}
                                 color="#FFB800"
                             />
                         ))}
@@ -114,7 +180,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
 
                 {/* Location */}
                 <View style={styles.locationRow}>
-                    <Ionicons name="location-sharp" size={14} color={colors.textSecondary} />
+                    <Ionicons name="location-sharp" size={12} color={colors.textSecondary} />
                     <Text style={styles.location} numberOfLines={1}>{property.location || 'Location not available'}</Text>
                 </View>
 
@@ -126,7 +192,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     </View>
                     {property.freeCancellation && (
                         <View style={styles.cancellationBadge}>
-                            <Ionicons name="checkmark-circle" size={12} color="#10B981" />
+                            <Ionicons name="checkmark-circle" size={10} color="#10B981" />
                             <Text style={styles.cancellationText}>Free Cancellation</Text>
                         </View>
                     )}
@@ -136,7 +202,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                 <View style={styles.detailsContainer}>
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="bed-outline" size={16} color={colors.primary} />
+                            <MaterialCommunityIcons name="bed-outline" size={14} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.bedrooms || 'Studio'}</Text>
                         <Text style={styles.detailLabel}>Beds</Text>
@@ -144,7 +210,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="shower" size={16} color={colors.primary} />
+                            <MaterialCommunityIcons name="shower" size={14} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.bathrooms || '-'}</Text>
                         <Text style={styles.detailLabel}>Baths</Text>
@@ -152,7 +218,7 @@ const PropertyCard = ({ property, onPress, fullWidth = false }) => {
                     <View style={styles.detailDivider} />
                     <View style={styles.detailItem}>
                         <View style={styles.detailIconWrapper}>
-                            <MaterialCommunityIcons name="vector-square" size={16} color={colors.primary} />
+                            <MaterialCommunityIcons name="vector-square" size={14} color={colors.primary} />
                         </View>
                         <Text style={styles.detailValue}>{property.area ? property.area.toLocaleString() : 'N/A'}</Text>
                         <Text style={styles.detailLabel}>{property.areaUnit || 'sqft'}</Text>
@@ -167,43 +233,77 @@ const styles = StyleSheet.create({
     container: {
         width: cardWidth,
         backgroundColor: colors.white,
-        borderRadius: 16,
-        marginRight: 16,
-        marginVertical: 6,
+        borderRadius: 12,
+        marginRight: 12,
+        marginVertical: 4,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 12,
-        elevation: 6,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+        elevation: 4,
         overflow: 'hidden',
     },
     fullWidthContainer: {
         width: '100%',
         marginRight: 0,
-        marginBottom: 10,
+        marginBottom: 8,
         marginVertical: 0,
     },
     imageContainer: {
         width: '100%',
-        height: 180,
+        height: 160,
+        position: 'relative',
+    },
+    imageScrollView: {
+        width: '100%',
+        height: '100%',
+    },
+    imageScrollContent: {
+        flexDirection: 'row',
+    },
+    imageWrapper: {
+        width: imageWidth,
+        height: 160,
         position: 'relative',
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width: imageWidth,
+        height: 160,
     },
     imageGradient: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        height: 70,
+        height: 60,
+    },
+    paginationContainer: {
+        position: 'absolute',
+        bottom: 6,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 4,
+    },
+    paginationDot: {
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    },
+    paginationDotActive: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: colors.white,
     },
     topRow: {
         position: 'absolute',
-        top: 8,
-        left: 8,
-        right: 8,
+        top: 6,
+        left: 6,
+        right: 6,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -211,9 +311,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.65)',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 16,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 12,
         backdropFilter: 'blur(10px)',
     },
     featuredText: {
@@ -222,34 +322,34 @@ const styles = StyleSheet.create({
     },
     tagBadge: {
         backgroundColor: 'rgba(72, 187, 120, 0.95)',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 16,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 12,
     },
     tagText: {
         ...typography.badge,
         color: colors.white,
     },
     favoriteButton: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
         backgroundColor: 'rgba(0,0,0,0.45)',
         alignItems: 'center',
         justifyContent: 'center',
     },
     typeBadgeContainer: {
         position: 'absolute',
-        top: 8,
-        right: 44,
+        top: 6,
+        right: 38,
         flexDirection: 'row',
         alignItems: 'center',
     },
     typeBadge: {
         backgroundColor: colors.primary,
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 16,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 12,
     },
     typeText: {
         ...typography.badge,
@@ -260,10 +360,10 @@ const styles = StyleSheet.create({
     },
     rentTagBadge: {
         backgroundColor: '#059669',
-        paddingHorizontal: 6,
-        paddingVertical: 3,
-        borderRadius: 10,
-        marginLeft: 4,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
+        borderRadius: 8,
+        marginLeft: 3,
     },
     rentTagText: {
         ...typography.badgeSmall,
@@ -271,34 +371,36 @@ const styles = StyleSheet.create({
     },
     priceOnImage: {
         position: 'absolute',
-        bottom: 8,
-        left: 8,
+        bottom: 6,
+        left: 6,
         flexDirection: 'row',
         alignItems: 'baseline',
     },
     priceText: {
         ...typography.price,
         color: colors.white,
+        fontSize: 18,
     },
     content: {
-        padding: 12,
+        padding: 10,
     },
     title: {
         ...typography.propertyTitle,
         color: colors.textPrimary,
-        marginBottom: 6,
+        marginBottom: 4,
+        fontSize: 15,
     },
     ratingRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 6,
+        marginBottom: 4,
     },
     ratingBadge: {
         backgroundColor: '#1E40AF',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-        marginRight: 6,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 5,
+        marginRight: 4,
     },
     ratingText: {
         ...typography.rating,
@@ -307,101 +409,109 @@ const styles = StyleSheet.create({
     starRating: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginRight: 6,
+        marginRight: 4,
     },
     reviewsText: {
         ...typography.ratingLabel,
         color: colors.textSecondary,
+        fontSize: 11,
     },
     ratingBadgeOnImage: {
         position: 'absolute',
-        top: 8,
-        right: 8,
+        top: 6,
+        right: 6,
         backgroundColor: '#1E40AF',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 5,
     },
     ratingTextOnImage: {
         ...typography.rating,
         color: colors.white,
+        fontSize: 12,
     },
     locationRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 6,
     },
     location: {
         ...typography.bodySmall,
         color: colors.textSecondary,
         flex: 1,
-        marginLeft: 4,
+        marginLeft: 3,
+        fontSize: 12,
     },
     priceSection: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: 10,
-        paddingTop: 8,
+        marginBottom: 6,
+        paddingTop: 6,
         borderTopWidth: 1,
         borderTopColor: colors.border,
     },
     priceMain: {
         ...typography.price,
         color: colors.textPrimary,
+        fontSize: 16,
     },
     pricePerNight: {
         ...typography.pricePerNight,
         color: colors.textSecondary,
-        marginTop: 2,
+        marginTop: 1,
+        fontSize: 11,
     },
     cancellationBadge: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#F0FDF4',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-        gap: 4,
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 5,
+        gap: 3,
     },
     cancellationText: {
         ...typography.caption,
         color: '#10B981',
+        fontSize: 10,
     },
     detailsContainer: {
         flexDirection: 'row',
         backgroundColor: '#F8F9FB',
-        borderRadius: 10,
-        paddingVertical: 8,
-        paddingHorizontal: 6,
+        borderRadius: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 4,
     },
     detailItem: {
         flex: 1,
         alignItems: 'center',
     },
     detailIconWrapper: {
-        width: 26,
-        height: 26,
-        borderRadius: 7,
+        width: 22,
+        height: 22,
+        borderRadius: 6,
         backgroundColor: 'rgba(185, 28, 28, 0.1)',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 3,
+        marginBottom: 2,
     },
     detailValue: {
         ...typography.bodySmall,
         color: colors.textPrimary,
         fontFamily: fontFamilies.bold,
+        fontSize: 13,
     },
     detailLabel: {
         ...typography.caption,
         color: colors.textTertiary,
         marginTop: 0,
+        fontSize: 10,
     },
     detailDivider: {
         width: 1,
         backgroundColor: colors.border,
-        marginVertical: 2,
+        marginVertical: 1,
     },
 });
 

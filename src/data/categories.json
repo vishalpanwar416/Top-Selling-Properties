@@ -1,0 +1,13 @@
+{
+  "propertyCategories": [
+    "Residential",
+    "Commercial",
+    "Rooms For Rent",
+    "Monthly Short Term",
+    "Daily Short Term"
+  ],
+  "transactionTypes": [
+    "Buy",
+    "Rent"
+  ]
+}

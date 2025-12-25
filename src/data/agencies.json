@@ -1,0 +1,245 @@
+{
+  "agencies": [
+    {
+      "id": "1",
+      "name": "Top Selling Properties",
+      "logo": "https://via.placeholder.com/80?text=TSP",
+      "description": "UAE's premier real estate agency specializing in luxury properties and exceptional service.",
+      "totalAgents": 6,
+      "totalListings": 85,
+      "saleListings": 65,
+      "rentListings": 20,
+      "serviceAreas": [
+        "Dubai",
+        "Abu Dhabi",
+        "Sharjah",
+        "Ras Al Khaimah"
+      ],
+      "specializations": [
+        "Luxury Villas",
+        "Penthouses",
+        "Waterfront Properties",
+        "Commercial Real Estate"
+      ],
+      "rating": 4.8,
+      "yearsInBusiness": 15,
+      "phone": "+971 4 123 4567",
+      "email": "info@topsellingproperties.ae",
+      "website": "www.topsellingproperties.ae",
+      "address": "Business Bay, Dubai, UAE",
+      "verified": true,
+      "propertyIds": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "ROCKY",
+      "logo": "https://via.placeholder.com/80?text=ROCKY",
+      "description": "Leading real estate agency with expertise in investment properties and high ROI opportunities.",
+      "totalAgents": 3,
+      "totalListings": 42,
+      "saleListings": 35,
+      "rentListings": 7,
+      "serviceAreas": [
+        "Dubai",
+        "Abu Dhabi"
+      ],
+      "specializations": [
+        "Investment Properties",
+        "Off-Plan",
+        "Residential",
+        "Commercial"
+      ],
+      "rating": 4.7,
+      "yearsInBusiness": 12,
+      "phone": "+971 4 234 5678",
+      "email": "info@rockyproperties.ae",
+      "website": "www.rockyproperties.ae",
+      "address": "Downtown Dubai, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "3",
+      "name": "Savills",
+      "logo": "https://via.placeholder.com/80?text=SAVILLS",
+      "description": "International real estate consultancy with premium residential and commercial services.",
+      "totalAgents": 2,
+      "totalListings": 28,
+      "saleListings": 22,
+      "rentListings": 6,
+      "serviceAreas": [
+        "Dubai",
+        "Abu Dhabi"
+      ],
+      "specializations": [
+        "High-End Residential",
+        "Commercial",
+        "Property Management"
+      ],
+      "rating": 4.8,
+      "yearsInBusiness": 20,
+      "phone": "+971 4 345 6789",
+      "email": "dubai@savills.com",
+      "website": "www.savills.ae",
+      "address": "DIFC, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "4",
+      "name": "Premium Realty",
+      "logo": "https://via.placeholder.com/80?text=PREMIUM",
+      "description": "Exclusive real estate agency focusing on marina and beachfront luxury properties.",
+      "totalAgents": 1,
+      "totalListings": 22,
+      "saleListings": 15,
+      "rentListings": 7,
+      "serviceAreas": [
+        "Dubai Marina",
+        "JBR",
+        "Bluewaters"
+      ],
+      "specializations": [
+        "Marina Properties",
+        "Beachfront",
+        "Luxury Apartments"
+      ],
+      "rating": 4.9,
+      "yearsInBusiness": 8,
+      "phone": "+971 4 456 7890",
+      "email": "info@premiumrealty.ae",
+      "website": "www.premiumrealty.ae",
+      "address": "Dubai Marina, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "5",
+      "name": "Elite Properties",
+      "logo": "https://via.placeholder.com/80?text=ELITE",
+      "description": "Boutique agency specializing in ultra-luxury penthouses and exclusive residences.",
+      "totalAgents": 1,
+      "totalListings": 12,
+      "saleListings": 9,
+      "rentListings": 3,
+      "serviceAreas": [
+        "Palm Jumeirah",
+        "Dubai Marina",
+        "JLT"
+      ],
+      "specializations": [
+        "Penthouses",
+        "Luxury Apartments",
+        "Sky Villas"
+      ],
+      "rating": 4.6,
+      "yearsInBusiness": 6,
+      "phone": "+971 4 567 8901",
+      "email": "info@eliteproperties.ae",
+      "website": "www.eliteproperties.ae",
+      "address": "Palm Jumeirah, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "6",
+      "name": "Desert Oasis Realty",
+      "logo": "https://via.placeholder.com/80?text=DESERT",
+      "description": "Specialized in family-friendly communities and golf course properties.",
+      "totalAgents": 4,
+      "totalListings": 38,
+      "saleListings": 28,
+      "rentListings": 10,
+      "serviceAreas": [
+        "Arabian Ranches",
+        "Emirates Hills",
+        "Dubai Hills"
+      ],
+      "specializations": [
+        "Family Homes",
+        "Townhouses",
+        "Golf Course Properties"
+      ],
+      "rating": 4.7,
+      "yearsInBusiness": 10,
+      "phone": "+971 4 678 9012",
+      "email": "info@desertoasis.ae",
+      "website": "www.desertoasis.ae",
+      "address": "Arabian Ranches, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "7",
+      "name": "Creek Properties",
+      "logo": "https://via.placeholder.com/80?text=CREEK",
+      "description": "Leading agency for new developments and off-plan investments in Dubai Creek area.",
+      "totalAgents": 3,
+      "totalListings": 45,
+      "saleListings": 40,
+      "rentListings": 5,
+      "serviceAreas": [
+        "Creek Harbour",
+        "Business Bay",
+        "Downtown Dubai"
+      ],
+      "specializations": [
+        "New Developments",
+        "Off-Plan",
+        "Branded Residences"
+      ],
+      "rating": 4.8,
+      "yearsInBusiness": 7,
+      "phone": "+971 4 789 0123",
+      "email": "info@creekproperties.ae",
+      "website": "www.creekproperties.ae",
+      "address": "Creek Harbour, Dubai, UAE",
+      "verified": true,
+      "propertyIds": []
+    },
+    {
+      "id": "8",
+      "name": "Abu Dhabi Luxury Homes",
+      "logo": "https://via.placeholder.com/80?text=ADLH",
+      "description": "Premier real estate agency specializing in luxury properties in Abu Dhabi.",
+      "totalAgents": 2,
+      "totalListings": 25,
+      "saleListings": 18,
+      "rentListings": 7,
+      "serviceAreas": [
+        "Abu Dhabi",
+        "Saadiyat Island",
+        "Yas Island"
+      ],
+      "specializations": [
+        "Waterfront Villas",
+        "Cultural District",
+        "Island Properties"
+      ],
+      "rating": 4.9,
+      "yearsInBusiness": 14,
+      "phone": "+971 2 123 4567",
+      "email": "info@adluxuryhomes.ae",
+      "website": "www.adluxuryhomes.ae",
+      "address": "Saadiyat Island, Abu Dhabi, UAE",
+      "verified": true,
+      "propertyIds": []
+    }
+  ]
+}

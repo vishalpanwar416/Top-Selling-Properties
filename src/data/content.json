@@ -1,0 +1,121 @@
+{
+    "home": {
+        "welcomeTitle": "Find Your Dream Property",
+        "welcomeSubtitle": "Discover premium real estate in UAE",
+        "browseProjectsTitle": "Browse New Projects in UAE",
+        "featuredPropertiesTitle": "Featured Properties",
+        "featuredProjectsTitle": "Featured Projects",
+        "topAgentsTitle": "Top Agents",
+        "popularAreasTitle": "Popular Areas",
+        "viewAllProjects": "View All Projects in",
+        "viewAllProperties": "View All Properties",
+        "viewAllAgents": "View All Agents",
+        "seeAll": "See All",
+        "viewAll": "View All"
+    },
+    "search": {
+        "placeholder": "Search properties, projects, locations...",
+        "recentSearches": "Recent Searches",
+        "popularSearches": "Popular Searches",
+        "noResults": "No results found",
+        "searchProperties": "Search Properties",
+        "searchProjects": "Search Projects"
+    },
+    "property": {
+        "beds": "Beds",
+        "baths": "Baths",
+        "sqft": "sqft",
+        "startingFrom": "Starting from",
+        "handover": "Handover",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms",
+        "area": "Area",
+        "price": "Price",
+        "type": "Type",
+        "purpose": "Purpose",
+        "forSale": "For Sale",
+        "forRent": "For Rent",
+        "availableNow": "Available Now",
+        "offPlan": "Off-Plan",
+        "ready": "Ready"
+    },
+    "project": {
+        "startingPrice": "Starting Price",
+        "handover": "Handover",
+        "developer": "Developer",
+        "totalUnits": "Total Units",
+        "availableUnits": "Available Units",
+        "paymentPlan": "Payment Plan",
+        "completion": "Completion",
+        "bedroomRange": "Bedroom Range"
+    },
+    "buttons": {
+        "contact": "Contact",
+        "whatsApp": "WhatsApp",
+        "call": "Call",
+        "email": "Email",
+        "viewProject": "View Project",
+        "viewProperty": "View Property",
+        "viewDetails": "View Details",
+        "getInTouch": "Get in Touch",
+        "scheduleVisit": "Schedule Visit",
+        "requestCallback": "Request Callback"
+    },
+    "filters": {
+        "buy": "Buy",
+        "rent": "Rent",
+        "residential": "Residential",
+        "commercial": "Commercial",
+        "offPlan": "Off-Plan",
+        "ready": "Ready",
+        "all": "All"
+    },
+    "locations": [
+        "Dubai",
+        "Abu Dhabi",
+        "Sharjah",
+        "Ajman",
+        "RAK",
+        "Fujairah"
+    ],
+    "featuredProperties": {
+        "enabled": true,
+        "limit": 10,
+        "showPriceRange": true
+    },
+    "featuredProjects": {
+        "enabled": true,
+        "limit": 5,
+        "showDeveloper": true
+    },
+    "agent": {
+        "experience": "Experience",
+        "listings": "Listings",
+        "languages": "Languages",
+        "specialization": "Specialization",
+        "contactAgent": "Contact Agent",
+        "viewProfile": "View Profile"
+    },
+    "labels": {
+        "new": "NEW",
+        "featured": "FEATURED",
+        "exclusive": "EXCLUSIVE",
+        "premium": "PREMIUM",
+        "verified": "VERIFIED",
+        "topRated": "TOP RATED",
+        "bestValue": "BEST VALUE"
+    },
+    "messages": {
+        "noPropertiesFound": "No properties found",
+        "noProjectsFound": "No projects found",
+        "noAgentsFound": "No agents found",
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "tryAgain": "Try Again"
+    },
+    "footer": {
+        "copyright": "© 2025 Top Selling Properties. All rights reserved.",
+        "termsOfService": "Terms of Service",
+        "privacyPolicy": "Privacy Policy"
+    }
+}

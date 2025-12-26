@@ -16,20 +16,23 @@ import SearchBar from '../components/SearchBar';
 import colors from '../theme/colors';
 import agentsData from '../data/agents.json';
 import agenciesData from '../data/agencies.json';
+import channelPartnersData from '../data/channelPartners.json';
 
 const { width } = Dimensions.get('window');
 const STICKY_THRESHOLD = 120;
 const mockAgents = agentsData.agents;
 const mockAgencies = agenciesData.agencies;
+const mockChannelPartners = channelPartnersData.channelPartners;
 
 const AgentsScreen = ({ navigation }) => {
-    const [selectedTypes, setSelectedTypes] = useState(['Agents']); // Can select Agents, Agencies, or both
-    const [selectedTransactions, setSelectedTransactions] = useState(['Buy']); // Can select Buy, Rent, or both
-    const [location, setLocation] = useState('Dubai'); // Dubai or Abu Dhabi
+    const [selectedTypes, setSelectedTypes] = useState(['Agents']);
+    const [selectedTransactions, setSelectedTransactions] = useState(['Buy']);
+    const [location, setLocation] = useState('Dubai');
     const [searchQuery, setSearchQuery] = useState('');
     const [isSticky, setIsSticky] = useState(false);
     const [agents] = useState(mockAgents);
     const [agencies] = useState(mockAgencies);
+    const [channelPartners] = useState(mockChannelPartners);
 
     const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -38,28 +41,14 @@ const AgentsScreen = ({ navigation }) => {
         setIsSticky(offsetY > STICKY_THRESHOLD);
     };
 
-    // Toggle selection for type (Agents/Agencies)
-    const toggleType = (type) => {
-        setSelectedTypes(prev => {
-            if (prev.includes(type)) {
-                // If it's the only one selected, don't allow deselecting
-                if (prev.length === 1) return prev;
-                return prev.filter(t => t !== type);
-            }
-            return [...prev, type];
-        });
+    // Select type (Agents/Agencies) - only one can be selected
+    const selectType = (type) => {
+        setSelectedTypes([type]);
     };
 
-    // Toggle selection for transaction (Buy/Rent)
-    const toggleTransaction = (transaction) => {
-        setSelectedTransactions(prev => {
-            if (prev.includes(transaction)) {
-                // If it's the only one selected, don't allow deselecting
-                if (prev.length === 1) return prev;
-                return prev.filter(t => t !== transaction);
-            }
-            return [...prev, transaction];
-        });
+    // Select transaction (Buy/Rent) - only one can be selected
+    const selectTransaction = (transaction) => {
+        setSelectedTransactions([transaction]);
     };
 
     // Filter agents and agencies based on selections
@@ -77,6 +66,14 @@ const AgentsScreen = ({ navigation }) => {
         return matchesSearch;
     });
 
+    const filteredChannelPartners = channelPartners.filter(partner => {
+        const matchesSearch = searchQuery === '' ||
+            partner.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            partner.serviceAreas.some(area => area.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            partner.developers.some(dev => dev.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesSearch;
+    });
+
     // Combine filtered results based on selected types
     const getFilteredData = () => {
         const data = [];
@@ -88,6 +85,11 @@ const AgentsScreen = ({ navigation }) => {
         if (selectedTypes.includes('Agencies')) {
             filteredAgencies.forEach(agency => {
                 data.push({ ...agency, itemType: 'agency' });
+            });
+        }
+        if (selectedTypes.includes('Channel Partners')) {
+            filteredChannelPartners.forEach(partner => {
+                data.push({ ...partner, itemType: 'channelPartner' });
             });
         }
         return data;
@@ -160,8 +162,8 @@ const AgentsScreen = ({ navigation }) => {
     };
 
     const renderAgencyCard = ({ item }) => {
-        const serviceAreasText = item.serviceAreas.slice(0, 2).join(', ');
-        const specializationsText = item.specializations.slice(0, 2).join(', ');
+        const serviceAreasText = item.serviceAreas?.slice(0, 2).join(', ') || '';
+        const specializationsText = item.specializations?.slice(0, 2).join(', ') || '';
 
         return (
             <TouchableOpacity
@@ -172,8 +174,9 @@ const AgentsScreen = ({ navigation }) => {
                 <View style={styles.agentCardContent}>
                     <View style={styles.agencyLogoWrapper}>
                         <Image
-                            source={{ uri: item.logo }}
+                            source={{ uri: item.logo || 'https://via.placeholder.com/80' }}
                             style={styles.agencyCardLogo}
+                            resizeMode="contain"
                         />
                         {item.verified && (
                             <View style={styles.verifiedBadgeSmall}>
@@ -182,33 +185,38 @@ const AgentsScreen = ({ navigation }) => {
                         )}
                     </View>
                     <View style={styles.agentInfo}>
-                        <View style={styles.agencyHeader}>
-                            <Text style={styles.agentName} numberOfLines={1}>{item.name}</Text>
+                        <View style={styles.agentHeader}>
+                            <Text style={styles.agentName} numberOfLines={1}>{item.name || 'Agency'}</Text>
+                            <View style={styles.verifiedIcon}>
+                                <Ionicons name="checkmark-circle" size={14} color={colors.primary} />
+                            </View>
                         </View>
-                        <Text style={styles.agencyDescription} numberOfLines={2}>{item.description}</Text>
+                        <Text style={styles.agencyDescription} numberOfLines={2}>{item.description || ''}</Text>
                         <View style={styles.agencyStatsRow}>
                             <View style={styles.agencyStatItem}>
-                                <Ionicons name="star" size={14} color="#FFD700" />
-                                <Text style={styles.agencyStatText}>{item.rating}</Text>
+                                <Ionicons name="star" size={12} color="#FFD700" />
+                                <Text style={styles.agencyStatText}>{item.rating || '0'}</Text>
                             </View>
                             <Text style={styles.agencyStatDivider}>•</Text>
-                            <Text style={styles.agencyStatText}>{item.yearsInBusiness} years</Text>
+                            <Text style={styles.agencyStatText}>{item.yearsInBusiness || 0} years</Text>
                         </View>
-                        <View style={styles.serviceAreasRow}>
-                            <Ionicons name="location" size={12} color={colors.textSecondary} />
-                            <Text style={styles.serviceAreas} numberOfLines={1}>{serviceAreasText}</Text>
-                        </View>
+                        {serviceAreasText && (
+                            <View style={styles.serviceAreasRow}>
+                                <Ionicons name="location" size={11} color={colors.textSecondary} />
+                                <Text style={styles.serviceAreas} numberOfLines={1}>{serviceAreasText}</Text>
+                            </View>
+                        )}
                         <View style={styles.listingTags}>
                             <View style={styles.listingTag}>
-                                <Text style={styles.listingTagText}>{item.totalAgents} Agents</Text>
+                                <Text style={styles.listingTagText}>{item.totalAgents || 0} Agents</Text>
                             </View>
                             <View style={styles.listingTag}>
-                                <Text style={styles.listingTagText}>{item.totalListings} Listings</Text>
+                                <Text style={styles.listingTagText}>{item.totalListings || 0} Listings</Text>
                             </View>
                         </View>
                         {specializationsText && (
                             <View style={styles.specializationsRow}>
-                                <Ionicons name="star-outline" size={12} color={colors.textSecondary} />
+                                <Ionicons name="star-outline" size={11} color={colors.textSecondary} />
                                 <Text style={styles.specializations} numberOfLines={1}>{specializationsText}</Text>
                             </View>
                         )}
@@ -218,9 +226,72 @@ const AgentsScreen = ({ navigation }) => {
         );
     };
 
+    const renderChannelPartnerCard = ({ item }) => {
+        const serviceAreasText = item.serviceAreas.slice(0, 2).join(', ');
+        const developersText = item.developers.slice(0, 2).join(', ');
+
+        return (
+            <TouchableOpacity
+                style={styles.agentCard}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('AgentDetails', { agent: item, isChannelPartner: true })}
+            >
+                <View style={styles.agentCardContent}>
+                    <View style={styles.agencyLogoWrapper}>
+                        <Image
+                            source={{ uri: item.image }}
+                            style={styles.agentImage}
+                            resizeMode="cover"
+                        />
+                        {item.verified && (
+                            <View style={styles.verifiedBadgeSmall}>
+                                <Ionicons name="checkmark-circle" size={14} color="#25D366" />
+                            </View>
+                        )}
+                    </View>
+                    <View style={styles.agentInfo}>
+                        <View style={styles.agentHeader}>
+                            <Text style={styles.agentName} numberOfLines={1}>{item.name}</Text>
+                        </View>
+                        <Text style={styles.agentSpecialization} numberOfLines={1}>
+                            {item.specialization}
+                        </Text>
+                        <View style={styles.agencyStatsRow}>
+                            <View style={styles.agencyStatItem}>
+                                <Ionicons name="star" size={12} color="#FFD700" />
+                                <Text style={styles.agencyStatText}>{item.rating}</Text>
+                            </View>
+                            <Text style={styles.agencyStatDivider}>•</Text>
+                            <Text style={styles.agencyStatText}>{item.yearsInBusiness} years</Text>
+                        </View>
+                        <View style={styles.serviceAreasRow}>
+                            <Ionicons name="location" size={11} color={colors.textSecondary} />
+                            <Text style={styles.serviceAreas} numberOfLines={1}>{serviceAreasText}</Text>
+                        </View>
+                        <View style={styles.listingTags}>
+                            <View style={[styles.listingTag, { backgroundColor: '#E8F5E9' }]}>
+                                <Text style={[styles.listingTagText, { color: '#4CAF50' }]}>{item.totalDeals} Deals</Text>
+                            </View>
+                            <View style={[styles.listingTag, { backgroundColor: '#FFF3E0' }]}>
+                                <Text style={[styles.listingTagText, { color: '#FF9800' }]}>{item.activeProjects} Projects</Text>
+                            </View>
+                        </View>
+                        <View style={styles.developersRow}>
+                            <Ionicons name="business-outline" size={11} color={colors.textSecondary} />
+                            <Text style={styles.developersText} numberOfLines={1}>{developersText}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    };
+
     const renderItem = ({ item }) => {
         if (item.itemType === 'agency') {
             return renderAgencyCard({ item });
+        }
+        if (item.itemType === 'channelPartner') {
+            return renderChannelPartnerCard({ item });
         }
         return renderAgentCard({ item });
     };
@@ -254,14 +325,14 @@ const AgentsScreen = ({ navigation }) => {
                         <Text style={styles.welcomeTitle}>Find My Agent</Text>
                     </View>
 
-                    {/* Agents/Agencies Toggle */}
+                    {/* Agents/Agencies/Channel Partners Toggle */}
                     <View style={styles.typeToggleContainer}>
                         <TouchableOpacity
                             style={[
                                 styles.typeToggleButton,
                                 selectedTypes.includes('Agents') && styles.activeTypeToggleButton
                             ]}
-                            onPress={() => toggleType('Agents')}
+                            onPress={() => selectType('Agents')}
                             activeOpacity={0.8}
                         >
                             <Text style={[
@@ -276,7 +347,7 @@ const AgentsScreen = ({ navigation }) => {
                                 styles.typeToggleButton,
                                 selectedTypes.includes('Agencies') && styles.activeTypeToggleButton
                             ]}
-                            onPress={() => toggleType('Agencies')}
+                            onPress={() => selectType('Agencies')}
                             activeOpacity={0.8}
                         >
                             <Text style={[
@@ -284,6 +355,21 @@ const AgentsScreen = ({ navigation }) => {
                                 selectedTypes.includes('Agencies') && styles.activeTypeToggleText
                             ]}>
                                 Agencies
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                styles.typeToggleButton,
+                                selectedTypes.includes('Channel Partners') && styles.activeTypeToggleButton
+                            ]}
+                            onPress={() => selectType('Channel Partners')}
+                            activeOpacity={0.8}
+                        >
+                            <Text style={[
+                                styles.typeToggleText,
+                                selectedTypes.includes('Channel Partners') && styles.activeTypeToggleText
+                            ]}>
+                                Channel Partners
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -295,7 +381,7 @@ const AgentsScreen = ({ navigation }) => {
                                 styles.buyRentButton,
                                 selectedTransactions.includes('Buy') && styles.activeBuyRentButton
                             ]}
-                            onPress={() => toggleTransaction('Buy')}
+                            onPress={() => selectTransaction('Buy')}
                             activeOpacity={0.8}
                         >
                             <Text style={[
@@ -310,7 +396,7 @@ const AgentsScreen = ({ navigation }) => {
                                 styles.buyRentButton,
                                 selectedTransactions.includes('Rent') && styles.activeBuyRentButton
                             ]}
-                            onPress={() => toggleTransaction('Rent')}
+                            onPress={() => selectTransaction('Rent')}
                             activeOpacity={0.8}
                         >
                             <Text style={[
@@ -825,6 +911,18 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         flex: 1,
         fontStyle: 'italic',
+    },
+    developersRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 4,
+    },
+    developersText: {
+        fontSize: 10,
+        color: colors.primary,
+        marginLeft: 4,
+        flex: 1,
+        fontWeight: '500',
     },
 });
 

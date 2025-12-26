@@ -11,11 +11,12 @@ import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
 import projectsData from '../data/projects.json';
 import categoriesData from '../data/categories.json';
+import contentData from '../data/content.json';
 
 const propertyCategories = categoriesData.propertyCategories;
 const transactionTypes = categoriesData.transactionTypes;
 
-const uaeLocations = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'RAK', 'Fujairah'];
+const uaeLocations = contentData.locations;
 const STICKY_THRESHOLD = 120; // When search bar becomes sticky
 
 const HomeScreen = ({ navigation }) => {
@@ -99,8 +100,8 @@ const HomeScreen = ({ navigation }) => {
                     <Header navigation={navigation} transparent />
                     <View style={styles.heroContent}>
                         <View style={styles.welcomeSection}>
-                            <Text style={styles.welcomeTitle} numberOfLines={1}>Find Your Dream Property</Text>
-                            <Text style={styles.welcomeSubtitle}>Discover premium real estate in UAE</Text>
+                            <Text style={styles.welcomeTitle} numberOfLines={1}>{contentData.home.welcomeTitle}</Text>
+                            <Text style={styles.welcomeSubtitle}>{contentData.home.welcomeSubtitle}</Text>
                         </View>
                     </View>
                 </View>
@@ -184,7 +185,7 @@ const HomeScreen = ({ navigation }) => {
                 >
                     {/* Browse New Projects Section */}
                     <View style={styles.newProjectsSection}>
-                        <Text style={styles.sectionTitleWhite}>Browse New Projects in UAE</Text>
+                        <Text style={styles.sectionTitleWhite}>{contentData.home.browseProjectsTitle}</Text>
 
                         {/* Location Tabs */}
                         <ScrollView
@@ -241,7 +242,7 @@ const HomeScreen = ({ navigation }) => {
                             activeOpacity={0.8}
                             onPress={() => setShowCityModal(true)}
                         >
-                            <Text style={styles.viewAllText}>View All Projects in {activeLocation}</Text>
+                            <Text style={styles.viewAllText}>{contentData.home.viewAllProjects} {activeLocation}</Text>
                             <Ionicons name="chevron-forward" size={18} color={colors.white} />
                         </TouchableOpacity>
                     </View>
@@ -249,13 +250,13 @@ const HomeScreen = ({ navigation }) => {
                     {/* Featured Properties Section */}
                     <View style={styles.featuredSection}>
                         <View style={styles.propertiesSectionHeader}>
-                            <Text style={styles.propertiesSectionTitle}>Featured Properties</Text>
+                            <Text style={styles.propertiesSectionTitle}>{contentData.home.featuredPropertiesTitle}</Text>
                             <TouchableOpacity
                                 style={styles.seeAllButton}
                                 onPress={() => navigation.navigate('Properties')}
                                 activeOpacity={0.8}
                             >
-                                <Text style={styles.seeAllText}>See All</Text>
+                                <Text style={styles.seeAllText}>{contentData.home.seeAll}</Text>
                                 <Ionicons name="chevron-forward" size={16} color={colors.white} />
                             </TouchableOpacity>
                         </View>
@@ -300,20 +301,20 @@ const styles = StyleSheet.create({
     },
     heroContent: {
         paddingHorizontal: 20,
-        marginTop: 8,
+        marginTop: -8,
     },
     welcomeSection: {
         marginBottom: 4,
     },
     welcomeTitle: {
-        fontSize: 20,
-        fontFamily: 'Lato_400Regular',
+        fontSize: 24,
+        fontFamily: 'Lato_700Bold',
         color: colors.black,
         marginBottom: 4,
         letterSpacing: -0.5,
     },
     welcomeSubtitle: {
-        fontSize: 15,
+        fontSize: 13,
         color: colors.textSecondary,
         fontFamily: 'Lato_400Regular',
     },

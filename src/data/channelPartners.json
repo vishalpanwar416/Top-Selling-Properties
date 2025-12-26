@@ -1,0 +1,172 @@
+{
+    "channelPartners": [
+        {
+            "id": "cp-1",
+            "name": "Prime Realty Partners",
+            "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400",
+            "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
+            "description": "Leading channel partner specializing in off-plan properties and new launches across Dubai and Abu Dhabi.",
+            "specialization": "Off-Plan Specialist",
+            "serviceAreas": [
+                "Dubai Marina",
+                "Downtown Dubai",
+                "Business Bay",
+                "Palm Jumeirah"
+            ],
+            "languages": [
+                "English",
+                "Arabic",
+                "Hindi"
+            ],
+            "yearsInBusiness": 8,
+            "rating": 4.9,
+            "totalDeals": 450,
+            "activeProjects": 25,
+            "developers": [
+                "Emaar",
+                "Damac",
+                "Sobha",
+                "Meraas"
+            ],
+            "verified": true,
+            "phone": "+971 50 123 4567",
+            "email": "info@primerealty.ae",
+            "website": "www.primerealty.ae"
+        },
+        {
+            "id": "cp-2",
+            "name": "Gulf Property Solutions",
+            "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
+            "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
+            "description": "Expert channel partner with exclusive access to luxury developments and premium investment opportunities.",
+            "specialization": "Luxury Investments",
+            "serviceAreas": [
+                "Palm Jumeirah",
+                "Emirates Hills",
+                "Dubai Hills",
+                "Al Barari"
+            ],
+            "languages": [
+                "English",
+                "Arabic",
+                "Russian"
+            ],
+            "yearsInBusiness": 12,
+            "rating": 4.8,
+            "totalDeals": 620,
+            "activeProjects": 32,
+            "developers": [
+                "Nakheel",
+                "Dubai Properties",
+                "Azizi",
+                "Ellington"
+            ],
+            "verified": true,
+            "phone": "+971 50 234 5678",
+            "email": "info@gulfpropertysolutions.ae",
+            "website": "www.gulfpropertysolutions.ae"
+        },
+        {
+            "id": "cp-3",
+            "name": "Elite Investment Group",
+            "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+            "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
+            "description": "Trusted channel partner for high-net-worth investors seeking premium real estate opportunities in UAE.",
+            "specialization": "Investment Advisory",
+            "serviceAreas": [
+                "DIFC",
+                "Downtown Dubai",
+                "JBR",
+                "Bluewaters"
+            ],
+            "languages": [
+                "English",
+                "Arabic",
+                "Chinese",
+                "French"
+            ],
+            "yearsInBusiness": 10,
+            "rating": 4.7,
+            "totalDeals": 380,
+            "activeProjects": 18,
+            "developers": [
+                "Emaar",
+                "Select Group",
+                "Omniyat",
+                "Binghatti"
+            ],
+            "verified": true,
+            "phone": "+971 50 345 6789",
+            "email": "info@eliteinvestment.ae",
+            "website": "www.eliteinvestment.ae"
+        },
+        {
+            "id": "cp-4",
+            "name": "Capital Real Estate Partners",
+            "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
+            "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
+            "description": "Premier channel partner connecting global investors with the best real estate opportunities in the UAE.",
+            "specialization": "Global Investments",
+            "serviceAreas": [
+                "Abu Dhabi",
+                "Yas Island",
+                "Saadiyat Island",
+                "Al Reem Island"
+            ],
+            "languages": [
+                "English",
+                "Arabic",
+                "German",
+                "Spanish"
+            ],
+            "yearsInBusiness": 15,
+            "rating": 4.9,
+            "totalDeals": 850,
+            "activeProjects": 40,
+            "developers": [
+                "Aldar",
+                "Bloom Properties",
+                "Reportage",
+                "Imkan"
+            ],
+            "verified": true,
+            "phone": "+971 50 456 7890",
+            "email": "info@capitalrealestate.ae",
+            "website": "www.capitalrealestate.ae"
+        },
+        {
+            "id": "cp-5",
+            "name": "Horizon Property Advisors",
+            "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400",
+            "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
+            "description": "Specialized in connecting first-time buyers with affordable housing options and flexible payment plans.",
+            "specialization": "Affordable Housing",
+            "serviceAreas": [
+                "JVC",
+                "Dubai South",
+                "Town Square",
+                "Dubailand"
+            ],
+            "languages": [
+                "English",
+                "Hindi",
+                "Urdu",
+                "Tagalog"
+            ],
+            "yearsInBusiness": 6,
+            "rating": 4.6,
+            "totalDeals": 290,
+            "activeProjects": 22,
+            "developers": [
+                "Danube",
+                "Samana",
+                "MAG",
+                "Vincitore"
+            ],
+            "verified": true,
+            "phone": "+971 50 567 8901",
+            "email": "info@horizonadvisors.ae",
+            "website": "www.horizonadvisors.ae"
+        }
+    ]
+}

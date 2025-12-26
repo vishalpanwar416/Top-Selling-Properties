@@ -19,22 +19,16 @@ import agentsData from '../data/agents.json';
 import agenciesData from '../data/agencies.json';
 import ContactActions from '../components/ContactActions';
 import LikeButton from '../components/LikeButton';
+import PhotoGalleryGrid from '../components/PhotoGalleryGrid';
 
 const { width, height } = Dimensions.get('window');
-const PHOTO_HEIGHT = width * 0.75;
-const INITIAL_SHEET_POSITION = height * 0.70;
 
 const PropertyDetails = ({ route, navigation }) => {
     const { property } = route.params || {};
     const insets = useSafeAreaInsets();
     const [showFullDescription, setShowFullDescription] = useState(false);
-    const [isPhotoScrolling, setIsPhotoScrolling] = useState(false);
-    const [isContentScrolling, setIsContentScrolling] = useState(false);
-    const [contentScrollPosition, setContentScrollPosition] = useState(0);
-    const [isInPhotoArea, setIsInPhotoArea] = useState(true);
-    const photoScrollRef = useRef(null);
-    const contentScrollRef = useRef(null);
-    const contentScrollY = useRef(new Animated.Value(0)).current;
+    const scrollViewRef = useRef(null);
+    const scrollY = useRef(new Animated.Value(0)).current;
 
     if (!property) {
         return (
@@ -44,8 +38,8 @@ const PropertyDetails = ({ route, navigation }) => {
         );
     }
 
-    const images = property.images && property.images.length > 0 
-        ? property.images 
+    const images = property.images && property.images.length > 0
+        ? property.images
         : [
             'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
             'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
@@ -73,7 +67,6 @@ const PropertyDetails = ({ route, navigation }) => {
     const formatPrice = (price) => {
         return `AED  ${price?.toLocaleString() || 'N/A'}`;
     };
-
 
     const handleShare = () => {
         // Share functionality
@@ -114,132 +107,40 @@ const PropertyDetails = ({ route, navigation }) => {
         ? property.amenities.map((a, i) => ({ name: a, icon: amenitiesWithIcons[i % amenitiesWithIcons.length].icon }))
         : amenitiesWithIcons;
 
-    // Calculate total photos height
-    const totalPhotosHeight = images.length * PHOTO_HEIGHT;
-
-    // Handle photo scroll begin - disable content scrolling
-    const handlePhotoScrollBegin = () => {
-        setIsPhotoScrolling(true);
-        if (contentScrollRef.current) {
-            contentScrollRef.current.setNativeProps({ scrollEnabled: false });
-        }
-    };
-
-    // Handle photo scroll end - enable content scrolling
-    const handlePhotoScrollEnd = () => {
-        setIsPhotoScrolling(false);
-        if (contentScrollRef.current) {
-            contentScrollRef.current.setNativeProps({ scrollEnabled: true });
-        }
-    };
-
-    // Handle content scroll begin - disable photo scrolling
-    const handleContentScrollBegin = () => {
-        setIsContentScrolling(true);
-        if (photoScrollRef.current) {
-            photoScrollRef.current.setNativeProps({ scrollEnabled: false });
-        }
-    };
-
-    // Handle content scroll end - enable photo scrolling
-    const handleContentScrollEnd = () => {
-        setIsContentScrolling(false);
-        if (photoScrollRef.current) {
-            photoScrollRef.current.setNativeProps({ scrollEnabled: true });
-        }
-    };
-
-    // Handle content scroll - update animated value and track position
-    const handleContentScroll = (event) => {
-        const offsetY = event.nativeEvent.contentOffset.y;
-        contentScrollY.setValue(offsetY);
-        setContentScrollPosition(offsetY);
-        // Update whether we're in photo area
-        setIsInPhotoArea(offsetY < INITIAL_SHEET_POSITION - 10);
-    };
-
-    // Combined scroll handler for Animated.event
-    const onContentScroll = Animated.event(
-        [{ nativeEvent: { contentOffset: { y: contentScrollY } } }],
-        { 
-            useNativeDriver: true,
-            listener: handleContentScroll
-        }
+    // Handle scroll for animated header effects
+    const handleScroll = Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: false }
     );
+
+    // Header background opacity based on scroll
+    const headerBackgroundOpacity = scrollY.interpolate({
+        inputRange: [0, 150],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+    });
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="dark-content" />
 
-            {/* Background Photos - Full screen scrollable */}
-            <View style={styles.photosBackground}>
-                <ScrollView
-                    ref={photoScrollRef}
-                    showsVerticalScrollIndicator={true}
-                    style={styles.photosScrollView}
-                    contentContainerStyle={styles.photosContentContainer}
-                    scrollEnabled={!isContentScrolling}
-                    nestedScrollEnabled={true}
-                    indicatorStyle="white"
-                    scrollEventThrottle={16}
-                    onScrollBeginDrag={handlePhotoScrollBegin}
-                    onScrollEndDrag={handlePhotoScrollEnd}
-                    onMomentumScrollBegin={handlePhotoScrollBegin}
-                    onMomentumScrollEnd={handlePhotoScrollEnd}
-                >
-                    {images.map((image, index) => (
-                        <View key={index} style={styles.photoWrapper}>
-                            <Image
-                                source={{ uri: image }}
-                                style={styles.photo}
-                                resizeMode="cover"
-                            />
-                            {/* Photo counter badge */}
-                            <View style={styles.photoCounterBadge}>
-                                <Ionicons name="images-outline" size={14} color={colors.white} />
-                                <Text style={styles.photoCounterText}>{index + 1} / {images.length}</Text>
-                            </View>
-                        </View>
-                    ))}
-                </ScrollView>
-                
-                {/* Scroll hint indicator */}
-                <View style={styles.scrollHintContainer}>
-                    <View style={styles.scrollHint}>
-                        <Ionicons name="chevron-down" size={16} color={colors.white} />
-                        <Text style={styles.scrollHintText}>Scroll for more photos</Text>
-                        <Ionicons name="chevron-down" size={16} color={colors.white} />
-                    </View>
+            {/* Main ScrollView with Photo Gallery and Content */}
+            <ScrollView
+                ref={scrollViewRef}
+                style={styles.scrollView}
+                showsVerticalScrollIndicator={false}
+                bounces={true}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                contentContainerStyle={styles.scrollViewContent}
+            >
+                {/* Photo Gallery Grid - at the top */}
+                <View style={[styles.galleryContainer, { paddingTop: insets.top + 60 }]}>
+                    <PhotoGalleryGrid images={images} />
                 </View>
-            </View>
 
-            {/* Content Sheet Overlay - Always on top, full screen coverage */}
-            <View style={styles.contentWrapper} pointerEvents="box-none">
-                <Animated.ScrollView
-                    ref={contentScrollRef}
-                    style={styles.contentScrollView}
-                    showsVerticalScrollIndicator={false}
-                    bounces={true}
-                    scrollEnabled={!isPhotoScrolling}
-                    onScroll={onContentScroll}
-                    onScrollBeginDrag={handleContentScrollBegin}
-                    onScrollEndDrag={handleContentScrollEnd}
-                    onMomentumScrollBegin={handleContentScrollBegin}
-                    onMomentumScrollEnd={handleContentScrollEnd}
-                    scrollEventThrottle={16}
-                    contentContainerStyle={styles.contentScrollContainer}
-                >
-                {/* Transparent spacer - shows photos behind initially, allows content to scroll over photos */}
-                <View 
-                    style={[styles.photosSpacer, { height: INITIAL_SHEET_POSITION }]} 
-                    pointerEvents="none" 
-                />
-                
-                {/* Content Sheet - white overlay on top, captures touches only in this area */}
-                <View style={styles.contentSheet} pointerEvents="auto">
-                    {/* Drag Handle */}
-                    <View style={styles.dragHandle} />
-
+                {/* Content Section */}
+                <View style={styles.contentSheet}>
                     {/* Price Row */}
                     <View style={styles.priceRow}>
                         <Text style={styles.price}>{formatPrice(property.price)}</Text>
@@ -591,16 +492,7 @@ const PropertyDetails = ({ route, navigation }) => {
                     {/* Bottom Spacing for fixed action buttons */}
                     <View style={{ height: 100 }} />
                 </View>
-            </Animated.ScrollView>
-            
-            {/* Touch interceptor for photo area - only blocks when scroll is at top (in photo area) */}
-            {isInPhotoArea && contentScrollPosition < 10 && (
-                <View 
-                    style={[styles.photoTouchArea, { height: INITIAL_SHEET_POSITION }]} 
-                    pointerEvents="box-none"
-                />
-            )}
-            </View>
+            </ScrollView>
 
             {/* Floating Header Buttons */}
             <View style={[styles.floatingHeader, { top: insets.top + 10 }]}>
@@ -640,111 +532,26 @@ const PropertyDetails = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: colors.background,
     },
-    photosBackground: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: height,
-        zIndex: 1,
-    },
-    photosScrollView: {
+    scrollView: {
         flex: 1,
     },
-    photosContentContainer: {
-        paddingBottom: 20,
-    },
-    photoWrapper: {
-        width: width,
-        height: PHOTO_HEIGHT,
-        position: 'relative',
-    },
-    photo: {
-        width: '100%',
-        height: '100%',
-    },
-    photoCounterBadge: {
-        position: 'absolute',
-        bottom: 16,
-        right: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 16,
-    },
-    photoCounterText: {
-        color: colors.white,
-        fontSize: 14,
-        fontFamily: 'Lato_400Regular',
-        marginLeft: 6,
-    },
-    scrollHintContainer: {
-        position: 'absolute',
-        bottom: height - INITIAL_SHEET_POSITION + 20,
-        left: 0,
-        right: 0,
-        alignItems: 'center',
-        zIndex: 5,
-    },
-    scrollHint: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        paddingHorizontal: 14,
-        paddingVertical: 6,
-        borderRadius: 20,
-    },
-    scrollHintText: {
-        color: colors.white,
-        fontSize: 11,
-        fontFamily: 'Lato_400Regular',
-        marginHorizontal: 6,
-    },
-    contentWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 10,
-    },
-    contentScrollView: {
-        flex: 1,
-    },
-    contentScrollContainer: {
+    scrollViewContent: {
         flexGrow: 1,
     },
-    photosSpacer: {
-        backgroundColor: 'transparent',
-    },
-    photoTouchArea: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 12,
-        backgroundColor: 'transparent',
+    galleryContainer: {
+        paddingHorizontal: 12,
+        paddingBottom: 16,
+        backgroundColor: colors.background,
     },
     contentSheet: {
         backgroundColor: colors.white,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         paddingHorizontal: 20,
-        paddingTop: 12,
+        paddingTop: 20,
         minHeight: height,
-    },
-    dragHandle: {
-        width: 40,
-        height: 4,
-        backgroundColor: '#D0D0D0',
-        borderRadius: 2,
-        alignSelf: 'center',
-        marginBottom: 16,
     },
     priceRow: {
         flexDirection: 'row',

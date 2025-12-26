@@ -46,6 +46,7 @@ const HomeStack = () => {
                 }}
             />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
+            <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
             <Stack.Screen name="PostProperty" component={PostPropertyScreen} />

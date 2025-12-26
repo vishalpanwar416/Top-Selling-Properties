@@ -9,6 +9,7 @@ import NewProjectCard from '../components/NewProjectCard';
 import CityPropertiesModal from '../components/CityPropertiesModal';
 import colors from '../theme/colors';
 import propertiesData from '../data/properties.json';
+import projectsData from '../data/projects.json';
 import categoriesData from '../data/categories.json';
 
 const propertyCategories = categoriesData.propertyCategories;
@@ -23,6 +24,7 @@ const HomeScreen = ({ navigation }) => {
     const [activeType, setActiveType] = useState('Rent');
     const [activeLocation, setActiveLocation] = useState('Dubai');
     const [properties, setProperties] = useState(propertiesData.properties);
+    const [projects, setProjects] = useState(projectsData.projects);
     const [isSticky, setIsSticky] = useState(false);
     const [showCityModal, setShowCityModal] = useState(false);
 
@@ -56,8 +58,24 @@ const HomeScreen = ({ navigation }) => {
         );
     };
 
+    // Helper function to check if project matches location
+    const matchesProjectLocation = (project, location) => {
+        if (!location) return true;
+        return (
+            (project.city && project.city.toLowerCase() === location.toLowerCase()) ||
+            (project.location && project.location.toLowerCase().includes(location.toLowerCase()))
+        );
+    };
+
+    // Filter projects by location
+    const filteredProjects = projects.filter(project => matchesProjectLocation(project, activeLocation));
+
     const handlePropertyPress = (property) => {
         navigation.navigate('PropertyDetails', { property });
+    };
+
+    const handleProjectPress = (project) => {
+        navigation.navigate('ProjectDetail', { project });
     };
 
     const handleScroll = (event) => {
@@ -198,9 +216,7 @@ const HomeScreen = ({ navigation }) => {
 
                         {/* Horizontal Project Cards - Filter by active location */}
                         <FlatList
-                            data={filteredProperties
-                                .filter(prop => matchesLocation(prop, activeLocation))
-                                .slice(0, 5)}
+                            data={filteredProjects.slice(0, 5)}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -209,9 +225,14 @@ const HomeScreen = ({ navigation }) => {
                             renderItem={({ item }) => (
                                 <NewProjectCard
                                     project={item}
-                                    onPress={() => handlePropertyPress(item)}
+                                    onPress={() => handleProjectPress(item)}
                                 />
                             )}
+                            ListEmptyComponent={
+                                <View style={styles.emptyProjectsContainer}>
+                                    <Text style={styles.emptyProjectsText}>No projects in {activeLocation}</Text>
+                                </View>
+                            }
                         />
 
                         {/* View All Button */}
@@ -229,7 +250,7 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.featuredSection}>
                         <View style={styles.propertiesSectionHeader}>
                             <Text style={styles.propertiesSectionTitle}>Featured Properties</Text>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 style={styles.seeAllButton}
                                 onPress={() => navigation.navigate('Properties')}
                                 activeOpacity={0.8}
@@ -480,6 +501,20 @@ const styles = StyleSheet.create({
     propertyCardsContainer: {
         paddingHorizontal: 20,
         paddingBottom: 12,
+    },
+    emptyProjectsContainer: {
+        width: 280,
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 16,
+        marginLeft: 20,
+    },
+    emptyProjectsText: {
+        color: 'rgba(255,255,255,0.7)',
+        fontSize: 14,
+        fontFamily: 'Lato_400Regular',
     },
 });
 

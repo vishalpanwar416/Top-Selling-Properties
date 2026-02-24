@@ -51,20 +51,17 @@ const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
 
     const formatPrice = (price) => {
         if (!price) return 'Price on Request';
-        if (price >= 1000000) {
-            return `AED ${(price / 1000000).toFixed(1)}M`;
-        }
-        if (price >= 1000) {
-            return `AED ${(price / 1000).toFixed(0)}K`;
-        }
-        return `AED ${price.toLocaleString()}`;
+        if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+        if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+        return `₹ ${price.toLocaleString('en-IN')}`;
     };
 
-    const getStatusColor = () => {
-        if (project.completion === 'Ready' || project.status === 'Ready to Move') {
-            return ['#10B981', '#059669'];
+    const getStatusStyle = () => {
+        const isReady = project.completion === 'Ready' || project.status === 'Ready to Move';
+        if (isReady) {
+            return { bg: ['#059669', '#10B981'], text: colors.white }; // Green for Ready
         }
-        return [colors.maroon, colors.primary];
+        return { bg: ['#D97706', '#F59E0B'], text: colors.white }; // Orange/amber for Off-Plan
     };
 
     const getStatusText = () => {
@@ -113,12 +110,12 @@ const NewProjectCard = ({ project, onPress, fullWidth = false }) => {
                 {/* Top Row */}
                 <View style={styles.topRow}>
                     <LinearGradient
-                        colors={getStatusColor()}
+                        colors={getStatusStyle().bg}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
                         style={styles.statusBadge}
                     >
-                        <Text style={styles.statusBadgeText}>{getStatusText()}</Text>
+                        <Text style={[styles.statusBadgeText, { color: getStatusStyle().text }]}>{getStatusText()}</Text>
                     </LinearGradient>
                     <View style={{ flex: 1 }} />
                     <LikeButton size={16} buttonStyle={styles.favoriteButton} />
@@ -257,7 +254,6 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     statusBadgeText: {
-        color: colors.white,
         fontSize: 9,
         fontFamily: 'Lato_900Black',
         letterSpacing: 0.6,

@@ -20,11 +20,12 @@ The `WorkletsPackage` class exists in `node_modules/react-native-worklets/androi
 ## Verification Steps
 
 1. ✅ WorkletsPackage.java exists in node_modules
-2. ❓ Check if module is in settings.gradle (autolinking should handle this)
+2. ✅ Manually added WorkletsPackage to MainApplication.kt (since autolinking failed)
 3. ❓ Check if classes are compiled into APK
 4. ❓ Check if autolinking includes react-native-worklets
 
 ## Solution
 
-The module needs to be explicitly included in the build. Since it's a dependency of react-native-reanimated, it should be autolinked, but there may be an issue with Expo's autolinking for this specific module.
+The module needs to be explicitly included in the build. I have manually added `WorkletsPackage()` to the `getPackages()` method in `MainApplication.kt` to ensure it is included in the Android build.
+
 

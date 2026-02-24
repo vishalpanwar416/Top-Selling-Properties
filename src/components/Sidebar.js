@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Platform, Image } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -158,6 +158,13 @@ const Sidebar = (props) => {
                 end={{ x: 1, y: 1 }}
                 style={[styles.header, { paddingTop: insets.top + 12 }]}
             >
+                <View style={styles.headerLogoContainer}>
+                    <Image
+                        source={require('../../assets/logo.jpeg')}
+                        style={styles.headerLogo}
+                        resizeMode="contain"
+                    />
+                </View>
                 <View style={styles.profileContainer}>
                     <View style={styles.avatarContainer}>
                         <LinearGradient
@@ -185,60 +192,21 @@ const Sidebar = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 {renderMenuItem(
-                    'Post Property via Whatsapp',
-                    'whatsapp',
-                    'FontAwesome5',
-                    false,
-                    '#25D366',
-                    () => handleCardPress('post-whatsapp')
-                )}
-
-                {/* Manage Your Property Section */}
-                {renderSectionHeader('MANAGE YOUR PROPERTY')}
-                
-                {renderMenuItem(
-                    'View Responses',
-                    'message-text-outline',
-                    'MaterialCommunityIcons',
-                    false,
-                    colors.info,
-                    () => handleCardPress('view-responses')
-                )}
-                
-                {renderMenuItem(
-                    'Manage/ Edit your listings',
-                    'office-building',
-                    'MaterialCommunityIcons',
-                    false,
-                    colors.primary,
-                    () => handleCardPress('manage-listings')
-                )}
-                
-                {renderMenuItem(
-                    'Self verify your property',
-                    'shield-check',
-                    'MaterialCommunityIcons',
-                    false,
-                    colors.teal,
-                    () => handleCardPress('self-verify')
-                )}
-                
-                {renderMenuItem(
-                    'Upload Media',
-                    'upload',
-                    'MaterialCommunityIcons',
-                    true,
-                    colors.warning,
-                    () => handleCardPress('upload-media')
-                )}
-                
-                {renderMenuItem(
                     'Homepage',
                     'home',
                     'Ionicons',
                     false,
                     colors.primary,
                     () => handleNavigation('Home')
+                )}
+
+                {renderMenuItem(
+                    'Projects',
+                    'business',
+                    'Ionicons',
+                    false,
+                    colors.primary,
+                    () => handleNavigation('Projects')
                 )}
 
                 {/* Plans and Services Section */}
@@ -266,7 +234,7 @@ const Sidebar = (props) => {
 
             <View style={styles.footer}>
                 <View style={styles.divider} />
-                <Text style={styles.footerText}>© 2024 Top Selling Properties</Text>
+                <Text style={styles.footerText}>© 2024 Credai</Text>
                 <Text style={styles.versionText}>Version 1.0.0</Text>
             </View>
 
@@ -343,6 +311,13 @@ const styles = StyleSheet.create({
     header: {
         paddingHorizontal: 16,
         paddingBottom: 20,
+    },
+    headerLogoContainer: {
+        marginBottom: 16,
+    },
+    headerLogo: {
+        width: 160,
+        height: 56,
     },
     profileContainer: {
         flexDirection: 'row',

@@ -14,14 +14,14 @@ const FavoritesScreen = ({ navigation }) => {
                 </View>
                 <Text style={styles.title}>No Favorites Yet</Text>
                 <Text style={styles.subtitle}>
-                    Start exploring properties and save your favorites to see them here
+                    Start exploring projects and save your favorites to see them here
                 </Text>
                 <TouchableOpacity 
                     style={styles.exploreButton}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('MainTabs', { screen: 'Projects' })}
                     activeOpacity={0.8}
                 >
-                    <Text style={styles.exploreButtonText}>Explore Properties</Text>
+                    <Text style={styles.exploreButtonText}>Explore Projects</Text>
                 </TouchableOpacity>
             </View>
         </View>

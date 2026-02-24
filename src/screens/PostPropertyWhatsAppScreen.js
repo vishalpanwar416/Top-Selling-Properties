@@ -9,7 +9,7 @@ const PostPropertyWhatsAppScreen = ({ navigation }) => {
 
     const handleWhatsAppPress = () => {
         // Replace with your WhatsApp business number
-        const phoneNumber = '971501234567'; // UAE format
+        const phoneNumber = '919876543210'; // India format
         const message = 'Hello, I would like to post my property.';
         const url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
         

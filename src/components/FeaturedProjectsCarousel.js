@@ -16,9 +16,9 @@ import LikeButton from './LikeButton';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const COLORS = {
-    primary: '#B91C1C',
-    primaryDark: '#991B1B',
-    primaryLight: 'rgba(185, 28, 28, 0.08)',
+    primary: '#1B5E20',
+    primaryDark: '#1B5E20',
+    primaryLight: 'rgba(27, 94, 32, 0.08)',
     secondary: '#1E293B',
     accent: '#F59E0B',
     success: '#10B981',
@@ -28,7 +28,7 @@ const COLORS = {
     textSecondary: '#64748B',
     textMuted: '#94A3B8',
     border: '#E2E8F0',
-    gradient1: ['#B91C1C', '#DC2626', '#EF4444'],
+    gradient1: ['#1B5E20', '#2E7D32', '#43A047'],
     gradient2: ['#1E293B', '#334155', '#475569'],
     gradient3: ['#0F172A', '#1E293B'],
     glassBg: 'rgba(255, 255, 255, 0.85)',
@@ -37,10 +37,9 @@ const COLORS = {
 
 const formatPrice = (price) => {
     if (!price) return 'Price on Request';
-    if (price >= 1000000) {
-        return `AED ${(price / 1000000).toFixed(1)}M`;
-    }
-    return `AED ${(price / 1000).toFixed(0)}K`;
+    if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+    if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+    return `₹ ${price.toLocaleString('en-IN')}`;
 };
 
 const FeaturedProjectsCarousel = ({ projects, onProjectPress, scrollY, autoRotateInterval = 5000 }) => {
@@ -259,9 +258,10 @@ const ProjectSlide = React.memo(({ project, onPress, scale, index }) => {
                                 style={[
                                     styles.statusDot,
                                     project.completion === 'Ready' && styles.statusDotReady,
+                                    project.completion !== 'Ready' && styles.statusDotOffPlan,
                                 ]}
                             />
-                            <Text style={styles.statusText}>{project.completion}</Text>
+                            <Text style={styles.statusText}>{project.completion || 'Off-Plan'}</Text>
                         </View>
                     </View>
 
@@ -414,7 +414,10 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
     },
     statusDotReady: {
-        backgroundColor: COLORS.success,
+        backgroundColor: '#059669',
+    },
+    statusDotOffPlan: {
+        backgroundColor: '#F59E0B',
     },
     statusText: {
         color: '#fff',

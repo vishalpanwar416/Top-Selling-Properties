@@ -14,26 +14,22 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import PropertyCard from '../components/PropertyCard';
+import NewProjectCard from '../components/NewProjectCard';
 import SearchBar from '../components/SearchBar';
 import colors from '../theme/colors';
-import propertiesData from '../data/properties.json';
+import projectsData from '../data/projects.json';
 
 const { width } = Dimensions.get('window');
 
 // Filter options
-const cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'];
-const locations = ['Any', 'Downtown', 'Marina', 'JBR', 'Business Bay', 'Palm Jumeirah', 'Dubai Hills', 'Arabian Ranches'];
-const propertyTypes = ['All in Residential', 'Apartment', 'Villa', 'Townhouse', 'Penthouse', 'Duplex', 'All in Commercial', 'Office', 'Retail', 'Warehouse', 'Shop'];
-const priceRanges = ['Any', '< 500K', '500K - 1M', '1M - 2M', '2M - 5M', '5M+'];
-const bedsOptions = ['Any', 'Studio', '1', '2', '3', '4', '5', '6', '7+'];
+const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata'];
 
-// Quick suggestions
+// Quick suggestions - projects
 const quickSuggestions = [
-    { id: '1', text: 'Apartments in Dubai', icon: 'business-outline' },
-    { id: '2', text: 'Villas for Sale', icon: 'home-outline' },
-    { id: '3', text: 'Properties under 1M', icon: 'cash-outline' },
-    { id: '4', text: 'Downtown Dubai', icon: 'location-outline' },
+    { id: '1', text: 'Off-Plan Mumbai', icon: 'business-outline' },
+    { id: '2', text: 'Ready Projects', icon: 'home-outline' },
+    { id: '3', text: 'New Launch', icon: 'rocket-outline' },
+    { id: '4', text: 'Mumbai', icon: 'location-outline' },
 ];
 
 const SearchScreen = (props) => {
@@ -42,30 +38,21 @@ const SearchScreen = (props) => {
 
     const insets = useSafeAreaInsets();
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredProperties, setFilteredProperties] = useState(
-        Array.isArray(propertiesData?.properties) ? propertiesData.properties : []
+    const [filteredProjects, setFilteredProjects] = useState(
+        Array.isArray(projectsData?.projects) ? projectsData.projects : []
     );
-    const [recentSearches] = useState(['Dubai Marina', '2 Bedroom Apartment', 'Villa in Palm Jumeirah']);
+    const [recentSearches] = useState(['Mumbai', 'Off-Plan Bangalore', 'Ready to Move']);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(30)).current;
     const modalAnimation = useRef(new Animated.Value(0)).current;
 
     // Filter states
-    const [selectedCity, setSelectedCity] = useState('Dubai');
-    const [selectedLocation, setSelectedLocation] = useState('');
-    const [selectedPropertyType, setSelectedPropertyType] = useState('All in Residential');
-    const [selectedPriceRange, setSelectedPriceRange] = useState('Any');
-    const [selectedBeds, setSelectedBeds] = useState('Any');
+    const [selectedCity, setSelectedCity] = useState('Mumbai');
 
     // Modal states
     const [showCityModal, setShowCityModal] = useState(false);
-    const [showLocationModal, setShowLocationModal] = useState(false);
-    const [showPropertyTypeModal, setShowPropertyTypeModal] = useState(false);
-    const [showPriceModal, setShowPriceModal] = useState(false);
-    const [showBedsModal, setShowBedsModal] = useState(false);
 
-    const hasActiveFilters = selectedCity !== 'Dubai' || selectedLocation || 
-        selectedPropertyType !== 'All in Residential' || selectedPriceRange !== 'Any' || selectedBeds !== 'Any';
+    const hasActiveFilters = selectedCity !== 'Mumbai';
 
     useEffect(() => {
         Animated.parallel([
@@ -83,77 +70,33 @@ const SearchScreen = (props) => {
     }, []);
 
     useEffect(() => {
-        const allProperties = Array.isArray(propertiesData?.properties) ? propertiesData.properties : [];
-        let filtered = allProperties;
+        const allProjects = Array.isArray(projectsData?.projects) ? projectsData.projects : [];
+        let filtered = allProjects;
 
         // Search filter
         if (searchQuery.trim() !== '') {
-            filtered = filtered.filter(property =>
-                (property.title && property.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (property.location && property.location.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (property.type && property.type.toLowerCase().includes(searchQuery.toLowerCase()))
+            filtered = filtered.filter(project =>
+                (project.name && project.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.location && project.location.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.city && project.city.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (project.developer && project.developer.toLowerCase().includes(searchQuery.toLowerCase()))
             );
         }
 
         // City filter
         if (selectedCity && selectedCity !== 'Any') {
-            filtered = filtered.filter(property =>
-                (property.city && property.city.toLowerCase() === selectedCity.toLowerCase()) ||
-                (property.location && property.location.toLowerCase().includes(selectedCity.toLowerCase()))
+            filtered = filtered.filter(project =>
+                (project.city && project.city.toLowerCase() === selectedCity.toLowerCase()) ||
+                (project.location && project.location.toLowerCase().includes(selectedCity.toLowerCase()))
             );
         }
 
-        // Location filter
-        if (selectedLocation && selectedLocation !== 'Any') {
-            filtered = filtered.filter(property =>
-                property.location && property.location.toLowerCase().includes(selectedLocation.toLowerCase())
-            );
-        }
+        setFilteredProjects(filtered);
+    }, [searchQuery, selectedCity]);
 
-        // Property type filter
-        if (selectedPropertyType && selectedPropertyType !== 'All in Residential' && selectedPropertyType !== 'All in Commercial') {
-            filtered = filtered.filter(property =>
-                property.type && property.type.toLowerCase().includes(selectedPropertyType.toLowerCase())
-            );
-        }
-
-        // Price range filter
-        if (selectedPriceRange && selectedPriceRange !== 'Any') {
-            filtered = filtered.filter(property => {
-                const price = property.price || 0;
-                switch (selectedPriceRange) {
-                    case '< 500K':
-                        return price < 500000;
-                    case '500K - 1M':
-                        return price >= 500000 && price < 1000000;
-                    case '1M - 2M':
-                        return price >= 1000000 && price < 2000000;
-                    case '2M - 5M':
-                        return price >= 2000000 && price < 5000000;
-                    case '5M+':
-                        return price >= 5000000;
-                    default:
-                        return true;
-                }
-            });
-        }
-
-        // Beds filter
-        if (selectedBeds && selectedBeds !== 'Any') {
-            filtered = filtered.filter(property => {
-                const beds = property.bedrooms || 0;
-                if (selectedBeds === 'Studio') return beds === 0;
-                if (selectedBeds === '7+') return beds >= 7;
-                return beds === parseInt(selectedBeds);
-            });
-        }
-
-        setFilteredProperties(filtered);
-    }, [searchQuery, selectedCity, selectedLocation, selectedPropertyType, selectedPriceRange, selectedBeds]);
-
-    const handlePropertyPress = (property) => {
+    const handleProjectPress = (project) => {
         if (navigation?.navigate) {
-            navigation.navigate('PropertyDetails', { property });
+            navigation.navigate('ProjectDetail', { project });
         }
     };
 
@@ -174,12 +117,9 @@ const SearchScreen = (props) => {
     };
 
     const clearAllFilters = () => {
-        setSelectedCity('Dubai');
-        setSelectedLocation('');
-        setSelectedPropertyType('All in Residential');
-        setSelectedPriceRange('Any');
-        setSelectedBeds('Any');
+        setSelectedCity('Mumbai');
     };
+
 
     const openModal = (setter) => {
         modalAnimation.setValue(0);
@@ -278,7 +218,7 @@ const SearchScreen = (props) => {
     );
 
     const showEmptyState = searchQuery.trim() === '' && !hasActiveFilters;
-    const showNoResults = (searchQuery.trim() !== '' || hasActiveFilters) && filteredProperties.length === 0;
+    const showNoResults = (searchQuery.trim() !== '' || hasActiveFilters) && filteredProjects.length === 0;
 
     return (
         <Animated.View
@@ -301,7 +241,7 @@ const SearchScreen = (props) => {
                 </TouchableOpacity>
 
                 <SearchBar
-                    placeholder="Search properties, locations..."
+                    placeholder="Search projects, locations..."
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     editable={true}
@@ -325,36 +265,8 @@ const SearchScreen = (props) => {
                         'City',
                         selectedCity,
                         () => openModal(setShowCityModal),
-                        selectedCity !== 'Dubai',
+                        selectedCity !== 'Mumbai',
                         'location-outline'
-                    )}
-                    {renderFilterChip(
-                        'Location',
-                        selectedLocation || 'Any',
-                        () => openModal(setShowLocationModal),
-                        selectedLocation !== '' && selectedLocation !== 'Any',
-                        'map-outline'
-                    )}
-                    {renderFilterChip(
-                        'Type',
-                        selectedPropertyType.length > 15 ? selectedPropertyType.substring(0, 15) + '...' : selectedPropertyType,
-                        () => openModal(setShowPropertyTypeModal),
-                        selectedPropertyType !== 'All in Residential' && selectedPropertyType !== 'All in Commercial',
-                        'home-outline'
-                    )}
-                    {renderFilterChip(
-                        'Price',
-                        selectedPriceRange,
-                        () => openModal(setShowPriceModal),
-                        selectedPriceRange !== 'Any',
-                        'cash-outline'
-                    )}
-                    {renderFilterChip(
-                        'Beds',
-                        selectedBeds,
-                        () => openModal(setShowBedsModal),
-                        selectedBeds !== 'Any',
-                        'bed-outline'
                     )}
                     {hasActiveFilters && (
                         <TouchableOpacity
@@ -471,7 +383,7 @@ const SearchScreen = (props) => {
                 <View style={styles.resultsContainer}>
                     <View style={styles.resultsHeader}>
                         <Text style={styles.resultsCount}>
-                            {filteredProperties.length} {filteredProperties.length === 1 ? 'Property' : 'Properties'} Found
+                            {filteredProjects.length} {filteredProjects.length === 1 ? 'Project' : 'Projects'} Found
                         </Text>
                         {hasActiveFilters && (
                             <TouchableOpacity
@@ -483,14 +395,13 @@ const SearchScreen = (props) => {
                         )}
                     </View>
                     <FlatList
-                        data={filteredProperties}
+                        data={filteredProjects}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
                             <View style={styles.cardWrapper}>
-                                <PropertyCard
-                                    property={item}
-                                    onPress={() => handlePropertyPress(item)}
-                                    fullWidth={true}
+                                <NewProjectCard
+                                    project={item}
+                                    onPress={() => handleProjectPress(item)}
                                 />
                             </View>
                         )}
@@ -531,131 +442,6 @@ const SearchScreen = (props) => {
                 'location-outline'
             )}
 
-            {/* Location Modal */}
-            {renderBottomSheet(
-                showLocationModal,
-                () => closeModal(setShowLocationModal),
-                'Select Location',
-                <ScrollView style={styles.modalContent}>
-                    {locations.map((location) => (
-                        <TouchableOpacity
-                            key={location}
-                            style={[
-                                styles.modalOption,
-                                (selectedLocation === location || (!selectedLocation && location === 'Any')) && styles.activeModalOption
-                            ]}
-                            onPress={() => {
-                                setSelectedLocation(location === 'Any' ? '' : location);
-                                closeModal(setShowLocationModal);
-                            }}
-                        >
-                            <Text style={[
-                                styles.modalOptionText,
-                                (selectedLocation === location || (!selectedLocation && location === 'Any')) && styles.activeModalOptionText
-                            ]}>{location}</Text>
-                            {(selectedLocation === location || (!selectedLocation && location === 'Any')) && (
-                                <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                            )}
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>,
-                'map-outline'
-            )}
-
-            {/* Property Type Modal */}
-            {renderBottomSheet(
-                showPropertyTypeModal,
-                () => closeModal(setShowPropertyTypeModal),
-                'Property Type',
-                <ScrollView style={styles.modalContent}>
-                    {propertyTypes.map((type) => (
-                        <TouchableOpacity
-                            key={type}
-                            style={[
-                                styles.modalOption,
-                                selectedPropertyType === type && styles.activeModalOption
-                            ]}
-                            onPress={() => {
-                                setSelectedPropertyType(type);
-                                closeModal(setShowPropertyTypeModal);
-                            }}
-                        >
-                            <Text style={[
-                                styles.modalOptionText,
-                                selectedPropertyType === type && styles.activeModalOptionText
-                            ]}>{type}</Text>
-                            {selectedPropertyType === type && (
-                                <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                            )}
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>,
-                'home-outline'
-            )}
-
-            {/* Price Range Modal */}
-            {renderBottomSheet(
-                showPriceModal,
-                () => closeModal(setShowPriceModal),
-                'Price Range',
-                <View style={styles.optionsModalContent}>
-                    <View style={styles.optionsGrid}>
-                        {priceRanges.map((range) => (
-                            <TouchableOpacity
-                                key={range}
-                                style={[
-                                    styles.optionPill,
-                                    selectedPriceRange === range && styles.selectedOptionPill
-                                ]}
-                                onPress={() => {
-                                    setSelectedPriceRange(range);
-                                    closeModal(setShowPriceModal);
-                                }}
-                            >
-                                <Text style={[
-                                    styles.optionPillText,
-                                    selectedPriceRange === range && styles.selectedOptionPillText
-                                ]}>
-                                    {range}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>,
-                'cash-outline'
-            )}
-
-            {/* Beds Modal */}
-            {renderBottomSheet(
-                showBedsModal,
-                () => closeModal(setShowBedsModal),
-                'Number of Beds',
-                <View style={styles.optionsModalContent}>
-                    <View style={styles.optionsGrid}>
-                        {bedsOptions.map((beds) => (
-                            <TouchableOpacity
-                                key={beds}
-                                style={[
-                                    styles.optionPill,
-                                    selectedBeds === beds && styles.selectedOptionPill
-                                ]}
-                                onPress={() => {
-                                    setSelectedBeds(beds);
-                                    closeModal(setShowBedsModal);
-                                }}
-                            >
-                                <Text style={[
-                                    styles.optionPillText,
-                                    selectedBeds === beds && styles.selectedOptionPillText
-                                ]}>
-                                    {beds === 'Any' ? 'Any' : beds === 'Studio' ? 'Studio' : `${beds} Bed${beds !== '1' ? 's' : ''}`}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>,
-                'bed-outline'
-            )}
         </Animated.View>
     );
 };

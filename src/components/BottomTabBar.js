@@ -29,8 +29,6 @@ const BottomTabBar = ({ state, descriptors, navigation }) => {
         switch (routeName) {
             case 'Home':
                 return 'home';
-            case 'Properties':
-                return 'search';
             case 'Projects':
                 return 'document-text';
             case 'Agents':

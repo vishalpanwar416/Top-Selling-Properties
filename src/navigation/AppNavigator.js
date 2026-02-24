@@ -9,7 +9,6 @@ import FavoritesScreen from '../screens/FavoritesScreen';
 import ContactScreen from '../screens/ContactScreen';
 import SearchScreen from '../screens/SearchScreen';
 import FindMyAgentScreen from '../screens/FindMyAgentScreen';
-import PropertiesScreen from '../screens/PropertiesScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 import ProjectDetailScreen from '../screens/ProjectDetailScreen';
 import AgentsScreen from '../screens/AgentsScreen';
@@ -45,37 +44,11 @@ const HomeStack = () => {
                     animationDuration: 300,
                 }}
             />
-            <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
             <Stack.Screen name="PostProperty" component={PostPropertyScreen} />
             <Stack.Screen name="PostPropertyWhatsApp" component={PostPropertyWhatsAppScreen} />
-        </Stack.Navigator>
-    );
-};
-
-const PropertiesStack = () => {
-    return (
-        <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Stack.Screen name="PropertiesMain" component={PropertiesScreen} />
-            <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
-            <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
-            <Stack.Screen
-                name="Search"
-                component={SearchScreen}
-                options={{
-                    presentation: 'modal',
-                    animationTypeForReplace: 'push',
-                    gestureEnabled: true,
-                    animation: 'slide_from_bottom',
-                    animationDuration: 300,
-                }}
-            />
         </Stack.Navigator>
     );
 };
@@ -137,13 +110,6 @@ const TabNavigator = () => {
                 component={HomeStack}
                 options={{
                     tabBarLabel: 'Home',
-                }}
-            />
-            <Tab.Screen
-                name="Properties"
-                component={PropertiesStack}
-                options={{
-                    tabBarLabel: 'Properties',
                 }}
             />
             <Tab.Screen

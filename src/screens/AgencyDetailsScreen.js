@@ -16,7 +16,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../components/Header';
 import colors from '../theme/colors';
 import agentsData from '../data/agents.json';
-import propertiesData from '../data/properties.json';
 import LikeButton from '../components/LikeButton';
 
 const { width, height } = Dimensions.get('window');
@@ -30,9 +29,6 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
     const [activeTab, setActiveTab] = useState('About');
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showFullServiceAreas, setShowFullServiceAreas] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState('');
-    const [propertyType, setPropertyType] = useState('All');
-    const [currentImageIndex, setCurrentImageIndex] = useState({});
 
     if (!agency) {
         return (
@@ -47,17 +43,7 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
         agent => agent.agencyName === agency.name
     );
 
-    // Get properties from agency agents
-    const agencyProperties = propertiesData.properties.filter(
-        property => {
-            const agent = agentsData.agents.find(a => a.id === property.agentId);
-            return agent && agent.agencyName === agency.name;
-        }
-    );
-
-    const totalProperties = agency.totalListings || agencyProperties.length;
-    const saleProperties = agency.saleListings || agencyProperties.filter(p => p.transactionType === 'Buy').length;
-    const rentProperties = agency.rentListings || agencyProperties.filter(p => p.transactionType === 'Rent').length;
+    const totalListings = agency.totalListings || 0;
 
     const handleCall = () => {
         const phone = agency.phone || '+97141234567';
@@ -128,7 +114,7 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
                         <View style={styles.companyInfo}>
                             <Text style={styles.companyName}>{agency.name}</Text>
                             <TouchableOpacity style={styles.propertyCountButton}>
-                                <Text style={styles.propertyCountText}>{totalProperties} PROPERTIES</Text>
+                                <Text style={styles.propertyCountText}>{totalListings} LISTINGS</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -145,16 +131,6 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
                             About
                         </Text>
                         {activeTab === 'About' && <View style={styles.tabIndicator} />}
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tab, activeTab === 'Properties' && styles.activeTab]}
-                        onPress={() => setActiveTab('Properties')}
-                        activeOpacity={0.7}
-                    >
-                        <Text style={[styles.tabText, activeTab === 'Properties' && styles.activeTabText]}>
-                            Properties
-                        </Text>
-                        {activeTab === 'Properties' && <View style={styles.tabIndicator} />}
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tab, activeTab === 'Agents' && styles.activeTab]}
@@ -192,26 +168,6 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
                             )}
                         </View>
 
-                        {/* Property Listings Summary */}
-                        <View style={styles.propertyListingsContainer}>
-                            <TouchableOpacity
-                                style={styles.propertyListingButton}
-                                onPress={() => setActiveTab('Properties')}
-                                activeOpacity={0.8}
-                            >
-                                <Text style={styles.propertyListingText}>{saleProperties} for Sale</Text>
-                                                            <Ionicons name="chevron-forward" size={20} color={RED_SHADE} />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.propertyListingButton}
-                                onPress={() => setActiveTab('Properties')}
-                                activeOpacity={0.8}
-                            >
-                                <Text style={styles.propertyListingText}>{rentProperties} for Rent</Text>
-                                                            <Ionicons name="chevron-forward" size={20} color={RED_SHADE} />
-                            </TouchableOpacity>
-                        </View>
-
                         {/* Service Areas */}
                         <View style={styles.infoBlock}>
                             <Text style={styles.infoLabel}>Service Areas</Text>
@@ -239,221 +195,6 @@ const AgencyDetailsScreen = ({ route, navigation }) => {
                                     {propertyTypes.join(', ')}
                                 </Text>
                             </View>
-                        )}
-                    </View>
-                )}
-
-                {activeTab === 'Properties' && (
-                    <View style={styles.propertiesContentSection}>
-                        {/* Search and Filter Section */}
-                        <View style={styles.searchFilterSection}>
-                            <View style={styles.locationSearchContainer}>
-                                <Ionicons name="location" size={20} color={colors.textSecondary} style={styles.searchIcon} />
-                                <Text style={styles.locationSearchText}>
-                                    {selectedLocation || 'Select Locations'}
-                                </Text>
-                            </View>
-                            <TouchableOpacity style={styles.filtersButton} activeOpacity={0.8}>
-                                <Ionicons name="filter" size={18} color={colors.white} />
-                                <Text style={styles.filtersButtonText}>Filters</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        {/* Property Type Buttons */}
-                        <View style={styles.propertyTypeContainer}>
-                            {['All', 'Buy', 'Rent'].map((type) => (
-                                <TouchableOpacity
-                                    key={type}
-                                    style={[
-                                        styles.propertyTypeButton,
-                                        propertyType === type && styles.activePropertyTypeButton
-                                    ]}
-                                    onPress={() => setPropertyType(type)}
-                                    activeOpacity={0.8}
-                                >
-                                    <Text style={[
-                                        styles.propertyTypeText,
-                                        propertyType === type && styles.activePropertyTypeText
-                                    ]}>
-                                        {type}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-
-                        {/* Properties List */}
-                        {agencyProperties.length > 0 ? (
-                            <View style={styles.propertiesListContainer}>
-                                {agencyProperties
-                                    .filter(property => {
-                                        if (propertyType === 'All') return true;
-                                        if (propertyType === 'Buy') return property.transactionType === 'Buy';
-                                        if (propertyType === 'Rent') return property.transactionType === 'Rent';
-                                        return true;
-                                    })
-                                    .map((property) => {
-                                        const images = property.images || [];
-                                        const currentIndex = currentImageIndex[property.id] || 0;
-                                        const currentImage = images[currentIndex] || 'https://via.placeholder.com/400';
-
-                                        return (
-                                            <TouchableOpacity
-                                                key={property.id}
-                                                style={styles.propertyListingCard}
-                                                onPress={() => navigation.navigate('PropertyDetails', { property })}
-                                                activeOpacity={0.9}
-                                            >
-                                                {/* Image Container */}
-                                                <View style={styles.propertyImageContainer}>
-                                                    <Image
-                                                        source={{ uri: currentImage }}
-                                                        style={styles.propertyListingImage}
-                                                    />
-                                                    
-                                                    {/* TruCheck Badge */}
-                                                    <View style={styles.truCheckBadge}>
-                                                        <Ionicons name="checkmark-circle" size={16} color={colors.white} />
-                                                        <Text style={styles.truCheckText}>TSPCheck™</Text>
-                                                    </View>
-
-                                                    {/* TruBroker Badge */}
-                                                    <View style={styles.truBrokerImageBadge}>
-                                                        <Image
-                                                            source={{ uri: property.agent?.image || 'https://via.placeholder.com/40' }}
-                                                            style={styles.brokerAvatar}
-                                                        />
-                                                        <View style={styles.truBrokerTextBadge}>
-                                                            <Text style={styles.truBrokerTextSmall}>TSPBroker™</Text>
-                                                        </View>
-                                                    </View>
-
-                                                    {/* Favorite Icon */}
-                                                    <LikeButton
-                                                        size={24}
-                                                        unlikedColor={colors.white}
-                                                        buttonStyle={styles.favoriteButton}
-                                                    />
-
-                                                    {/* Image Navigation */}
-                                                    {images.length > 1 && (
-                                                        <>
-                                                            {currentIndex > 0 && (
-                                                                <TouchableOpacity
-                                                                    style={styles.imageNavButton}
-                                                                    onPress={(e) => {
-                                                                        e.stopPropagation();
-                                                                        setCurrentImageIndex({
-                                                                            ...currentImageIndex,
-                                                                            [property.id]: currentIndex - 1
-                                                                        });
-                                                                    }}
-                                                                >
-                                                                    <Ionicons name="chevron-back" size={24} color={colors.white} />
-                                                                </TouchableOpacity>
-                                                            )}
-                                                            {currentIndex < images.length - 1 && (
-                                                                <TouchableOpacity
-                                                                    style={[styles.imageNavButton, styles.imageNavButtonRight]}
-                                                                    onPress={(e) => {
-                                                                        e.stopPropagation();
-                                                                        setCurrentImageIndex({
-                                                                            ...currentImageIndex,
-                                                                            [property.id]: currentIndex + 1
-                                                                        });
-                                                                    }}
-                                                                >
-                                                                    <Ionicons name="chevron-forward" size={24} color={colors.white} />
-                                                                </TouchableOpacity>
-                                                            )}
-                                                            {/* Pagination Dots */}
-                                                            <View style={styles.paginationDots}>
-                                                                {images.slice(0, 5).map((_, index) => (
-                                                                    <View
-                                                                        key={index}
-                                                                        style={[
-                                                                            styles.paginationDot,
-                                                                            index === currentIndex && styles.paginationDotActive
-                                                                        ]}
-                                                                    />
-                                                                ))}
-                                                            </View>
-                                                        </>
-                                                    )}
-                                                </View>
-
-                                                {/* Property Details */}
-                                                <View style={styles.propertyListingInfo}>
-                                                    <Text style={styles.propertyListingPrice}>
-                                                        AED {property.price?.toLocaleString()}
-                                                    </Text>
-                                                    
-                                                    <View style={styles.propertyDetailsRow}>
-                                                        <View style={styles.propertyDetailItem}>
-                                                            <Ionicons name="bed" size={16} color={colors.textSecondary} />
-                                                            <Text style={styles.propertyDetailText}>{property.bedrooms || 'N/A'}</Text>
-                                                        </View>
-                                                        <View style={styles.propertyDetailItem}>
-                                                            <Ionicons name="water" size={16} color={colors.textSecondary} />
-                                                            <Text style={styles.propertyDetailText}>{property.bathrooms || 'N/A'}</Text>
-                                                        </View>
-                                                        <View style={styles.propertyDetailItem}>
-                                                            <Ionicons name="grid" size={16} color={colors.textSecondary} />
-                                                            <Text style={styles.propertyDetailText}>{property.area || 'N/A'} sqft</Text>
-                                                        </View>
-                                                    </View>
-
-                                                    {property.tags && property.tags.length > 0 && (
-                                                        <Text style={styles.propertyDescription}>
-                                                            {property.tags.slice(0, 3).join(' | ')}
-                                                        </Text>
-                                                    )}
-
-                                                    <Text style={styles.propertyLocation} numberOfLines={1}>
-                                                        {property.location || 'Location not specified'}
-                                                    </Text>
-
-                                                    {/* Contact Buttons */}
-                                                    <View style={styles.propertyContactButtons}>
-                                                        <TouchableOpacity
-                                                            style={styles.propertyContactButton}
-                                                            onPress={(e) => {
-                                                                e.stopPropagation();
-                                                                handleEmail();
-                                                            }}
-                                                            activeOpacity={0.8}
-                                                        >
-                                                            <Ionicons name="mail" size={18} color={RED_SHADE} />
-                                                            <Text style={styles.propertyContactButtonText}>Email</Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity
-                                                            style={styles.propertyContactButton}
-                                                            onPress={(e) => {
-                                                                e.stopPropagation();
-                                                                handleCall();
-                                                            }}
-                                                            activeOpacity={0.8}
-                                                        >
-                                                            <Ionicons name="call" size={18} color={RED_SHADE} />
-                                                            <Text style={styles.propertyContactButtonText}>Call</Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity
-                                                            style={styles.propertyContactButton}
-                                                            onPress={(e) => {
-                                                                e.stopPropagation();
-                                                                handleWhatsApp(property);
-                                                            }}
-                                                            activeOpacity={0.8}
-                                                        >
-                                                            <Ionicons name="logo-whatsapp" size={20} color={RED_SHADE} />
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                </View>
-                                            </TouchableOpacity>
-                                        );
-                                    })}
-                            </View>
-                        ) : (
-                            <Text style={styles.emptyText}>No properties available</Text>
                         )}
                     </View>
                 )}

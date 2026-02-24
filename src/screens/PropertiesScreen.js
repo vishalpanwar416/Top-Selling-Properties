@@ -41,7 +41,7 @@ const commercialTypes = [
     { id: 'shop', name: 'Shop', icon: 'cart-outline' },
 ];
 const bedsOptions = ['Studio', '1', '2', '3', '4', '5', '6', '7+'];
-const priceRanges = ['Any', '< 500K', '500K - 1M', '1M - 2M', '2M - 5M', '5M+'];
+const priceRanges = ['Any', '< 50 L', '50 L - 1 Cr', '1 Cr - 2 Cr', '2 Cr - 5 Cr', '5 Cr+'];
 const areaRanges = ['Any', '< 500 sqft', '500-1000', '1000-2000', '2000-5000', '5000+'];
 const bathsOptions = ['Any', '1', '2', '3', '4', '5+'];
 
@@ -70,7 +70,7 @@ const PropertiesScreen = ({ navigation }) => {
     const [showBathsModal, setShowBathsModal] = useState(false);
     const [showStoryViewer, setShowStoryViewer] = useState(false);
     const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
-    const [selectedLocation, setSelectedLocation] = useState('UAE');
+    const [selectedLocation, setSelectedLocation] = useState('India');
 
     // Animation values
     const modalAnimation = useRef(new Animated.Value(0)).current;
@@ -234,7 +234,7 @@ const PropertiesScreen = ({ navigation }) => {
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
             >
-                {/* Hero Section with Back Button and UAE */}
+                {/* Hero Section with Back Button */}
                 <View style={styles.heroSection}>
                     {/* Header Row with Back Button, Title, and Location */}
                     <View style={styles.headerRow}>
@@ -244,14 +244,14 @@ const PropertiesScreen = ({ navigation }) => {
                             activeOpacity={0.7}
                         >
                             <View style={styles.backButtonContainer}>
-                                <Ionicons name="chevron-back" size={24} color="#991B1B" />
+                                <Ionicons name="chevron-back" size={24} color="#1B5E20" />
                             </View>
                         </TouchableOpacity>
 
                         {/* Title with Icon - Centered */}
                         <View style={styles.titleRow}>
                             <View style={styles.iconContainer}>
-                                <Ionicons name="home" size={24} color="#991B1B" />
+                                <Ionicons name="home" size={24} color="#1B5E20" />
                             </View>
                             <Text style={styles.welcomeTitle}>Properties</Text>
                         </View>
@@ -453,7 +453,7 @@ const PropertiesScreen = ({ navigation }) => {
                             <Ionicons name="play-circle" size={28} color={colors.filterRed} />
                         </View>
                         <Text style={styles.storiesTitle} numberOfLines={1}>
-                            <Text style={styles.storiesBold}>TSPBroker</Text>™ Stories in Dubai and nearby...
+                            <Text style={styles.storiesBold}>TSPBroker</Text>™ Stories
                         </Text>
                     </View>
                     <ScrollView
@@ -784,7 +784,7 @@ const styles = StyleSheet.create({
 
     // Hero Section
     heroSection: {
-        backgroundColor: '#FFF5F5',
+        backgroundColor: '#E8F5E9',
         paddingTop: 44,
         paddingBottom: 20,
         paddingHorizontal: 20,
@@ -829,7 +829,7 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 24,
         fontFamily: 'Lato_700Bold',
-        color: '#991B1B',
+        color: '#1B5E20',
         letterSpacing: -0.3,
     },
 

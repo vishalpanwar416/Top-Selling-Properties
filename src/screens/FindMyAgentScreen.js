@@ -24,13 +24,13 @@ const mockAgencies = agenciesData.agencies;
 const FindMyAgentScreen = ({ navigation }) => {
     const [activeTab, setActiveTab] = useState('Agents'); // Agents or Agencies
     const [transactionType, setTransactionType] = useState('Buy'); // Buy or Rent
-    const [location, setLocation] = useState('Dubai'); // Dubai or Abu Dhabi
+    const [location, setLocation] = useState('Mumbai');
     const [searchQuery, setSearchQuery] = useState('');
     const [isSticky, setIsSticky] = useState(false);
     const [agents] = useState(mockAgents);
     const [agencies] = useState(mockAgencies);
 
-    const uaeLocations = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'RAK', 'Fujairah'];
+    const indiaLocations = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune'];
 
     const handleScroll = (event) => {
         const offsetY = event.nativeEvent.contentOffset.y;
@@ -239,7 +239,7 @@ const FindMyAgentScreen = ({ navigation }) => {
                         contentContainerStyle={styles.locationTabsContent}
                         nestedScrollEnabled={true}
                     >
-                        {uaeLocations.map((loc) => (
+                        {indiaLocations.map((loc) => (
                             <TouchableOpacity
                                 key={loc}
                                 style={[

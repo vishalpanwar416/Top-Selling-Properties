@@ -13,7 +13,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
-import propertiesData from '../data/properties.json';
 import agenciesData from '../data/agencies.json';
 import ContactActions from '../components/ContactActions';
 
@@ -36,12 +35,6 @@ const AgentDetailsScreen = ({ route, navigation }) => {
     // Get agency information
     const agency = agenciesData.agencies.find(a => a.name === agent.agencyName) || null;
 
-    // Get properties listed by this agent
-    const agentProperties = propertiesData.properties.filter(
-        property => property.agentId === agent.id
-    );
-
-
     const handleShare = () => {
         // Share functionality
     };
@@ -50,10 +43,6 @@ const AgentDetailsScreen = ({ route, navigation }) => {
     const expertise = agent.specialization
         ? agent.specialization.split(',').map(e => e.trim())
         : ['Residential Sales', 'Residential Leasing'];
-
-    // Get properties for sale count
-    const saleProperties = agentProperties.filter(p => p.transactionType === 'Buy' || p.status === 'For Sale');
-    const saleCount = saleProperties.length;
 
     // Agent description
     const agentDescription = agent.description || `${agent.name} is an honest, hardworking, and transparent agent for both buyers and sellers. With over ${agent.experience || '4 years'} of experience in ${agent.serviceAreas?.[0] || 'his chosen area'}, ${agent.name} has built a reputation for delivering exceptional results and providing personalized service to each client.`;
@@ -117,7 +106,7 @@ const AgentDetailsScreen = ({ route, navigation }) => {
                     <View style={styles.agentInfoSection}>
                         <Text style={styles.agentName}>{agent.name}</Text>
                         <Text style={styles.agencyName}>
-                            {agent.agencyName || agent.serviceAreas?.[0] || 'Dubai'}
+                            {agent.agencyName || agent.serviceAreas?.[0] || 'Mumbai'}
                         </Text>
 
                         {/* Badges */}
@@ -152,15 +141,6 @@ const AgentDetailsScreen = ({ route, navigation }) => {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.tab, activeTab === 'Properties' && styles.tabActive]}
-                            onPress={() => setActiveTab('Properties')}
-                            activeOpacity={0.7}
-                        >
-                            <Text style={[styles.tabText, activeTab === 'Properties' && styles.tabTextActive]}>
-                                Properties
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
                             style={[styles.tab, activeTab === 'Transactions' && styles.tabActive]}
                             onPress={() => setActiveTab('Transactions')}
                             activeOpacity={0.7}
@@ -189,24 +169,9 @@ const AgentDetailsScreen = ({ route, navigation }) => {
                             <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Service Areas:</Text>
                                 <Text style={styles.infoValue}>
-                                    {agent.serviceAreas?.join(', ') || 'Dubai'}
+                                    {agent.serviceAreas?.join(', ') || 'Mumbai'}
                                 </Text>
                             </View>
-                            {saleCount > 0 && (
-                                <View style={styles.infoRow}>
-                                    <Text style={styles.infoLabel}>Properties:</Text>
-                                    <TouchableOpacity
-                                        style={styles.propertiesButton}
-                                        onPress={() => setActiveTab('Properties')}
-                                        activeOpacity={0.7}
-                                    >
-                                        <Text style={styles.propertiesButtonText}>
-                                            {saleCount} for Sale
-                                        </Text>
-                                        <Ionicons name="chevron-forward" size={18} color={colors.primary} />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
                             <View style={styles.infoRow}>
                                 <Text style={styles.infoLabel}>Description:</Text>
                                 <Text style={styles.infoValue} numberOfLines={showFullDescription ? undefined : 3}>
@@ -238,41 +203,6 @@ const AgentDetailsScreen = ({ route, navigation }) => {
                                     {experienceYears} {experienceYears === '1' ? 'Year' : 'Years'}
                                 </Text>
                             </View>
-                        </View>
-                    )}
-
-                    {activeTab === 'Properties' && (
-                        <View style={styles.tabContent}>
-                            {agentProperties.length > 0 ? (
-                                <View style={styles.propertiesGrid}>
-                                    {agentProperties.map((property) => (
-                                        <TouchableOpacity
-                                            key={property.id}
-                                            style={styles.propertyCard}
-                                            onPress={() => navigation.navigate('PropertyDetails', { property })}
-                                            activeOpacity={0.8}
-                                        >
-                                            <Image
-                                                source={{ uri: property.images?.[0] || 'https://via.placeholder.com/200' }}
-                                                style={styles.propertyImage}
-                                            />
-                                            <View style={styles.propertyInfo}>
-                                                <Text style={styles.propertyTitle} numberOfLines={2}>
-                                                    {property.title}
-                                                </Text>
-                                                <Text style={styles.propertyPrice}>
-                                                    AED {property.price?.toLocaleString()}
-                                                </Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    ))}
-                                </View>
-                            ) : (
-                                <View style={styles.emptyState}>
-                                    <Ionicons name="home-outline" size={48} color={colors.textTertiary} />
-                                    <Text style={styles.emptyStateText}>No properties listed yet</Text>
-                                </View>
-                            )}
                         </View>
                     )}
 

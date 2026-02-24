@@ -5,11 +5,11 @@
             "name": "Prime Realty Partners",
             "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400",
             "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
-            "description": "Leading channel partner specializing in off-plan properties and new launches across Dubai and Abu Dhabi.",
+            "description": "Leading channel partner specializing in off-plan properties and new launches across Mumbai and Delhi.",
             "specialization": "Off-Plan Specialist",
             "serviceAreas": [
-                "Dubai Marina",
-                "Downtown Dubai",
+                "Marine Drive",
+                "Lower Parel",
                 "Business Bay",
                 "Palm Jumeirah"
             ],
@@ -43,7 +43,7 @@
             "serviceAreas": [
                 "Palm Jumeirah",
                 "Emirates Hills",
-                "Dubai Hills",
+                "Powai",
                 "Al Barari"
             ],
             "languages": [
@@ -57,7 +57,7 @@
             "activeProjects": 32,
             "developers": [
                 "Nakheel",
-                "Dubai Properties",
+                "Mumbai Properties",
                 "Azizi",
                 "Ellington"
             ],
@@ -71,11 +71,11 @@
             "name": "Elite Investment Group",
             "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
             "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
-            "description": "Trusted channel partner for high-net-worth investors seeking premium real estate opportunities in UAE.",
+            "description": "Trusted channel partner for high-net-worth investors seeking premium real estate opportunities in India.",
             "specialization": "Investment Advisory",
             "serviceAreas": [
                 "DIFC",
-                "Downtown Dubai",
+                "Lower Parel",
                 "JBR",
                 "Bluewaters"
             ],
@@ -105,10 +105,10 @@
             "name": "Capital Real Estate Partners",
             "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
             "logo": "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200",
-            "description": "Premier channel partner connecting global investors with the best real estate opportunities in the UAE.",
+            "description": "Premier channel partner connecting global investors with the best real estate opportunities in India.",
             "specialization": "Global Investments",
             "serviceAreas": [
-                "Abu Dhabi",
+                "Delhi",
                 "Yas Island",
                 "Saadiyat Island",
                 "Al Reem Island"
@@ -143,9 +143,9 @@
             "specialization": "Affordable Housing",
             "serviceAreas": [
                 "JVC",
-                "Dubai South",
+                "Navi Mumbai",
                 "Town Square",
-                "Dubailand"
+                "Thane"
             ],
             "languages": [
                 "English",

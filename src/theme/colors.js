@@ -1,20 +1,20 @@
-// Premium Modern Theme for Property App
+// Premium Modern Theme for Property App - Credai Green
 export const colors = {
     // Primary Brand Colors
     white: '#FFFFFF',
-    red: '#B91C1C',
-    maroon: '#B91C3E',
+    red: '#1B5E20',
+    maroon: '#2E7D32',
     black: '#1A1A1A',
 
     // Modern Color Palette
-    primary: '#B91C1C',
-    primaryLight: '#C41E3A',
-    secondary: '#B91C1C',
-    accent: '#FF6B8A',
+    primary: '#1B5E20',
+    primaryLight: '#2E7D32',
+    secondary: '#1B5E20',
+    accent: '#4CAF50',
     teal: '#008B7C',
     tealLight: '#E6F5F3',
-    filterRed: '#F87171',
-    filterRedLight: '#FEF2F2',
+    filterRed: '#43A047',
+    filterRedLight: '#E8F5E9',
 
     // Neutral Colors
     lightGray: '#F5F7FA',
@@ -45,8 +45,8 @@ export const colors = {
     overlay: 'rgba(0, 0, 0, 0.5)',
 
     // Gradients
-    gradientStart: '#B91C1C',
-    gradientEnd: '#B91C1C',
+    gradientStart: '#1B5E20',
+    gradientEnd: '#2E7D32',
 };
 
 export default colors;

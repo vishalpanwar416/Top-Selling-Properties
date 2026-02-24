@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../theme/colors';
-import Logo from '../../assets/logo.svg';
 
 const Header = ({ navigation, transparent = false }) => {
     const insets = useSafeAreaInsets();
@@ -20,16 +19,11 @@ const Header = ({ navigation, transparent = false }) => {
             transparent && styles.transparentContainer
         ]}>
             <View style={styles.leftContainer}>
-                <Logo
-                    width={48}
-                    height={48}
-                    fill={transparent ? colors.primary : colors.primary}
+                <Image
+                    source={require('../../assets/logo.jpeg')}
+                    style={styles.logoImage}
+                    resizeMode="contain"
                 />
-                <Text style={styles.brandTitle} numberOfLines={1}>
-                    <Text style={styles.topText}>Top </Text>
-                    <Text style={styles.sellingText}>Selling </Text>
-                    <Text style={styles.propertiesText}>Properties</Text>
-                </Text>
             </View>
 
             <TouchableOpacity
@@ -58,9 +52,10 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'transparent',
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        paddingLeft: 0,
+        paddingRight: 20,
         paddingBottom: 16,
     },
     transparentContainer: {
@@ -68,29 +63,7 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-    },
-    brandTitle: {
-        marginLeft: 8,
-    },
-    topText: {
-        fontSize: 17,
-        fontFamily: 'Lato_900Black',
-        color: colors.red,
-        letterSpacing: -0.5,
-    },
-    sellingText: {
-        fontSize: 17,
-        fontFamily: 'Lato_900Black',
-        color: colors.black,
-        letterSpacing: -0.5,
-    },
-    propertiesText: {
-        fontSize: 17,
-        fontFamily: 'Lato_900Black',
-        color: colors.primary,
-        letterSpacing: -0.5,
+        alignItems: 'flex-start',
     },
     menuButton: {
         padding: 10,
@@ -108,14 +81,9 @@ const styles = StyleSheet.create({
         marginVertical: 3,
         borderRadius: 3,
     },
-    logoText: {
-        fontSize: 16,
-        fontFamily: 'Lato_700Bold',
-        letterSpacing: 1,
-    },
     logoImage: {
-        width: 52,
-        height: 52,
+        width: 140,
+        height: 48,
     },
 });
 

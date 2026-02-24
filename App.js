@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -48,21 +48,37 @@ class ErrorBoundary extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1B5E20',
+  },
+  loadingLogo: {
+    width: 220,
+    height: 120,
+    marginBottom: 24,
+  },
+  loadingText: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 16,
+  },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   errorText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#1a1a1a',
   },
   errorDetails: {
     fontSize: 14,
-    color: '#666',
+    color: '#333',
     textAlign: 'center',
   },
 });
@@ -80,13 +96,26 @@ export default function App() {
     Lato_900Black,
     Lato_900Black_Italic,
   });
+  const [fontsTimeout, setFontsTimeout] = React.useState(false);
 
   React.useEffect(() => {
-    console.log('App component mounted');
+    const t = setTimeout(() => setFontsTimeout(true), 8000);
+    return () => clearTimeout(t);
   }, []);
 
-  if (!fontsLoaded) {
-    return null; // Or a loading spinner
+  const showApp = fontsLoaded || fontsTimeout;
+
+  if (!showApp) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Image
+          source={require('./assets/logo.jpeg')}
+          style={styles.loadingLogo}
+          resizeMode="contain"
+        />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
   }
 
   return (

@@ -143,7 +143,7 @@ const ContactScreen = ({ navigation }) => {
                         </View>
                         <View style={styles.infoContent}>
                             <Text style={styles.infoLabel}>Address</Text>
-                            <Text style={styles.infoValue}>Dubai Marina, Dubai, UAE</Text>
+                            <Text style={styles.infoValue}>Bandra West, Mumbai, India</Text>
                         </View>
                     </View>
                 </View>

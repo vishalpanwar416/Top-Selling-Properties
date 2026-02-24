@@ -65,7 +65,10 @@ const PropertyDetails = ({ route, navigation }) => {
     const agency = property.agencyId ? getAgencyById(property.agencyId) : null;
 
     const formatPrice = (price) => {
-        return `AED  ${price?.toLocaleString() || 'N/A'}`;
+        if (!price) return '₹ —';
+        if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+        if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+        return `₹ ${price.toLocaleString('en-IN')}`;
     };
 
     const handleShare = () => {
@@ -257,15 +260,15 @@ const PropertyDetails = ({ route, navigation }) => {
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Average Price/sqft</Text>
                         <Text style={styles.sectionSubtitle}>
-                            for other {property.bedrooms || '2'} beds apartments in {property.location?.split(',')[0] || 'Dubai'}
+                            for other {property.bedrooms || '2'} beds apartments in {property.location?.split(',')[0] || 'Mumbai'}
                         </Text>
                         <View style={styles.chartContainer}>
                             <View style={styles.chartYAxis}>
-                                <Text style={styles.chartLabel}>AED 5173</Text>
-                                <Text style={styles.chartLabel}>AED 3879</Text>
-                                <Text style={styles.chartLabel}>AED 2586</Text>
-                                <Text style={styles.chartLabel}>AED 1293</Text>
-                                <Text style={styles.chartLabel}>AED 0</Text>
+                                <Text style={styles.chartLabel}>₹ 51,730</Text>
+                                <Text style={styles.chartLabel}>₹ 38,790</Text>
+                                <Text style={styles.chartLabel}>₹ 25,860</Text>
+                                <Text style={styles.chartLabel}>₹ 12,930</Text>
+                                <Text style={styles.chartLabel}>₹ 0</Text>
                             </View>
                             <View style={styles.chartBars}>
                                 <View style={styles.chartBarWrapper}>
@@ -287,7 +290,7 @@ const PropertyDetails = ({ route, navigation }) => {
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Popular Locations**</Text>
                         <Text style={styles.sectionSubtitle}>
-                            with {property.bedrooms || '3'} beds apartments in {property.location?.split(',')[0] || 'Downtown Dubai'}
+                            with {property.bedrooms || '3'} beds apartments in {property.location?.split(',')[0] || 'Mumbai'}
                         </Text>
                         <View style={styles.popularTable}>
                             <View style={styles.popularHeader}>
@@ -332,7 +335,7 @@ const PropertyDetails = ({ route, navigation }) => {
                         />
                         <View style={styles.areaGuideContent}>
                             <Text style={styles.areaGuideLabel}>AREA GUIDE</Text>
-                            <Text style={styles.areaGuideName}>{property.location?.split(',')[0] || 'Downtown Dubai'}</Text>
+                            <Text style={styles.areaGuideName}>{property.location?.split(',')[0] || 'Mumbai'}</Text>
                         </View>
                         <Ionicons name="chevron-forward" size={24} color={colors.textSecondary} />
                     </TouchableOpacity>
@@ -344,7 +347,7 @@ const PropertyDetails = ({ route, navigation }) => {
                             {[
                                 { label: 'Trakheesi Permit', value: property.permit || '71635604642', hasInfo: true },
                                 { label: 'Zone Name', value: property.zone || property.location?.split(',')[0] || 'Business Bay', hasInfo: true },
-                                { label: 'Registered Agency', value: agency?.name?.toUpperCase() || property.agency || agent?.agencyName?.toUpperCase() || 'TOP SELLING PROPERTIES', hasInfo: true },
+                                { label: 'Registered Agency', value: agency?.name?.toUpperCase() || property.agency || agent?.agencyName?.toUpperCase() || 'CREDAI', hasInfo: true },
                                 { label: 'RERA', value: property.rera || agency?.rera || '1858', hasInfo: true },
                                 { label: 'BRN', value: property.brn || agency?.brn || '69449', hasInfo: true },
                             ].map((item, index) => (

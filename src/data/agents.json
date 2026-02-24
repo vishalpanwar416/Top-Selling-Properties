@@ -8,8 +8,8 @@
       "email": "ahmed@topsellingproperties.ae",
       "serviceAreas": [
         "Palm Jumeirah",
-        "Dubai Marina",
-        "Downtown Dubai"
+        "Marine Drive",
+        "Lower Parel"
       ],
       "languages": [
         "English",
@@ -37,7 +37,7 @@
       "phone": "+971 50 234 5678",
       "email": "sara@topsellingproperties.ae",
       "serviceAreas": [
-        "Dubai Marina",
+        "Marine Drive",
         "JBR",
         "Bluewaters Island"
       ],
@@ -66,7 +66,7 @@
       "phone": "+971 50 345 6789",
       "email": "mohammed@topsellingproperties.ae",
       "serviceAreas": [
-        "Downtown Dubai",
+        "Lower Parel",
         "Business Bay",
         "DIFC"
       ],
@@ -95,7 +95,7 @@
       "email": "fatima@topsellingproperties.ae",
       "serviceAreas": [
         "Arabian Ranches",
-        "Sharjah",
+        "Pune",
         "Al Majaz"
       ],
       "languages": [
@@ -125,7 +125,7 @@
       "serviceAreas": [
         "DIFC",
         "Business Bay",
-        "Downtown Dubai"
+        "Lower Parel"
       ],
       "languages": [
         "English",
@@ -150,7 +150,7 @@
       "phone": "+971 50 678 9012",
       "email": "layla@topsellingproperties.ae",
       "serviceAreas": [
-        "Abu Dhabi",
+        "Delhi",
         "Saadiyat Island",
         "Yas Island"
       ],
@@ -178,9 +178,9 @@
       "phone": "+971 50 789 0123",
       "email": "jitesh@topsellingproperties.ae",
       "serviceAreas": [
-        "Downtown Dubai",
+        "Lower Parel",
         "Business Bay",
-        "Dubai Marina"
+        "Marine Drive"
       ],
       "languages": [
         "English",
@@ -203,7 +203,7 @@
       "phone": "+971 50 890 1234",
       "email": "george@topsellingproperties.ae",
       "serviceAreas": [
-        "Downtown Dubai",
+        "Lower Parel",
         "DIFC"
       ],
       "languages": [
@@ -225,7 +225,7 @@
       "phone": "+971 50 901 2345",
       "email": "liam@topsellingproperties.ae",
       "serviceAreas": [
-        "Dubai Marina",
+        "Marine Drive",
         "JBR",
         "Bluewaters"
       ],
@@ -250,7 +250,7 @@
       "email": "sarah@topsellingproperties.ae",
       "serviceAreas": [
         "Palm Jumeirah",
-        "Dubai Marina",
+        "Marine Drive",
         "JLT"
       ],
       "languages": [
@@ -276,7 +276,7 @@
       "serviceAreas": [
         "Emirates Hills",
         "Arabian Ranches",
-        "Dubai Hills"
+        "Powai"
       ],
       "languages": [
         "English",
@@ -299,7 +299,7 @@
       "email": "aisha@topsellingproperties.ae",
       "serviceAreas": [
         "Creek Harbour",
-        "Dubai Creek",
+        "Worli",
         "Business Bay"
       ],
       "languages": [

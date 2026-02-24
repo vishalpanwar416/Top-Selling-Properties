@@ -20,11 +20,11 @@ import FeaturedProjectsCarousel from '../components/FeaturedProjectsCarousel';
 import LikeButton from '../components/LikeButton';
 import projectsData from '../data/projects.json';
 
-// Premium Color Palette
+// Premium Color Palette - Credai Green
 const COLORS = {
-    primary: '#B91C1C',
-    primaryDark: '#991B1B',
-    primaryLight: 'rgba(185, 28, 28, 0.08)',
+    primary: '#1B5E20',
+    primaryDark: '#1B5E20',
+    primaryLight: 'rgba(27, 94, 32, 0.08)',
     secondary: '#1E293B',
     accent: '#F59E0B',
     success: '#10B981',
@@ -34,7 +34,7 @@ const COLORS = {
     textSecondary: '#64748B',
     textMuted: '#94A3B8',
     border: '#E2E8F0',
-    gradient1: ['#B91C1C', '#DC2626', '#EF4444'],
+    gradient1: ['#1B5E20', '#2E7D32', '#43A047'],
     gradient2: ['#1E293B', '#334155', '#475569'],
     gradient3: ['#0F172A', '#1E293B'],
     glassBg: 'rgba(255, 255, 255, 0.85)',
@@ -57,11 +57,10 @@ const SORT_OPTIONS = [
 
 // Utility Functions
 const formatPrice = (price) => {
-    if (!price) return 'Price on Request';
-    if (price >= 1000000) {
-        return `AED ${(price / 1000000).toFixed(1)}M`;
-    }
-    return `AED ${(price / 1000).toFixed(0)}K`;
+    if (!price) return '₹ —';
+    if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+    if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+    return `₹ ${price.toLocaleString('en-IN')}`;
 };
 
 // Premium Project Card Component
@@ -283,7 +282,7 @@ const ProjectsScreen = ({ navigation }) => {
     const [sortBy, setSortBy] = useState('Latest');
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState('UAE');
+    const [selectedLocation, setSelectedLocation] = useState('India');
     const [projects] = useState(() => {
         const loadedProjects = projectsData?.projects || [];
         console.log('Projects loaded:', loadedProjects.length);
@@ -380,14 +379,14 @@ const ProjectsScreen = ({ navigation }) => {
                             activeOpacity={0.7}
                         >
                             <View style={styles.backButtonContainer}>
-                                <Ionicons name="chevron-back" size={24} color="#991B1B" />
+                                <Ionicons name="chevron-back" size={24} color="#1B5E20" />
                             </View>
                         </TouchableOpacity>
 
                         {/* Title with Icon - Centered */}
                         <View style={styles.titleRow}>
                             <View style={styles.iconContainer}>
-                                <Ionicons name="business" size={24} color="#991B1B" />
+                                <Ionicons name="business" size={24} color="#1B5E20" />
                             </View>
                             <Text style={styles.welcomeTitle}>Projects</Text>
                         </View>
@@ -594,7 +593,7 @@ const styles = StyleSheet.create({
 
     // Hero Section Header
     heroSection: {
-        backgroundColor: '#FFF5F5',
+        backgroundColor: '#E8F5E9',
         paddingTop: 44,
         paddingBottom: 20,
         paddingHorizontal: 20,
@@ -639,7 +638,7 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 24,
         fontFamily: 'Lato_700Bold',
-        color: '#991B1B',
+        color: '#1B5E20',
         letterSpacing: -0.3,
     },
 

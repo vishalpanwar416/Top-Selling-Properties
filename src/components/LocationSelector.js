@@ -22,25 +22,29 @@ try {
     }
 }
 
-const LOCATIONS = ['UAE', 'Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'RAK', 'Fujairah', 'Umm Al Quwain'];
+const LOCATIONS = ['India', 'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata'];
 
-// Map coordinates to cities (simplified for UAE)
+// Map coordinates to cities (simplified for India)
 const getCityFromCoordinates = (latitude, longitude) => {
-    // Dubai approximate coordinates
-    if (latitude >= 25.0 && latitude <= 25.5 && longitude >= 55.0 && longitude <= 55.5) {
-        return 'Dubai';
+    // Mumbai approximate coordinates
+    if (latitude >= 18.9 && latitude <= 19.3 && longitude >= 72.7 && longitude <= 73.0) {
+        return 'Mumbai';
     }
-    // Abu Dhabi approximate coordinates
-    if (latitude >= 24.0 && latitude <= 24.8 && longitude >= 54.0 && longitude <= 54.8) {
-        return 'Abu Dhabi';
+    // Delhi approximate coordinates
+    if (latitude >= 28.4 && latitude <= 28.9 && longitude >= 76.8 && longitude <= 77.4) {
+        return 'Delhi';
     }
-    // Sharjah approximate coordinates
-    if (latitude >= 25.2 && latitude <= 25.5 && longitude >= 55.2 && longitude <= 55.5) {
-        return 'Sharjah';
+    // Bangalore approximate coordinates
+    if (latitude >= 12.8 && latitude <= 13.2 && longitude >= 77.4 && longitude <= 77.8) {
+        return 'Bangalore';
     }
-    // Default to Dubai if in UAE region
-    if (latitude >= 22.0 && latitude <= 26.0 && longitude >= 50.0 && longitude <= 56.0) {
-        return 'Dubai';
+    // Hyderabad approximate coordinates
+    if (latitude >= 17.3 && latitude <= 17.5 && longitude >= 78.4 && longitude <= 78.6) {
+        return 'Hyderabad';
+    }
+    // Default to Mumbai if in India region
+    if (latitude >= 8.0 && latitude <= 35.0 && longitude >= 68.0 && longitude <= 97.0) {
+        return 'Mumbai';
     }
     return null;
 };
@@ -230,7 +234,7 @@ const LocationSelector = ({ selectedLocation, onLocationChange, style }) => {
                 onPress={openModal}
                 activeOpacity={0.7}
             >
-                <Ionicons name="location" size={16} color="#991B1B" />
+                <Ionicons name="location" size={16} color="#1B5E20" />
                 <Text style={styles.locationText}>{selectedLocation}</Text>
             </TouchableOpacity>
             {renderBottomSheet()}
@@ -252,7 +256,7 @@ const styles = StyleSheet.create({
     locationText: {
         fontSize: 14,
         fontFamily: 'Lato_700Bold',
-        color: '#991B1B',
+        color: '#1B5E20',
     },
     modalOverlay: {
         flex: 1,

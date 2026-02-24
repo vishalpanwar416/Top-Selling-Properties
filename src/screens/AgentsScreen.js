@@ -27,7 +27,7 @@ const mockChannelPartners = channelPartnersData.channelPartners;
 const AgentsScreen = ({ navigation }) => {
     const [selectedTypes, setSelectedTypes] = useState(['Agents']);
     const [selectedTransactions, setSelectedTransactions] = useState(['Buy']);
-    const [location, setLocation] = useState('Dubai');
+    const [location, setLocation] = useState('Mumbai');
     const [searchQuery, setSearchQuery] = useState('');
     const [isSticky, setIsSticky] = useState(false);
     const [agents] = useState(mockAgents);
@@ -428,7 +428,7 @@ const AgentsScreen = ({ navigation }) => {
                         contentContainerStyle={styles.locationTabsContent}
                         nestedScrollEnabled={true}
                     >
-                        {['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'RAK', 'Fujairah'].map((loc) => (
+                        {['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune'].map((loc) => (
                             <TouchableOpacity
                                 key={loc}
                                 style={[
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
     },
     heroSection: {
-        backgroundColor: '#FFF5F5',
+        backgroundColor: '#E8F5E9',
         paddingTop: 40,
         paddingBottom: 16,
         paddingHorizontal: 20,
@@ -565,7 +565,7 @@ const styles = StyleSheet.create({
         color: colors.primary,
     },
     filtersSection: {
-        backgroundColor: '#FFF5F5',
+        backgroundColor: '#E8F5E9',
         paddingTop: 6,
         paddingBottom: 12,
     },

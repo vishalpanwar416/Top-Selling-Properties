@@ -52,14 +52,10 @@ const ProjectCard = ({ project, onPress, fullWidth = false }) => {
     }
 
     const formatPrice = (price) => {
-        if (!price) return 'AED N/A';
-        if (price >= 1000000) {
-            return `AED ${(price / 1000000).toFixed(1)}M`;
-        }
-        if (price >= 1000) {
-            return `AED ${(price / 1000).toFixed(0)}K`;
-        }
-        return `AED ${price.toLocaleString()}`;
+        if (!price) return '₹ —';
+        if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+        if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+        return `₹ ${price.toLocaleString('en-IN')}`;
     };
 
     const handleCall = () => {
@@ -358,7 +354,7 @@ const styles = StyleSheet.create({
     offPlanBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.primary,
+        backgroundColor: '#D97706',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 12,
@@ -372,7 +368,7 @@ const styles = StyleSheet.create({
     readyBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.success,
+        backgroundColor: '#059669',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 12,

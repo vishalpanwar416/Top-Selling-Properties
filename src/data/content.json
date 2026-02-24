@@ -1,8 +1,8 @@
 {
     "home": {
         "welcomeTitle": "Find Your Dream Property",
-        "welcomeSubtitle": "Discover premium real estate in UAE",
-        "browseProjectsTitle": "Browse New Projects in UAE",
+        "welcomeSubtitle": "Discover premium real estate",
+        "browseProjectsTitle": "Browse New Projects",
         "featuredPropertiesTitle": "Featured Properties",
         "featuredProjectsTitle": "Featured Projects",
         "topAgentsTitle": "Top Agents",
@@ -71,12 +71,12 @@
         "all": "All"
     },
     "locations": [
-        "Dubai",
-        "Abu Dhabi",
-        "Sharjah",
-        "Ajman",
-        "RAK",
-        "Fujairah"
+        "Mumbai",
+        "Delhi",
+        "Bangalore",
+        "Hyderabad",
+        "Chennai",
+        "Pune"
     ],
     "featuredProperties": {
         "enabled": true,
@@ -114,7 +114,7 @@
         "tryAgain": "Try Again"
     },
     "footer": {
-        "copyright": "© 2025 Top Selling Properties. All rights reserved.",
+        "copyright": "© 2025 Credai. All rights reserved.",
         "termsOfService": "Terms of Service",
         "privacyPolicy": "Privacy Policy"
     }

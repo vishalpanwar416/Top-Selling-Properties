@@ -50,17 +50,10 @@ const SimplePropertyCard = ({ property, onPress, fullWidth = false }) => {
     }
 
     const formatPrice = (price) => {
-        if (!price) return 'AED N/A';
-        if (price >= 10000000) {
-            return `AED ${(price / 10000000).toFixed(2)} Cr`;
-        }
-        if (price >= 1000000) {
-            return `AED ${(price / 1000000).toFixed(2)}M`;
-        }
-        if (price >= 100000) {
-            return `AED ${(price / 100000).toFixed(1)}L`;
-        }
-        return `AED ${price.toLocaleString()}`;
+        if (!price) return '₹ —';
+        if (price >= 10000000) return `₹ ${(price / 10000000).toFixed(2)} Cr`;
+        if (price >= 100000) return `₹ ${(price / 100000).toFixed(1)} L`;
+        return `₹ ${price.toLocaleString('en-IN')}`;
     };
 
     const formatArea = (area) => {

@@ -209,6 +209,17 @@ const Sidebar = (props) => {
                     () => handleNavigation('Projects')
                 )}
 
+                {/* Developers section */}
+                {renderSectionHeader('DEVELOPERS')}
+                {renderMenuItem(
+                    'Developers',
+                    'business',
+                    'Ionicons',
+                    false,
+                    colors.teal,
+                    () => handleNavigation('Home', 'Developers')
+                )}
+
                 {/* Plans and Services Section */}
                 {renderSectionHeader('PLANS AND SERVICES')}
                 
@@ -219,6 +230,33 @@ const Sidebar = (props) => {
                     false,
                     colors.warning,
                     () => handleCardPress('dealer-plans')
+                )}
+
+                {/* Home loan & more - project development solutions */}
+                {renderSectionHeader('HOME LOAN & MORE')}
+                {renderMenuItem(
+                    'Home Loan',
+                    'home',
+                    'Ionicons',
+                    false,
+                    colors.primary,
+                    () => handleNavigation('More', 'HomeLoan')
+                )}
+                {renderMenuItem(
+                    'Legal services',
+                    'document-text',
+                    'Ionicons',
+                    false,
+                    colors.teal,
+                    () => handleNavigation('More', 'LegalServices')
+                )}
+                {renderMenuItem(
+                    'Home Interiors',
+                    'color-palette',
+                    'Ionicons',
+                    false,
+                    colors.primary,
+                    () => handleNavigation('More', 'HomeInterior')
                 )}
 
                 {/* Rate Our App Section */}

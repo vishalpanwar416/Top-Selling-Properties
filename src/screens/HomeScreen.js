@@ -5,6 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import NewProjectCard from '../components/NewProjectCard';
+import ProjectCardRecommended from '../components/ProjectCardRecommended';
+import ProjectCardOverlay from '../components/ProjectCardOverlay';
+import ProjectCardCompact from '../components/ProjectCardCompact';
+import DeveloperCardClassic from '../components/DeveloperCardClassic';
+import DeveloperCardHorizontal from '../components/DeveloperCardHorizontal';
+import DeveloperCardStats from '../components/DeveloperCardStats';
+import DeveloperCardMinimal from '../components/DeveloperCardMinimal';
 import colors from '../theme/colors';
 import projectsData from '../data/projects.json';
 import contentData from '../data/content.json';
@@ -16,13 +23,24 @@ const STICKY_THRESHOLD = 120; // When search bar becomes sticky
 
 const HomeScreen = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [activeLocation, setActiveLocation] = useState('Mumbai');
+    const [activeLocation, setActiveLocation] = useState('Bangalore');
     const [projects, setProjects] = useState(Array.isArray(projectsData?.projects) ? projectsData.projects : []);
     const [isSticky, setIsSticky] = useState(false);
 
     const credaiProjects = homeSectionsData?.credaiVerifiedBuilderProjects ?? [];
-    const reraProjects = homeSectionsData?.reraVerifiedBuilderProjects ?? [];
     const verifiedDevelopers = homeSectionsData?.credaiVerifiedDevelopers ?? [];
+    const featuredProjectsGallery = homeSectionsData?.featuredProjectsGallery ?? [];
+    const topProjects = homeSectionsData?.topProjects ?? [];
+    const bestOfferProjects = homeSectionsData?.bestOfferProjects ?? [];
+    const trendingProjects = homeSectionsData?.trendingProjects ?? [];
+    const readyToMoveProjects = homeSectionsData?.readyToMoveProjects ?? [];
+    const newlyLaunchedProjects = homeSectionsData?.newlyLaunchedProjects ?? [];
+    const completedProjects = homeSectionsData?.completedProjects ?? [];
+    const topDevelopers = homeSectionsData?.topDevelopers ?? [];
+    const featuredDevelopers = homeSectionsData?.featuredDevelopers ?? [];
+    const developersInCity = (verifiedDevelopers || []).filter(
+        (d) => (d.location || '').toLowerCase().includes((activeLocation || '').toLowerCase())
+    );
 
     // Helper function to check if project matches location
     const matchesProjectLocation = (project, location) => {
@@ -115,40 +133,190 @@ const HomeScreen = ({ navigation }) => {
                         </ScrollView>
 
                         {/* Horizontal Project Cards - Filter by active location */}
+                        {filteredProjects.length === 0 ? (
+                            <View style={styles.noProjectsInLocation}>
+                                <Text style={styles.noProjectsInLocationText}>There is no project in {activeLocation}</Text>
+                            </View>
+                        ) : (
+                            <>
+                                <FlatList
+                                    data={filteredProjects.slice(0, 5)}
+                                    keyExtractor={(item) => item.id}
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    contentContainerStyle={styles.projectCardsContainer}
+                                    nestedScrollEnabled={true}
+                                    renderItem={({ item }) => (
+                                        <NewProjectCard
+                                            project={item}
+                                            onPress={() => handleProjectPress(item)}
+                                        />
+                                    )}
+                                />
+                                <TouchableOpacity
+                                    style={styles.viewAllButton}
+                                    activeOpacity={0.8}
+                                    onPress={() => navigation.navigate('MainTabs', { screen: 'Projects' })}
+                                >
+                                    <Text style={styles.viewAllText}>{contentData?.home?.viewAllProjects ?? 'View All Projects in'} {activeLocation}</Text>
+                                    <Ionicons name="chevron-forward" size={18} color={colors.white} />
+                                </TouchableOpacity>
+                            </>
+                        )}
+                    </View>
+
+                    {/* 1. Featured Projects Gallery - Recommended style */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Featured Projects Gallery</Text>
                         <FlatList
-                            data={filteredProjects.slice(0, 5)}
+                            data={featuredProjectsGallery}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.projectCardsContainer}
                             nestedScrollEnabled={true}
                             renderItem={({ item }) => (
-                                <NewProjectCard
-                                    project={item}
-                                    onPress={() => handleProjectPress(item)}
-                                />
+                                <ProjectCardRecommended project={item} onPress={() => handleProjectPress(item)} />
                             )}
-                            ListEmptyComponent={
-                                <View style={styles.emptyProjectsContainer}>
-                                    <Text style={styles.emptyProjectsText}>No projects in {activeLocation}</Text>
-                                </View>
-                            }
                         />
-
-                        {/* View All Button - navigate to Projects tab */}
-                        <TouchableOpacity
-                            style={styles.viewAllButton}
-                            activeOpacity={0.8}
-                            onPress={() => navigation.navigate('MainTabs', { screen: 'Projects' })}
-                        >
-                            <Text style={styles.viewAllText}>{contentData?.home?.viewAllProjects ?? 'View All Projects in'} {activeLocation}</Text>
-                            <Ionicons name="chevron-forward" size={18} color={colors.white} />
-                        </TouchableOpacity>
                     </View>
 
-                    {/* Credai Verified Builder Projects */}
+                    {/* 2. Top Developers - Horizontal card */}
                     <View style={styles.verifiedSection}>
-                        <Text style={styles.sectionTitleWhite}>Credai Verified Builder Projects</Text>
+                        <Text style={styles.sectionTitleWhite}>Top Developers</Text>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.developersContainer} nestedScrollEnabled={true}>
+                            {topDevelopers.map((dev) => (
+                                <DeveloperCardHorizontal key={dev.id} developer={dev} onPress={() => navigation.navigate('DeveloperProfile', { developer: dev })} />
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    {/* 3. Top Projects - Overlay style */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Top Projects</Text>
+                        <FlatList
+                            data={topProjects}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.projectCardsContainer}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) => (
+                                <ProjectCardOverlay project={item} onPress={() => handleProjectPress(item)} />
+                            )}
+                        />
+                    </View>
+
+                    {/* 4. Credai Verified Developers - Classic translucent */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Credai Verified Developers</Text>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.developersContainer} nestedScrollEnabled={true}>
+                            {verifiedDevelopers.map((dev) => (
+                                <DeveloperCardClassic key={dev.id} developer={dev} onPress={() => navigation.navigate('DeveloperProfile', { developer: dev })} />
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    {/* 5. Best Offer Projects - Compact strip style */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Best Offer Projects</Text>
+                        <FlatList
+                            data={bestOfferProjects}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.projectCardsContainer}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) => (
+                                <ProjectCardCompact project={item} onPress={() => handleProjectPress(item)} />
+                            )}
+                        />
+                    </View>
+
+                    {/* 6. Featured Developers - Stats card */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Featured Developers</Text>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.developersContainer} nestedScrollEnabled={true}>
+                            {featuredDevelopers.map((dev) => (
+                                <DeveloperCardStats key={dev.id} developer={dev} onPress={() => navigation.navigate('DeveloperProfile', { developer: dev })} />
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    {/* 7. Trending Projects - Default card */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Trending Projects</Text>
+                        <FlatList
+                            data={trendingProjects}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.projectCardsContainer}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) => (
+                                <NewProjectCard project={item} onPress={() => handleProjectPress(item)} />
+                            )}
+                        />
+                    </View>
+
+                    {/* 8. Ready to Move Projects - Recommended style */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Ready to Move Projects</Text>
+                        <FlatList
+                            data={readyToMoveProjects}
+                            keyExtractor={(item) => item.id}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.projectCardsContainer}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) => (
+                                <ProjectCardRecommended project={item} onPress={() => handleProjectPress(item)} />
+                            )}
+                        />
+                    </View>
+
+                    {/* 9. Developers in [City] - with location pills */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Developers in {activeLocation || 'Bangalore'}</Text>
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.developerPillsContainer}
+                            contentContainerStyle={styles.developerPillsContent}
+                        >
+                            {(locationsList || INDIA_LOCATIONS).map((loc) => (
+                                <TouchableOpacity
+                                    key={loc}
+                                    style={[
+                                        styles.developerPill,
+                                        (activeLocation || 'Bangalore') === loc && styles.developerPillActive
+                                    ]}
+                                    onPress={() => setActiveLocation(loc)}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text style={[
+                                        styles.developerPillText,
+                                        (activeLocation || 'Bangalore') === loc && styles.developerPillTextActive
+                                    ]}>
+                                        {loc}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.developersContainer} nestedScrollEnabled={true}>
+                            {developersInCity.length > 0 ? developersInCity.map((dev) => (
+                                <DeveloperCardMinimal key={dev.id} developer={dev} onPress={() => navigation.navigate('DeveloperProfile', { developer: dev })} />
+                            )) : (
+                                <View style={styles.emptyDevelopers}>
+                                    <Text style={styles.emptyDevelopersText}>No developers in {activeLocation || 'Bangalore'}. Try another city.</Text>
+                                </View>
+                            )}
+                        </ScrollView>
+                    </View>
+
+                    {/* 10. Credai Verified Projects - Overlay style */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Credai Verified Projects</Text>
                         <FlatList
                             data={credaiProjects}
                             keyExtractor={(item) => item.id}
@@ -157,62 +325,41 @@ const HomeScreen = ({ navigation }) => {
                             contentContainerStyle={styles.projectCardsContainer}
                             nestedScrollEnabled={true}
                             renderItem={({ item }) => (
-                                <NewProjectCard
-                                    project={item}
-                                    onPress={() => handleProjectPress(item)}
-                                />
+                                <ProjectCardOverlay project={item} onPress={() => handleProjectPress(item)} />
                             )}
                         />
                     </View>
 
-                    {/* RERA Verified Builder Projects */}
+                    {/* 11. Newly Launched Projects - Compact strip style */}
                     <View style={styles.verifiedSection}>
-                        <Text style={styles.sectionTitleWhite}>RERA Verified Builder Projects</Text>
+                        <Text style={styles.sectionTitleWhite}>Newly Launched Projects</Text>
                         <FlatList
-                            data={reraProjects}
+                            data={newlyLaunchedProjects}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             contentContainerStyle={styles.projectCardsContainer}
                             nestedScrollEnabled={true}
                             renderItem={({ item }) => (
-                                <NewProjectCard
-                                    project={item}
-                                    onPress={() => handleProjectPress(item)}
-                                />
+                                <ProjectCardCompact project={item} onPress={() => handleProjectPress(item)} />
                             )}
                         />
                     </View>
 
-                    {/* Credai Verified Developers */}
+                    {/* 12. Completed / Sold Out Projects */}
                     <View style={styles.verifiedSection}>
-                        <Text style={styles.sectionTitleWhite}>Credai Verified Developers</Text>
-                        <ScrollView
+                        <Text style={styles.sectionTitleWhite}>Completed / Sold Out Projects</Text>
+                        <FlatList
+                            data={completedProjects}
+                            keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={styles.developersContainer}
+                            contentContainerStyle={styles.projectCardsContainer}
                             nestedScrollEnabled={true}
-                        >
-                            {verifiedDevelopers.map((dev) => (
-                                <TouchableOpacity
-                                    key={dev.id}
-                                    style={styles.developerCard}
-                                    activeOpacity={0.8}
-                                    onPress={() => navigation.navigate('MainTabs', { screen: 'Projects' })}
-                                >
-                                    <Image
-                                        source={{ uri: dev.logo }}
-                                        style={styles.developerLogo}
-                                    />
-                                    <Text style={styles.developerName} numberOfLines={2}>{dev.name}</Text>
-                                    <View style={styles.developerBadge}>
-                                        <Ionicons name="shield-checkmark" size={12} color={colors.white} />
-                                        <Text style={styles.developerBadgeText}>{dev.badge}</Text>
-                                    </View>
-                                    <Text style={styles.developerCount}>{dev.projectsCount} Projects</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
+                            renderItem={({ item }) => (
+                                <NewProjectCard project={item} onPress={() => handleProjectPress(item)} />
+                            )}
+                        />
                     </View>
                 </LinearGradient>
             </ScrollView>
@@ -330,9 +477,49 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Lato_400Regular',
     },
+    noProjectsInLocation: {
+        paddingHorizontal: 20,
+        paddingVertical: 24,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noProjectsInLocationText: {
+        color: 'rgba(255,255,255,0.9)',
+        fontSize: 15,
+        fontFamily: 'Lato_400Regular',
+        textAlign: 'center',
+    },
     verifiedSection: {
         marginTop: 24,
         paddingBottom: 8,
+    },
+    developerPillsContainer: {
+        marginBottom: 10,
+    },
+    developerPillsContent: {
+        paddingHorizontal: 20,
+        flexDirection: 'row',
+        gap: 8,
+    },
+    developerPill: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    developerPillActive: {
+        backgroundColor: colors.white,
+        borderColor: colors.white,
+    },
+    developerPillText: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: 'rgba(255, 255, 255, 0.9)',
+    },
+    developerPillTextActive: {
+        color: colors.primary,
     },
     developersContainer: {
         paddingHorizontal: 20,
@@ -381,6 +568,17 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontFamily: 'Lato_400Regular',
         color: 'rgba(255, 255, 255, 0.9)',
+    },
+    emptyDevelopers: {
+        paddingHorizontal: 20,
+        paddingVertical: 24,
+        minWidth: 200,
+        justifyContent: 'center',
+    },
+    emptyDevelopersText: {
+        fontSize: 13,
+        fontFamily: 'Lato_400Regular',
+        color: 'rgba(255, 255, 255, 0.8)',
     },
 });
 

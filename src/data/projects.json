@@ -1489,6 +1489,222 @@
                     "floorPlan": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
                 }
             ]
+        },
+        {
+            "id": "project-blr-1",
+            "name": "Green Valley Residences",
+            "developer": "Credai Certified Builders",
+            "location": "Whitefield, Bangalore",
+            "city": "Bangalore",
+            "description": "Premium residential project in Whitefield with modern apartments, excellent connectivity to IT hubs and schools. Credai verified developer with timely delivery track record.",
+            "completion": "Off-Plan",
+            "handover": "Q3 2026",
+            "paymentPlan": "60/40",
+            "startingPrice": 7200000,
+            "priceRange": "₹72 L - 1.8 Cr",
+            "totalUnits": 280,
+            "availableUnits": 95,
+            "propertyTypes": ["Apartment", "3BR", "4BR"],
+            "bedroomRange": "2BR - 4BR",
+            "featured": true,
+            "status": "Under Construction",
+            "masterPlan": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"
+            ],
+            "amenities": ["Swimming Pool", "Gym", "Clubhouse", "Landscaped Garden", "24/7 Security", "Power Backup", "Covered Parking"],
+            "nearbyPlaces": [
+                { "name": "ITPL", "distance": "8 min" },
+                { "name": "Phoenix Mall", "distance": "5 min" },
+                { "name": "Whitefield Metro", "distance": "3 min" }
+            ],
+            "properties": [
+                {
+                    "id": "prop-blr-1-1",
+                    "title": "3BR Apartment in Tower A",
+                    "price": 9200000,
+                    "currency": "INR",
+                    "bedrooms": 3,
+                    "bathrooms": 3,
+                    "area": 1450,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "12-18",
+                    "view": "Garden View",
+                    "status": "Available",
+                    "tags": ["Off-Plan", "BEST VALUE"],
+                    "images": ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"],
+                    "floorPlan": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
+                },
+                {
+                    "id": "prop-blr-1-2",
+                    "title": "2BR Apartment in Tower B",
+                    "price": 7200000,
+                    "currency": "INR",
+                    "bedrooms": 2,
+                    "bathrooms": 2,
+                    "area": 1080,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "8-14",
+                    "view": "Pool View",
+                    "status": "Available",
+                    "tags": ["Off-Plan"],
+                    "images": ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"],
+                    "floorPlan": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-blr-2",
+            "name": "Sustainable Living Tower",
+            "developer": "EcoHomes India",
+            "location": "Whitefield, Bangalore",
+            "city": "Bangalore",
+            "description": "Eco-friendly high-rise with green building certification. Walking distance to tech parks and metro. Solar power, rainwater harvesting, and premium finishes.",
+            "completion": "Off-Plan",
+            "handover": "Q4 2026",
+            "paymentPlan": "70/30",
+            "startingPrice": 9800000,
+            "priceRange": "₹98 L - 2.1 Cr",
+            "totalUnits": 180,
+            "availableUnits": 62,
+            "propertyTypes": ["Apartment", "3BR", "4BR"],
+            "bedroomRange": "2BR - 4BR",
+            "featured": true,
+            "status": "Under Construction",
+            "masterPlan": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+                "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800",
+                "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800"
+            ],
+            "amenities": ["Solar Power", "Rainwater Harvesting", "Gym", "Rooftop Garden", "EV Charging", "24/7 Security", "Co-working Lounge"],
+            "nearbyPlaces": [
+                { "name": "Manyata Tech Park", "distance": "6 min" },
+                { "name": "Orion Mall", "distance": "4 min" },
+                { "name": "Kadugodi", "distance": "10 min" }
+            ],
+            "properties": [
+                {
+                    "id": "prop-blr-2-1",
+                    "title": "3BR Green Certified Apartment",
+                    "price": 12500000,
+                    "currency": "INR",
+                    "bedrooms": 3,
+                    "bathrooms": 3,
+                    "area": 1650,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "15-22",
+                    "view": "City View",
+                    "status": "Available",
+                    "tags": ["Off-Plan", "GREEN BUILDING"],
+                    "images": ["https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"],
+                    "floorPlan": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-blr-3",
+            "name": "Koramangala Heights",
+            "developer": "Prestige Group",
+            "location": "Koramangala, Bangalore",
+            "city": "Bangalore",
+            "description": "Luxury apartments in the heart of Koramangala with premium retail on the ground floor. Close to Forum Mall, restaurants, and corporate offices.",
+            "completion": "Ready",
+            "handover": "Available Now",
+            "paymentPlan": "100",
+            "startingPrice": 14500000,
+            "priceRange": "₹1.45 Cr - 3.2 Cr",
+            "totalUnits": 120,
+            "availableUnits": 18,
+            "propertyTypes": ["Apartment", "3BR", "4BR", "Penthouse"],
+            "bedroomRange": "3BR - 5BR",
+            "featured": true,
+            "status": "Ready to Move",
+            "masterPlan": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+                "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"
+            ],
+            "amenities": ["Infinity Pool", "Gym", "Concierge", "Retail Arcade", "Sky Lounge", "24/7 Security", "Valet Parking"],
+            "nearbyPlaces": [
+                { "name": "Forum Mall", "distance": "2 min" },
+                { "name": "MG Road", "distance": "8 min" },
+                { "name": "Bangalore Airport", "distance": "35 min" }
+            ],
+            "properties": [
+                {
+                    "id": "prop-blr-3-1",
+                    "title": "4BR Ready-to-Move Apartment",
+                    "price": 19800000,
+                    "currency": "INR",
+                    "bedrooms": 4,
+                    "bathrooms": 4,
+                    "area": 2200,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "18-24",
+                    "view": "City View",
+                    "status": "Available",
+                    "tags": ["Ready", "LUXURY"],
+                    "images": ["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"],
+                    "floorPlan": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"
+                }
+            ]
+        },
+        {
+            "id": "project-blr-4",
+            "name": "Electronic City Greens",
+            "developer": "Brigade Group",
+            "location": "Electronic City, Bangalore",
+            "city": "Bangalore",
+            "description": "Affordable yet quality homes near Electronic City Phase 1. Ideal for IT professionals. Well-connected by bus and upcoming metro corridor.",
+            "completion": "Off-Plan",
+            "handover": "Q1 2027",
+            "paymentPlan": "80/20",
+            "startingPrice": 5200000,
+            "priceRange": "₹52 L - 1.1 Cr",
+            "totalUnits": 450,
+            "availableUnits": 220,
+            "propertyTypes": ["Apartment", "1BR", "2BR", "3BR"],
+            "bedroomRange": "1BR - 3BR",
+            "featured": false,
+            "status": "Under Construction",
+            "masterPlan": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+            "images": [
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+                "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
+            ],
+            "amenities": ["Clubhouse", "Gym", "Children's Play Area", "Multi-purpose Court", "24/7 Security", "Power Backup"],
+            "nearbyPlaces": [
+                { "name": "Infosys Campus", "distance": "5 min" },
+                { "name": "Wipro Campus", "distance": "7 min" },
+                { "name": "Electronic City Metro", "distance": "12 min" }
+            ],
+            "properties": [
+                {
+                    "id": "prop-blr-4-1",
+                    "title": "2BR Apartment for IT Professionals",
+                    "price": 6200000,
+                    "currency": "INR",
+                    "bedrooms": 2,
+                    "bathrooms": 2,
+                    "area": 950,
+                    "areaUnit": "sqft",
+                    "type": "Apartment",
+                    "floor": "5-12",
+                    "view": "Garden View",
+                    "status": "Available",
+                    "tags": ["Off-Plan", "AFFORDABLE"],
+                    "images": ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"],
+                    "floorPlan": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
+                }
+            ]
         }
     ]
 }

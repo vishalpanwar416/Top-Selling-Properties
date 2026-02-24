@@ -117,5 +117,14 @@
         "copyright": "© 2025 Credai. All rights reserved.",
         "termsOfService": "Terms of Service",
         "privacyPolicy": "Privacy Policy"
+    },
+    "share": {
+        "appName": "Credai",
+        "website": "https://credai.in",
+        "contactPhone": "+91 85499 88888",
+        "contactWhatsApp": "+91 98454 00535",
+        "contactEmail": "info@credai.in",
+        "appStoreUrl": "https://apps.apple.com/app/credai",
+        "playStoreUrl": "https://play.google.com/store/apps/details?id=com.anonymous.TopSellingProperties"
     }
 }

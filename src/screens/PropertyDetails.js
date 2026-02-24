@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import {
     View,
     Text,
@@ -20,13 +20,20 @@ import agenciesData from '../data/agencies.json';
 import ContactActions from '../components/ContactActions';
 import LikeButton from '../components/LikeButton';
 import PhotoGalleryGrid from '../components/PhotoGalleryGrid';
+import SharePropertyModal from '../components/SharePropertyModal';
+import { getPropertyById } from '../utils/propertyResolver';
 
 const { width, height } = Dimensions.get('window');
 
 const PropertyDetails = ({ route, navigation }) => {
-    const { property } = route.params || {};
+    const { property: paramProperty, propertyId } = route.params || {};
+    const property = useMemo(
+        () => paramProperty || getPropertyById(propertyId),
+        [paramProperty, propertyId]
+    );
     const insets = useSafeAreaInsets();
     const [showFullDescription, setShowFullDescription] = useState(false);
+    const [shareModalVisible, setShareModalVisible] = useState(false);
     const scrollViewRef = useRef(null);
     const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -72,7 +79,7 @@ const PropertyDetails = ({ route, navigation }) => {
     };
 
     const handleShare = () => {
-        // Share functionality
+        setShareModalVisible(true);
     };
 
     // Property info data
@@ -527,6 +534,12 @@ const PropertyDetails = ({ route, navigation }) => {
                 whatsappMessage={`Hi, I'm interested in ${property.title}`}
                 emailSubject={`Inquiry about ${property.title}`}
                 contactName={agent?.name}
+            />
+
+            <SharePropertyModal
+                visible={shareModalVisible}
+                onClose={() => setShareModalVisible(false)}
+                property={property}
             />
         </View>
     );

@@ -402,9 +402,13 @@ const ProjectDetailScreen = ({ route, navigation }) => {
 
                     {/* Hero Info */}
                     <View style={styles.heroInfo}>
-                        <View style={styles.developerBadge}>
+                        <TouchableOpacity
+                            style={styles.developerBadge}
+                            onPress={() => project.developer && navigation.navigate('DeveloperProfile', { developer: { name: project.developer } })}
+                            activeOpacity={0.8}
+                        >
                             <Text style={styles.developerText}>by {project.developer}</Text>
-                        </View>
+                        </TouchableOpacity>
                         <Text style={styles.heroTitle}>{project.name}</Text>
                         <View style={styles.heroLocationRow}>
                             <Ionicons name="location" size={16} color="#fff" />

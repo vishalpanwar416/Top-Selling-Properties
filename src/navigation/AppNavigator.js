@@ -11,10 +11,15 @@ import SearchScreen from '../screens/SearchScreen';
 import FindMyAgentScreen from '../screens/FindMyAgentScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 import ProjectDetailScreen from '../screens/ProjectDetailScreen';
+import DeveloperProfileScreen from '../screens/DeveloperProfileScreen';
+import DevelopersScreen from '../screens/DevelopersScreen';
 import AgentsScreen from '../screens/AgentsScreen';
 import AgentDetailsScreen from '../screens/AgentDetailsScreen';
 import AgencyDetailsScreen from '../screens/AgencyDetailsScreen';
 import MoreScreen from '../screens/MoreScreen';
+import HomeLoanScreen from '../screens/HomeLoanScreen';
+import HomeInteriorScreen from '../screens/HomeInteriorScreen';
+import LegalServicesScreen from '../screens/LegalServicesScreen';
 import PostPropertyScreen from '../screens/PostPropertyScreen';
 import PostPropertyWhatsAppScreen from '../screens/PostPropertyWhatsAppScreen';
 import Sidebar from '../components/Sidebar';
@@ -45,6 +50,8 @@ const HomeStack = () => {
                 }}
             />
             <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
+            <Stack.Screen name="DeveloperProfile" component={DeveloperProfileScreen} />
+            <Stack.Screen name="Developers" component={DevelopersScreen} />
             <Stack.Screen name="FindMyAgent" component={FindMyAgentScreen} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
             <Stack.Screen name="PostProperty" component={PostPropertyScreen} />
@@ -62,6 +69,7 @@ const ProjectsStack = () => {
         >
             <Stack.Screen name="ProjectsMain" component={ProjectsScreen} />
             <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
+            <Stack.Screen name="DeveloperProfile" component={DeveloperProfileScreen} />
             <Stack.Screen name="PropertyDetails" component={PropertyDetails} />
             <Stack.Screen name="AgentDetails" component={AgentDetailsScreen} />
         </Stack.Navigator>
@@ -93,6 +101,9 @@ const MoreStack = () => {
             <Stack.Screen name="MoreMain" component={MoreScreen} />
             <Stack.Screen name="Favorites" component={FavoritesScreen} />
             <Stack.Screen name="Contact" component={ContactScreen} />
+            <Stack.Screen name="HomeLoan" component={HomeLoanScreen} />
+            <Stack.Screen name="HomeInterior" component={HomeInteriorScreen} />
+            <Stack.Screen name="LegalServices" component={LegalServicesScreen} />
         </Stack.Navigator>
     );
 };
@@ -137,9 +148,26 @@ const TabNavigator = () => {
     );
 };
 
+const linking = {
+    prefixes: ['credai://', 'https://credai.in'],
+    config: {
+        screens: {
+            MainTabs: {
+                screens: {
+                    Projects: {
+                        screens: {
+                            PropertyDetails: 'property/:propertyId',
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
 const AppNavigator = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
             <Drawer.Navigator
                 drawerContent={(props) => <Sidebar {...props} />}
                 screenOptions={{

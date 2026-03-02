@@ -6,27 +6,20 @@ import {
     ScrollView,
     TouchableOpacity,
     TextInput,
-    useWindowDimensions,
     Linking,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
+import homeLoansData from '../data/homeLoans.json';
 
 const HomeLoanScreen = ({ navigation }) => {
     const insets = useSafeAreaInsets();
-    const { width } = useWindowDimensions();
     const [loanAmount, setLoanAmount] = useState('');
     const [tenure, setTenure] = useState('');
     const [income, setIncome] = useState('');
 
-    const partners = [
-        { name: 'HDFC Home Loan', rate: '8.5%', icon: 'business' },
-        { name: 'ICICI Home Loan', rate: '8.6%', icon: 'business' },
-        { name: 'SBI Home Loan', rate: '8.4%', icon: 'business' },
-        { name: 'Axis Bank', rate: '8.55%', icon: 'business' },
-    ];
+    const { partners, benefits } = homeLoansData;
 
     const handleApply = () => {
         Linking.openURL('tel:+918549988888').catch(() => {});
@@ -43,11 +36,11 @@ const HomeLoanScreen = ({ navigation }) => {
             </View>
 
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-                <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.hero}>
+                <View style={styles.hero}>
                     <Ionicons name="home" size={48} color="rgba(255,255,255,0.9)" />
                     <Text style={styles.heroTitle}>Home Loans</Text>
                     <Text style={styles.heroSubtitle}>Get the best rates from our partner banks. Quick approval, transparent process.</Text>
-                </LinearGradient>
+                </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Quick Eligibility</Text>
@@ -87,14 +80,17 @@ const HomeLoanScreen = ({ navigation }) => {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Partner banks & rates</Text>
-                    {partners.map((p, i) => (
-                        <TouchableOpacity key={i} style={styles.partnerCard} activeOpacity={0.8}>
+                    {partners.map((p) => (
+                        <TouchableOpacity key={p.id} style={styles.partnerCard} activeOpacity={0.8}>
                             <View style={styles.partnerIcon}>
-                                <Ionicons name={p.icon} size={24} color={colors.primary} />
+                                <Ionicons name={p.icon} size={24} color={colors.logoGreen} />
                             </View>
                             <View style={styles.partnerInfo}>
                                 <Text style={styles.partnerName}>{p.name}</Text>
-                                <Text style={styles.partnerRate}>From {p.rate} p.a.</Text>
+                                <Text style={styles.partnerRate}>From {p.rate}% {p.rateType}</Text>
+                                {p.processingFee ? (
+                                    <Text style={styles.partnerFee}>Processing: {p.processingFee}</Text>
+                                ) : null}
                             </View>
                             <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
                         </TouchableOpacity>
@@ -103,29 +99,19 @@ const HomeLoanScreen = ({ navigation }) => {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Why Credai Home Loan?</Text>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Best interest rates from top banks</Text>
-                    </View>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Quick sanction & disbursement</Text>
-                    </View>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Dedicated relationship manager</Text>
-                    </View>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>No hidden charges</Text>
-                    </View>
+                    {benefits.map((text, i) => (
+                        <View key={i} style={styles.benefitRow}>
+                            <Ionicons name="checkmark-circle" size={22} color={colors.logoGreen} />
+                            <Text style={styles.benefitText}>{text}</Text>
+                        </View>
+                    ))}
                 </View>
 
                 <TouchableOpacity style={styles.applyBtn} onPress={handleApply} activeOpacity={0.9}>
-                    <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.applyBtnGradient}>
+                    <View style={styles.applyBtnInner}>
                         <Ionicons name="call" size={20} color={colors.white} />
                         <Text style={styles.applyBtnText}>Apply / Get call back</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />
@@ -159,6 +145,7 @@ const styles = StyleSheet.create({
         padding: 24,
         borderRadius: 16,
         alignItems: 'center',
+        backgroundColor: colors.logoGreen,
     },
     heroTitle: { fontSize: 22, fontWeight: '700', color: colors.white, marginTop: 12 },
     heroSubtitle: { fontSize: 14, color: 'rgba(255,255,255,0.9)', marginTop: 8, textAlign: 'center' },
@@ -185,7 +172,7 @@ const styles = StyleSheet.create({
         color: colors.textPrimary,
     },
     checkBtn: {
-        backgroundColor: colors.primary,
+        backgroundColor: colors.logoGreen,
         borderRadius: 10,
         paddingVertical: 14,
         marginTop: 20,
@@ -209,10 +196,11 @@ const styles = StyleSheet.create({
     partnerInfo: { flex: 1 },
     partnerName: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
     partnerRate: { fontSize: 13, color: colors.textSecondary, marginTop: 2 },
+    partnerFee: { fontSize: 11, color: colors.textTertiary, marginTop: 2 },
     benefitRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     benefitText: { fontSize: 15, color: colors.textPrimary, marginLeft: 10, flex: 1 },
-    applyBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, overflow: 'hidden' },
-    applyBtnGradient: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
+    applyBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, backgroundColor: colors.logoGreen },
+    applyBtnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
     applyBtnText: { fontSize: 17, fontWeight: '700', color: colors.white },
 });
 

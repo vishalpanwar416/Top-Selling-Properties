@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
 
 const services = [
@@ -29,17 +28,17 @@ const LegalServicesScreen = ({ navigation }) => {
             </View>
 
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-                <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.hero}>
+                <View style={styles.hero}>
                     <Ionicons name="document-text" size={44} color="rgba(255,255,255,0.9)" />
                     <Text style={styles.heroTitle}>Property legal support</Text>
                     <Text style={styles.heroSubtitle}>Verified legal partners for documentation & compliance</Text>
-                </LinearGradient>
+                </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>What we offer</Text>
                     {services.map((s, i) => (
                         <View key={i} style={styles.serviceCard}>
-                            <Ionicons name="shield-checkmark" size={24} color={colors.primary} style={styles.serviceIcon} />
+                            <Ionicons name="shield-checkmark" size={24} color={colors.logoGreen} style={styles.serviceIcon} />
                             <View style={styles.serviceBody}>
                                 <Text style={styles.serviceTitle}>{s.title}</Text>
                                 <Text style={styles.serviceDesc}>{s.desc}</Text>
@@ -49,10 +48,10 @@ const LegalServicesScreen = ({ navigation }) => {
                 </View>
 
                 <TouchableOpacity style={styles.contactBtn} onPress={handleContact} activeOpacity={0.9}>
-                    <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.contactBtnGradient}>
+                    <View style={styles.contactBtnInner}>
                         <Ionicons name="call" size={20} color={colors.white} />
                         <Text style={styles.contactBtnText}>Contact legal team</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />
@@ -83,6 +82,7 @@ const styles = StyleSheet.create({
         padding: 22,
         borderRadius: 16,
         alignItems: 'center',
+        backgroundColor: colors.logoGreen,
     },
     heroTitle: { fontSize: 20, fontWeight: '700', color: colors.white, marginTop: 10 },
     heroSubtitle: { fontSize: 13, color: 'rgba(255,255,255,0.9)', marginTop: 6, textAlign: 'center' },
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     serviceBody: { flex: 1 },
     serviceTitle: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
     serviceDesc: { fontSize: 13, color: colors.textSecondary, marginTop: 4 },
-    contactBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, overflow: 'hidden' },
-    contactBtnGradient: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
+    contactBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, backgroundColor: colors.logoGreen },
+    contactBtnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
     contactBtnText: { fontSize: 17, fontWeight: '700', color: colors.white },
 });
 

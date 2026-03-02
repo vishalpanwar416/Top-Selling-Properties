@@ -41,19 +41,16 @@ const DeveloperCardStats = ({ developer, onPress }) => {
 const styles = StyleSheet.create({
     card: {
         width: cardWidth,
-        backgroundColor: 'rgba(255, 255, 255, 0.18)',
-        borderRadius: 16,
-        padding: 14,
-        marginRight: 12,
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.28)',
+        paddingVertical: 10,
+        marginRight: 16,
     },
     logo: {
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        overflow: 'hidden',
         marginBottom: 10,
     },
     name: {
@@ -66,12 +63,12 @@ const styles = StyleSheet.create({
     badge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.28)',
         paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 10,
+        borderRadius: 20,
         marginBottom: 10,
         gap: 4,
+        backgroundColor: 'rgba(255, 255, 255, 0.12)',
     },
     badgeText: {
         fontSize: 9,
@@ -81,9 +78,10 @@ const styles = StyleSheet.create({
     statsRow: {
         flexDirection: 'row',
         width: '100%',
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(255, 255, 255, 0.3)',
         paddingTop: 10,
+        marginTop: 4,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(255, 255, 255, 0.2)',
     },
     statBox: {
         flex: 1,

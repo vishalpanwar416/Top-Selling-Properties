@@ -20,6 +20,9 @@ import MoreScreen from '../screens/MoreScreen';
 import HomeLoanScreen from '../screens/HomeLoanScreen';
 import HomeInteriorScreen from '../screens/HomeInteriorScreen';
 import LegalServicesScreen from '../screens/LegalServicesScreen';
+import AuthStartScreen from '../screens/AuthStartScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 import PostPropertyScreen from '../screens/PostPropertyScreen';
 import PostPropertyWhatsAppScreen from '../screens/PostPropertyWhatsAppScreen';
 import Sidebar from '../components/Sidebar';
@@ -104,6 +107,9 @@ const MoreStack = () => {
             <Stack.Screen name="HomeLoan" component={HomeLoanScreen} />
             <Stack.Screen name="HomeInterior" component={HomeInteriorScreen} />
             <Stack.Screen name="LegalServices" component={LegalServicesScreen} />
+            <Stack.Screen name="AuthStart" component={AuthStartScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
     );
 };
@@ -165,29 +171,45 @@ const linking = {
     },
 };
 
+const MainDrawer = () => (
+    <Drawer.Navigator
+        drawerContent={(props) => <Sidebar {...props} />}
+        screenOptions={{
+            headerShown: false,
+            drawerType: 'slide',
+            drawerStyle: {
+                width: 280,
+            },
+            overlayColor: 'rgba(0, 0, 0, 0.5)',
+        }}
+    >
+        <Drawer.Screen
+            name="MainTabs"
+            component={TabNavigator}
+            options={{
+                drawerLabel: () => null,
+                drawerItemStyle: { display: 'none' },
+            }}
+        />
+    </Drawer.Navigator>
+);
+
+const RootStack = () => (
+    <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName="AuthStart"
+    >
+        <Stack.Screen name="AuthStart" component={AuthStartScreen} initialParams={{ isInitialGate: true }} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Main" component={MainDrawer} />
+    </Stack.Navigator>
+);
+
 const AppNavigator = () => {
     return (
         <NavigationContainer linking={linking}>
-            <Drawer.Navigator
-                drawerContent={(props) => <Sidebar {...props} />}
-                screenOptions={{
-                    headerShown: false,
-                    drawerType: 'slide',
-                    drawerStyle: {
-                        width: 280,
-                    },
-                    overlayColor: 'rgba(0, 0, 0, 0.5)',
-                }}
-            >
-                <Drawer.Screen
-                    name="MainTabs"
-                    component={TabNavigator}
-                    options={{
-                        drawerLabel: () => null,
-                        drawerItemStyle: { display: 'none' },
-                    }}
-                />
-            </Drawer.Navigator>
+            <RootStack />
         </NavigationContainer>
     );
 };

@@ -30,19 +30,16 @@ const DeveloperCardClassic = ({ developer, onPress }) => {
 const styles = StyleSheet.create({
     card: {
         width: cardWidth,
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
-        borderRadius: 16,
-        padding: 12,
-        marginRight: 12,
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.25)',
+        paddingVertical: 8,
+        marginRight: 16,
     },
     logo: {
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        overflow: 'hidden',
         marginBottom: 8,
     },
     name: {
@@ -55,12 +52,12 @@ const styles = StyleSheet.create({
     badge: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.25)',
         paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 12,
+        borderRadius: 20,
         marginBottom: 4,
         gap: 4,
+        backgroundColor: 'rgba(255, 255, 255, 0.12)',
     },
     badgeText: {
         fontSize: 9,

@@ -1,0 +1,112 @@
+{
+    "categories": [
+        {
+            "id": "1",
+            "name": "Living Room",
+            "icon": "tv-outline",
+            "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400",
+            "count": "1200+ designs"
+        },
+        {
+            "id": "2",
+            "name": "Bedroom",
+            "icon": "bed-outline",
+            "image": "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400",
+            "count": "800+ designs"
+        },
+        {
+            "id": "3",
+            "name": "Kitchen",
+            "icon": "restaurant-outline",
+            "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400",
+            "count": "Modular & traditional"
+        },
+        {
+            "id": "4",
+            "name": "Bathroom",
+            "icon": "water-outline",
+            "image": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400",
+            "count": "500+ designs"
+        },
+        {
+            "id": "5",
+            "name": "Kids Room",
+            "icon": "happy-outline",
+            "image": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400",
+            "count": "300+ designs"
+        },
+        {
+            "id": "6",
+            "name": "Study",
+            "icon": "library-outline",
+            "image": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400",
+            "count": "Compact & full room"
+        }
+    ],
+    "packages": [
+        {
+            "id": "pkg-1",
+            "name": "Basic",
+            "price": "₹5 L",
+            "priceNote": "Starting price",
+            "desc": "Essential interiors for 2 BHK. Includes basic modular kitchen, flooring, painting & false ceiling.",
+            "tag": "Popular",
+            "features": ["Modular kitchen", "Vitrified flooring", "Paint & false ceiling", "6 months warranty"]
+        },
+        {
+            "id": "pkg-2",
+            "name": "Premium",
+            "price": "₹10 L",
+            "priceNote": "For 2–3 BHK",
+            "desc": "Designer finishes, premium materials. Custom wardrobes, premium tiles & branded fittings.",
+            "tag": null,
+            "features": ["All in Basic", "Designer tiles", "Custom wardrobes", "1 year warranty"]
+        },
+        {
+            "id": "pkg-3",
+            "name": "Luxury",
+            "price": "₹20 L+",
+            "priceNote": "Full home",
+            "desc": "Full home turnkey. Premium materials, smart home options & dedicated project manager.",
+            "tag": "Best value",
+            "features": ["All in Premium", "Smart home options", "Dedicated PM", "2 year warranty"]
+        }
+    ],
+    "gallery": [
+        {
+            "id": "g1",
+            "url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400",
+            "title": "Modern living"
+        },
+        {
+            "id": "g2",
+            "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400",
+            "title": "Modular kitchen"
+        },
+        {
+            "id": "g3",
+            "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
+            "title": "Master bedroom"
+        },
+        {
+            "id": "g4",
+            "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400",
+            "title": "Minimal bathroom"
+        },
+        {
+            "id": "g5",
+            "url": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400",
+            "title": "Contemporary design"
+        }
+    ],
+    "partners": [
+        { "id": "pt1", "name": "Livspace", "type": "Full home", "rating": "4.8" },
+        { "id": "pt2", "name": "Homelane", "type": "Modular & interiors", "rating": "4.7" },
+        { "id": "pt3", "name": "DesignCafe", "type": "Custom design", "rating": "4.6" }
+    ],
+    "benefits": [
+        "Verified design partners",
+        "Fixed timeline & pricing",
+        "Quality materials & warranty"
+    ]
+}

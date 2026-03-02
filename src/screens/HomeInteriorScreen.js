@@ -11,31 +11,13 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../theme/colors';
+import homeInteriorsData from '../data/homeInteriors.json';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2 - 6;
 
-const categories = [
-    { id: '1', name: 'Living Room', icon: 'tv-outline', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400' },
-    { id: '2', name: 'Bedroom', icon: 'bed-outline', image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=400' },
-    { id: '3', name: 'Kitchen', icon: 'restaurant-outline', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400' },
-    { id: '4', name: 'Bathroom', icon: 'water-outline', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400' },
-];
-
-const packages = [
-    { name: 'Basic', price: '₹5 L', desc: 'Essential interiors for 2 BHK', tag: 'Popular' },
-    { name: 'Premium', price: '₹10 L', desc: 'Designer finishes, 2–3 BHK', tag: null },
-    { name: 'Luxury', price: '₹20 L+', desc: 'Full home, premium materials', tag: 'Best value' },
-];
-
-const gallery = [
-    'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400',
-    'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=400',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400',
-];
+const { categories, packages, gallery, benefits } = homeInteriorsData;
 
 const HomeInteriorScreen = ({ navigation }) => {
     const insets = useSafeAreaInsets();
@@ -55,11 +37,11 @@ const HomeInteriorScreen = ({ navigation }) => {
             </View>
 
             <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-                <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.hero}>
+                <View style={styles.hero}>
                     <Ionicons name="color-palette" size={44} color="rgba(255,255,255,0.9)" />
                     <Text style={styles.heroTitle}>Design your dream home</Text>
                     <Text style={styles.heroSubtitle}>End-to-end interior solutions with trusted partners</Text>
-                </LinearGradient>
+                </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Rooms we design</Text>
@@ -77,8 +59,8 @@ const HomeInteriorScreen = ({ navigation }) => {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Packages</Text>
-                    {packages.map((pkg, i) => (
-                        <TouchableOpacity key={i} style={styles.packageCard} activeOpacity={0.85}>
+                    {packages.map((pkg) => (
+                        <TouchableOpacity key={pkg.id} style={styles.packageCard} activeOpacity={0.85}>
                             <View style={styles.packageHeader}>
                                 <Text style={styles.packageName}>{pkg.name}</Text>
                                 {pkg.tag ? (
@@ -96,33 +78,27 @@ const HomeInteriorScreen = ({ navigation }) => {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Our work</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.galleryContent}>
-                        {gallery.map((uri, i) => (
-                            <Image key={i} source={{ uri }} style={styles.galleryImage} resizeMode="cover" />
+                        {gallery.map((item) => (
+                            <Image key={item.id} source={{ uri: item.url }} style={styles.galleryImage} resizeMode="cover" />
                         ))}
                     </ScrollView>
                 </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Why Credai Interiors?</Text>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Verified design partners</Text>
-                    </View>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Fixed timeline & pricing</Text>
-                    </View>
-                    <View style={styles.benefitRow}>
-                        <Ionicons name="checkmark-circle" size={22} color={colors.primary} />
-                        <Text style={styles.benefitText}>Quality materials & warranty</Text>
-                    </View>
+                    {benefits.map((text, i) => (
+                        <View key={i} style={styles.benefitRow}>
+                            <Ionicons name="checkmark-circle" size={22} color={colors.logoGreen} />
+                            <Text style={styles.benefitText}>{text}</Text>
+                        </View>
+                    ))}
                 </View>
 
                 <TouchableOpacity style={styles.enquireBtn} onPress={handleEnquire} activeOpacity={0.9}>
-                    <LinearGradient colors={[colors.primary, colors.primaryLight]} style={styles.enquireBtnGradient}>
+                    <View style={styles.enquireBtnInner}>
                         <Ionicons name="chatbubble-ellipses" size={20} color={colors.white} />
                         <Text style={styles.enquireBtnText}>Enquire now</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />
@@ -153,6 +129,7 @@ const styles = StyleSheet.create({
         padding: 22,
         borderRadius: 16,
         alignItems: 'center',
+        backgroundColor: colors.logoGreen,
     },
     heroTitle: { fontSize: 20, fontWeight: '700', color: colors.white, marginTop: 10 },
     heroSubtitle: { fontSize: 13, color: 'rgba(255,255,255,0.9)', marginTop: 6, textAlign: 'center' },
@@ -181,16 +158,16 @@ const styles = StyleSheet.create({
     },
     packageHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 },
     packageName: { fontSize: 17, fontWeight: '700', color: colors.textPrimary },
-    packageTag: { backgroundColor: colors.primary, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8 },
+    packageTag: { backgroundColor: colors.logoGreen, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8 },
     packageTagText: { fontSize: 11, fontWeight: '700', color: colors.white },
-    packagePrice: { fontSize: 18, fontWeight: '800', color: colors.primary, marginTop: 4 },
+    packagePrice: { fontSize: 18, fontWeight: '800', color: colors.logoGreen, marginTop: 4 },
     packageDesc: { fontSize: 13, color: colors.textSecondary, marginTop: 4 },
     galleryContent: { paddingRight: 16, gap: 12 },
     galleryImage: { width: width * 0.7, height: 180, borderRadius: 12, marginRight: 12 },
     benefitRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
     benefitText: { fontSize: 15, color: colors.textPrimary, marginLeft: 10, flex: 1 },
-    enquireBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, overflow: 'hidden' },
-    enquireBtnGradient: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
+    enquireBtn: { marginHorizontal: 16, marginTop: 28, borderRadius: 12, backgroundColor: colors.logoGreen },
+    enquireBtnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, gap: 8 },
     enquireBtnText: { fontSize: 17, fontWeight: '700', color: colors.white },
 });
 

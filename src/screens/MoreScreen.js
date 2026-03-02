@@ -15,6 +15,23 @@ const MoreScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.card}
+                        onPress={() => navigation.navigate('AuthStart')}
+                        activeOpacity={0.85}
+                    >
+                        <View style={[styles.cardIconWrap, { backgroundColor: colors.filterRedLight }]}>
+                            <Ionicons name="person" size={28} color={colors.primary} />
+                        </View>
+                        <View style={styles.cardBody}>
+                            <Text style={styles.cardTitle}>Log in</Text>
+                            <Text style={styles.cardDesc}>Sign in to save favorites and get alerts</Text>
+                        </View>
+                        <Ionicons name="chevron-forward" size={22} color={colors.textTertiary} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Project development solutions</Text>
                     <Text style={styles.sectionSubtitle}>Home loans, legal support & interiors</Text>
 
@@ -38,8 +55,8 @@ const MoreScreen = ({ navigation }) => {
                         onPress={() => navigation.navigate('LegalServices')}
                         activeOpacity={0.85}
                     >
-                        <View style={[styles.cardIconWrap, { backgroundColor: colors.tealLight }]}>
-                            <Ionicons name="document-text" size={28} color={colors.teal} />
+                        <View style={[styles.cardIconWrap, { backgroundColor: colors.filterRedLight }]}>
+                            <Ionicons name="document-text" size={28} color={colors.primary} />
                         </View>
                         <View style={styles.cardBody}>
                             <Text style={styles.cardTitle}>Legal services</Text>

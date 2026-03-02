@@ -234,7 +234,7 @@ const LocationSelector = ({ selectedLocation, onLocationChange, style }) => {
                 onPress={openModal}
                 activeOpacity={0.7}
             >
-                <Ionicons name="location" size={16} color="#1B5E20" />
+                <Ionicons name="location" size={16} color={colors.primary} />
                 <Text style={styles.locationText}>{selectedLocation}</Text>
             </TouchableOpacity>
             {renderBottomSheet()}
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     locationText: {
         fontSize: 14,
         fontFamily: 'Lato_700Bold',
-        color: '#1B5E20',
+        color: colors.primary,
     },
     modalOverlay: {
         flex: 1,

@@ -244,14 +244,14 @@ const PropertiesScreen = ({ navigation }) => {
                             activeOpacity={0.7}
                         >
                             <View style={styles.backButtonContainer}>
-                                <Ionicons name="chevron-back" size={24} color="#1B5E20" />
+                                <Ionicons name="chevron-back" size={24} color="#00593b" />
                             </View>
                         </TouchableOpacity>
 
                         {/* Title with Icon - Centered */}
                         <View style={styles.titleRow}>
                             <View style={styles.iconContainer}>
-                                <Ionicons name="home" size={24} color="#1B5E20" />
+                                <Ionicons name="home" size={24} color="#00593b" />
                             </View>
                             <Text style={styles.welcomeTitle}>Properties</Text>
                         </View>
@@ -829,7 +829,7 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 24,
         fontFamily: 'Lato_700Bold',
-        color: '#1B5E20',
+        color: '#00593b',
         letterSpacing: -0.3,
     },
 

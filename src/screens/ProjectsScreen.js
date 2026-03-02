@@ -22,9 +22,9 @@ import projectsData from '../data/projects.json';
 
 // Premium Color Palette - Credai Green
 const COLORS = {
-    primary: '#1B5E20',
-    primaryDark: '#1B5E20',
-    primaryLight: 'rgba(27, 94, 32, 0.08)',
+    primary: '#00593b',
+    primaryDark: '#00593b',
+    primaryLight: 'rgba(0, 89, 59, 0.08)',
     secondary: '#1E293B',
     accent: '#F59E0B',
     success: '#10B981',
@@ -34,7 +34,7 @@ const COLORS = {
     textSecondary: '#64748B',
     textMuted: '#94A3B8',
     border: '#E2E8F0',
-    gradient1: ['#1B5E20', '#2E7D32', '#43A047'],
+    gradient1: ['#00593b', '#006d45', '#008054'],
     gradient2: ['#1E293B', '#334155', '#475569'],
     gradient3: ['#0F172A', '#1E293B'],
     glassBg: 'rgba(255, 255, 255, 0.85)',
@@ -379,14 +379,14 @@ const ProjectsScreen = ({ navigation }) => {
                             activeOpacity={0.7}
                         >
                             <View style={styles.backButtonContainer}>
-                                <Ionicons name="chevron-back" size={24} color="#1B5E20" />
+                                <Ionicons name="chevron-back" size={24} color="#00593b" />
                             </View>
                         </TouchableOpacity>
 
                         {/* Title with Icon - Centered */}
                         <View style={styles.titleRow}>
                             <View style={styles.iconContainer}>
-                                <Ionicons name="business" size={24} color="#1B5E20" />
+                                <Ionicons name="business" size={24} color="#00593b" />
                             </View>
                             <Text style={styles.welcomeTitle}>Projects</Text>
                         </View>
@@ -638,7 +638,7 @@ const styles = StyleSheet.create({
     welcomeTitle: {
         fontSize: 24,
         fontFamily: 'Lato_700Bold',
-        color: '#1B5E20',
+        color: '#00593b',
         letterSpacing: -0.3,
     },
 

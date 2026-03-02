@@ -16,9 +16,9 @@ import LikeButton from './LikeButton';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const COLORS = {
-    primary: '#1B5E20',
-    primaryDark: '#1B5E20',
-    primaryLight: 'rgba(27, 94, 32, 0.08)',
+    primary: '#00593b',
+    primaryDark: '#00593b',
+    primaryLight: 'rgba(0, 89, 59, 0.08)',
     secondary: '#1E293B',
     accent: '#F59E0B',
     success: '#10B981',
@@ -28,7 +28,7 @@ const COLORS = {
     textSecondary: '#64748B',
     textMuted: '#94A3B8',
     border: '#E2E8F0',
-    gradient1: ['#1B5E20', '#2E7D32', '#43A047'],
+    gradient1: ['#00593b', '#006d45', '#008054'],
     gradient2: ['#1E293B', '#334155', '#475569'],
     gradient3: ['#0F172A', '#1E293B'],
     glassBg: 'rgba(255, 255, 255, 0.85)',

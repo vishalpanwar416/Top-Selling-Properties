@@ -7,7 +7,10 @@
     "start:localhost": "REACT_NATIVE_PACKAGER_HOSTNAME=127.0.0.1 expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:android:clean": "rm -rf android/app/build android/app/.cxx && cd android && ./gradlew assembleRelease",
+    "build:ios": "expo run:ios --configuration Release"
   },
   "dependencies": {
     "@expo-google-fonts/lato": "^0.4.1",

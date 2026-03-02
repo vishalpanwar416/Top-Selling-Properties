@@ -1,0 +1,70 @@
+{
+    "partners": [
+        {
+            "id": "bank-1",
+            "name": "HDFC Home Loan",
+            "rate": "8.50",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "Up to 0.5%",
+            "maxTenure": "30 years"
+        },
+        {
+            "id": "bank-2",
+            "name": "ICICI Home Loan",
+            "rate": "8.60",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "0.5% - 1%",
+            "maxTenure": "30 years"
+        },
+        {
+            "id": "bank-3",
+            "name": "SBI Home Loan",
+            "rate": "8.40",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "Nil to 0.35%",
+            "maxTenure": "30 years"
+        },
+        {
+            "id": "bank-4",
+            "name": "Axis Bank",
+            "rate": "8.55",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "Up to 1%",
+            "maxTenure": "30 years"
+        },
+        {
+            "id": "bank-5",
+            "name": "Kotak Mahindra",
+            "rate": "8.65",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "0.5%",
+            "maxTenure": "25 years"
+        },
+        {
+            "id": "bank-6",
+            "name": "LIC Housing",
+            "rate": "8.45",
+            "rateType": "p.a.",
+            "icon": "business",
+            "processingFee": "Up to 0.50%",
+            "maxTenure": "30 years"
+        }
+    ],
+    "benefits": [
+        "Best interest rates from top banks",
+        "Quick sanction & disbursement",
+        "Dedicated relationship manager",
+        "No hidden charges"
+    ],
+    "eligibilityTips": [
+        "Salaried: Min income ₹25,000/month",
+        "Self-employed: ITR for last 2 years",
+        "Age: 21–65 years",
+        "Max loan: Up to 90% of property value"
+    ]
+}

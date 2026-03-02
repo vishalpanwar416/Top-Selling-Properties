@@ -152,12 +152,7 @@ const Sidebar = (props) => {
 
     return (
         <View style={styles.container}>
-            <LinearGradient
-                colors={[colors.primary, colors.maroon, colors.primary]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={[styles.header, { paddingTop: insets.top + 12 }]}
-            >
+            <View style={[styles.header, styles.headerGreen, { paddingTop: insets.top + 12 }]}>
                 <View style={styles.headerLogoContainer}>
                     <Image
                         source={require('../../assets/logo.jpeg')}
@@ -167,12 +162,9 @@ const Sidebar = (props) => {
                 </View>
                 <View style={styles.profileContainer}>
                     <View style={styles.avatarContainer}>
-                        <LinearGradient
-                            colors={[colors.white, colors.filterRedLight]}
-                            style={styles.avatar}
-                        >
+                        <View style={styles.avatar}>
                             <Text style={styles.avatarText}>S</Text>
-                        </LinearGradient>
+                        </View>
                         <View style={styles.avatarBadge} />
                     </View>
                     <View style={styles.profileInfo}>
@@ -184,7 +176,7 @@ const Sidebar = (props) => {
                         </View>
                     </View>
                 </View>
-            </LinearGradient>
+            </View>
 
             <DrawerContentScrollView 
                 {...props} 
@@ -196,7 +188,7 @@ const Sidebar = (props) => {
                     'home',
                     'Ionicons',
                     false,
-                    colors.primary,
+                    colors.logoGreen,
                     () => handleNavigation('Home')
                 )}
 
@@ -205,7 +197,7 @@ const Sidebar = (props) => {
                     'business',
                     'Ionicons',
                     false,
-                    colors.primary,
+                    colors.logoGreen,
                     () => handleNavigation('Projects')
                 )}
 
@@ -216,7 +208,7 @@ const Sidebar = (props) => {
                     'business',
                     'Ionicons',
                     false,
-                    colors.teal,
+                    colors.logoGreen,
                     () => handleNavigation('Home', 'Developers')
                 )}
 
@@ -228,7 +220,7 @@ const Sidebar = (props) => {
                     'crown',
                     'MaterialCommunityIcons',
                     false,
-                    colors.warning,
+                    colors.logoGreen,
                     () => handleCardPress('dealer-plans')
                 )}
 
@@ -239,7 +231,7 @@ const Sidebar = (props) => {
                     'home',
                     'Ionicons',
                     false,
-                    colors.primary,
+                    colors.logoGreen,
                     () => handleNavigation('More', 'HomeLoan')
                 )}
                 {renderMenuItem(
@@ -247,7 +239,7 @@ const Sidebar = (props) => {
                     'document-text',
                     'Ionicons',
                     false,
-                    colors.teal,
+                    colors.logoGreen,
                     () => handleNavigation('More', 'LegalServices')
                 )}
                 {renderMenuItem(
@@ -255,7 +247,7 @@ const Sidebar = (props) => {
                     'color-palette',
                     'Ionicons',
                     false,
-                    colors.primary,
+                    colors.logoGreen,
                     () => handleNavigation('More', 'HomeInterior')
                 )}
 
@@ -265,7 +257,7 @@ const Sidebar = (props) => {
                     'star',
                     'Ionicons',
                     false,
-                    colors.warning,
+                    colors.logoGreen,
                     () => handleCardPress('rate-app')
                 )}
             </DrawerContentScrollView>
@@ -320,18 +312,13 @@ const Sidebar = (props) => {
                             </TouchableOpacity>
                             
                             <TouchableOpacity
-                                style={[styles.modalButton, styles.submitButton, rating === 0 && styles.submitButtonDisabled]}
+                                style={[styles.modalButton, styles.submitButton, styles.submitButtonGreen, rating === 0 && styles.submitButtonDisabled]}
                                 onPress={handleRatingSubmit}
                                 disabled={rating === 0}
                             >
-                                <LinearGradient
-                                    colors={rating > 0 ? [colors.primary, colors.maroon] : [colors.textTertiary, colors.textTertiary]}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 0 }}
-                                    style={styles.submitButtonGradient}
-                                >
+                                <View style={styles.submitButtonGradient}>
                                     <Text style={styles.submitButtonText}>Submit</Text>
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -349,6 +336,9 @@ const styles = StyleSheet.create({
     header: {
         paddingHorizontal: 16,
         paddingBottom: 20,
+    },
+    headerGreen: {
+        backgroundColor: colors.logoGreen,
     },
     headerLogoContainer: {
         marginBottom: 16,
@@ -371,6 +361,7 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.25)',
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -383,7 +374,7 @@ const styles = StyleSheet.create({
     avatarText: {
         fontSize: 22,
         fontFamily: 'Lato_700Bold',
-        color: colors.primary,
+        color: colors.white,
     },
     avatarBadge: {
         position: 'absolute',
@@ -394,7 +385,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: colors.success,
         borderWidth: 2,
-        borderColor: colors.primary,
+        borderColor: colors.logoGreen,
     },
     profileInfo: {
         flex: 1,
@@ -634,6 +625,9 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         borderRadius: 10,
+    },
+    submitButtonGreen: {
+        backgroundColor: colors.logoGreen,
     },
     submitButtonDisabled: {
         opacity: 0.5,

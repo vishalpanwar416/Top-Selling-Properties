@@ -16,6 +16,7 @@ import colors from '../theme/colors';
 import projectsData from '../data/projects.json';
 import contentData from '../data/content.json';
 import homeSectionsData from '../data/homeSections.json';
+import homeLoansData from '../data/homeLoans.json';
 
 const INDIA_LOCATIONS = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune'];
 const locationsList = Array.isArray(contentData?.locations) ? contentData.locations : INDIA_LOCATIONS;
@@ -41,6 +42,7 @@ const HomeScreen = ({ navigation }) => {
     const developersInCity = (verifiedDevelopers || []).filter(
         (d) => (d.location || '').toLowerCase().includes((activeLocation || '').toLowerCase())
     );
+    const homeLoanOffers = (homeLoansData?.partners || []).slice(0, 4);
 
     // Helper function to check if project matches location
     const matchesProjectLocation = (project, location) => {
@@ -163,6 +165,46 @@ const HomeScreen = ({ navigation }) => {
                                 </TouchableOpacity>
                             </>
                         )}
+                    </View>
+
+                    {/* Home Loan Options - Ad-style cards */}
+                    <View style={styles.verifiedSection}>
+                        <Text style={styles.sectionTitleWhite}>Home Loan Options</Text>
+                        <Text style={styles.sectionSubtitleWhite}>Best rates from partner banks. Quick approval.</Text>
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.homeLoanAdsContainer}
+                            nestedScrollEnabled={true}
+                        >
+                            {homeLoanOffers.map((offer) => (
+                                <TouchableOpacity
+                                    key={offer.id}
+                                    style={styles.homeLoanAdCard}
+                                    onPress={() => navigation.navigate('MainTabs', { screen: 'More', params: { screen: 'HomeLoan' } })}
+                                    activeOpacity={0.85}
+                                >
+                                    <View style={styles.homeLoanAdIconWrap}>
+                                        <Ionicons name="business" size={28} color={colors.white} />
+                                    </View>
+                                    <Text style={styles.homeLoanAdName} numberOfLines={2}>{offer.name}</Text>
+                                    <Text style={styles.homeLoanAdRate}>From {offer.rate}% p.a.</Text>
+                                    <View style={styles.homeLoanAdCta}>
+                                        <Text style={styles.homeLoanAdCtaText}>Apply</Text>
+                                        <Ionicons name="arrow-forward" size={14} color={colors.white} />
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                            <TouchableOpacity
+                                style={styles.homeLoanAdCardViewAll}
+                                onPress={() => navigation.navigate('MainTabs', { screen: 'More', params: { screen: 'HomeLoan' } })}
+                                activeOpacity={0.85}
+                            >
+                                <Ionicons name="add-circle-outline" size={32} color="rgba(255,255,255,0.9)" />
+                                <Text style={styles.homeLoanAdViewAllText}>View all</Text>
+                                <Text style={styles.homeLoanAdViewAllSub}>Loans & eligibility</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
                     </View>
 
                     {/* 1. Featured Projects Gallery - Recommended style */}
@@ -406,6 +448,87 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         paddingHorizontal: 20,
         letterSpacing: -0.3,
+    },
+    sectionSubtitleWhite: {
+        fontSize: 13,
+        color: 'rgba(255,255,255,0.9)',
+        marginTop: -8,
+        marginBottom: 12,
+        paddingHorizontal: 20,
+        fontFamily: 'Lato_400Regular',
+    },
+    homeLoanAdsContainer: {
+        paddingHorizontal: 20,
+        paddingBottom: 8,
+        gap: 12,
+    },
+    homeLoanAdCard: {
+        width: 160,
+        backgroundColor: 'rgba(255, 255, 255, 0.18)',
+        borderRadius: 16,
+        padding: 14,
+        marginRight: 12,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    homeLoanAdIconWrap: {
+        width: 48,
+        height: 48,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255,255,255,0.25)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    homeLoanAdName: {
+        fontSize: 13,
+        fontWeight: '700',
+        color: colors.white,
+        marginBottom: 4,
+    },
+    homeLoanAdRate: {
+        fontSize: 15,
+        fontWeight: '800',
+        color: colors.white,
+        marginBottom: 10,
+    },
+    homeLoanAdCta: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'flex-start',
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+        gap: 4,
+    },
+    homeLoanAdCtaText: {
+        fontSize: 12,
+        fontWeight: '700',
+        color: colors.white,
+    },
+    homeLoanAdCardViewAll: {
+        width: 120,
+        backgroundColor: 'rgba(255, 255, 255, 0.12)',
+        borderRadius: 16,
+        padding: 14,
+        marginRight: 20,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.25)',
+        borderStyle: 'dashed',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    homeLoanAdViewAllText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: colors.white,
+        marginTop: 8,
+    },
+    homeLoanAdViewAllSub: {
+        fontSize: 11,
+        color: 'rgba(255,255,255,0.85)',
+        marginTop: 2,
     },
     locationTabsContainer: {
         marginBottom: 12,

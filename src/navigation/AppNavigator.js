@@ -23,6 +23,12 @@ import LegalServicesScreen from '../screens/LegalServicesScreen';
 import AuthStartScreen from '../screens/AuthStartScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import AboutScreen from '../screens/AboutScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
+import TermsScreen from '../screens/TermsScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 import PostPropertyScreen from '../screens/PostPropertyScreen';
 import PostPropertyWhatsAppScreen from '../screens/PostPropertyWhatsAppScreen';
 import Sidebar from '../components/Sidebar';
@@ -107,6 +113,12 @@ const MoreStack = () => {
             <Stack.Screen name="HomeLoan" component={HomeLoanScreen} />
             <Stack.Screen name="HomeInterior" component={HomeInteriorScreen} />
             <Stack.Screen name="LegalServices" component={LegalServicesScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="About" component={AboutScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+            <Stack.Screen name="Terms" component={TermsScreen} />
+            <Stack.Screen name="Notifications" component={NotificationsScreen} />
             <Stack.Screen name="AuthStart" component={AuthStartScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />

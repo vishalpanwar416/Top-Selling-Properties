@@ -68,8 +68,13 @@ const BottomTabBar = ({ state, descriptors, navigation }) => {
                         canPreventDefault: true,
                     });
 
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name);
+                    if (!event.defaultPrevented) {
+                        // When tapping More tab, always show the main More screen (not last opened sub-screen like Home Loan)
+                        if (route.name === 'More') {
+                            navigation.navigate('More', { screen: 'MoreMain' });
+                        } else if (!isFocused) {
+                            navigation.navigate(route.name);
+                        }
                     }
                 };
 
